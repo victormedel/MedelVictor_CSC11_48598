@@ -1,4 +1,4 @@
-/* Add two 64-bit numbers together	*/
+/* Add two 64-bit numbers together		*/
 
 	.global _start
 _start:

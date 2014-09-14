@@ -1,4 +1,4 @@
-/* Perform R0=R1+R2	*/
+/* Perform R0=R1+R2		*/
 
 	.global _start
 _start:
