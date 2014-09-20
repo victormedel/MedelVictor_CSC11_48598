@@ -3,7 +3,7 @@
 	.global _start
 _start:
 	MOV R2, #25		@ a=25
-	MOV R3, #4		@ b=4
+	MOV R3, #5		@ b=5
 
 	SUBS R1, R2, R3		@ R1=R2-R3
 	MOV R0, #1		@ Set counter to 1
