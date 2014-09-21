@@ -1,7 +1,7 @@
 /* 
 	Assignment 2: Calculate a/b and a%b with successive subtraction
 	
-	This program will return the the answer to the division problem a/b
+	This program will return the answer to the division problem a/b
 	
  */
 
