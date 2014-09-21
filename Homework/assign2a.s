@@ -1,10 +1,15 @@
-/* Assignment 2: Calculate a/b and a%b with successive subtraction */
+/* 
+	Assignment 2: Calculate a/b and a%b with successive subtraction
+	
+	This program will return the the answer to the division problem a/b
+	
+ */
 
 	.global _start
 _start:
 	MOV R2, #25		@ a=25
 	MOV R3, #4		@ b=4
-	MOV R4, #0		@ Used to swap R0 and R1 "flag"
+	MOV R4, #0		@ Used to swap R0 and R1 "flag is NOT set"
 	MOV R0, #0		@ Set Couter to 0, just to be sure
 
 	SUBS R1, R2, R3		@ R1=R2-R3
