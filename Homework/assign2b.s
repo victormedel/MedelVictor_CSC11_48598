@@ -1,4 +1,9 @@
-/* Assignment 2: Calculate a/b and a%b with successive subtraction */
+/* 
+	Assignment 2: Calculate a/b and a%b with successive subtraction
+	
+	This program will return the remainder (a%b) to the division problem a/b
+	
+ */
 
 	.global _start
 _start:
