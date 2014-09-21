@@ -9,7 +9,7 @@
 _start:
 	MOV R2, #25		@ a=25
 	MOV R3, #4		@ b=4
-	MOV R4, #1		@ Used to swap R0 and R1 "flag"
+	MOV R4, #1		@ Used to swap R0 and R1 "flag IS set"
 	MOV R0, #0		@ Set Couter to 0, just to be sure
 
 	SUBS R1, R2, R3		@ R1=R2-R3
