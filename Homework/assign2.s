@@ -18,10 +18,6 @@ _loop:
 	BLT _exit		@ If R1 is less than R3 then exit
 	BAL _loop		@ otherwise go back to the start of the loop
 	
-_output:
-	
-	
-	
 	
 _exit:
 	MOV R7, #1
