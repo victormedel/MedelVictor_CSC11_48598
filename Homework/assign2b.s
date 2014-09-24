@@ -11,12 +11,12 @@ _start:
 	MOV R3, #4		@ b=4
 	MOV R4, #1		@ Used to swap R0 and R1 "flag IS set"
 	MOV R0, #0		@ Set Couter to 0, just to be sure
+	MOV R1, R2		@ Set R1=R2
 
-	SUBS R1, R2, R3		@ R1=R2-R3
-	MOV R0, #1		@ Set counter to 1
+/*	Test to make sure that R1<R3	*/	
+
 	CMP R1, R3		@ Compare R1 with R3
 	BLT _flag		@ If R1 is less than R3 go to flag
-	/* BAL _loop		@ otherwise go to loop */
 	
 _loop:
 	SUBS R1, R1, R3		@ R1=R1-R3
