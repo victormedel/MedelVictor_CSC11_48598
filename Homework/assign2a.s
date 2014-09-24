@@ -7,16 +7,16 @@
 
 	.global _start
 _start:
-	MOV R2, #25		@ a=25
-	MOV R3, #4		@ b=4
+	MOV R2, #111		@ a=25
+	MOV R3, #5		@ b=4
 	MOV R4, #0		@ Used to swap R0 and R1 "flag is NOT set"
 	MOV R0, #0		@ Set Couter to 0, just to be sure
+	MOV R1, R2		@ Set R1=R2
 
-	SUBS R1, R2, R3		@ R1=R2-R3
-	MOV R0, #1		@ Set counter to 1
+/*	Test to make sure that R1<R3	*/	
+
 	CMP R1, R3		@ Compare R1 with R3
 	BLT _flag		@ If R1 is less than R3 go to flag
-	/* BAL _loop		@ otherwise go to loop */
 	
 _loop:
 	SUBS R1, R1, R3		@ R1=R1-R3
