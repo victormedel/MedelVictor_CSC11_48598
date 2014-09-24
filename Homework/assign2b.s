@@ -7,8 +7,8 @@
 
 	.global _start
 _start:
-	MOV R2, #25		@ a=25
-	MOV R3, #4		@ b=4
+	MOV R2, #111		@ a
+	MOV R3, #5		@ b
 	MOV R4, #1		@ Used to swap R0 and R1 "flag IS set"
 	MOV R0, #0		@ Set Couter to 0, just to be sure
 	MOV R1, R2		@ Set R1=R2
