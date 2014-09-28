@@ -22,23 +22,29 @@
      MOV R8, #10	          @ Sets Register R8 to 10
      MOV R9, #0		          @ Sets Register R9 to 0
      MOV R0, #0            @ Set Counter to 0
-     MOV R1, R2                @ Set R1=R2
+     MOV R1, R2            @ Set R1=R2
  
  /*   Test to make sure that R1<R3   */
 
-     CMP R1, R3             @ Compare R1 with R3
+     CMP R1, R3            @ Compare R1 with R3
      BLT flag              @ If R1 is less than R3 go to flag
+     BGT scale             @ Otherwise go to scale
+     
+ scale:
+    MOV R6, #1
+    MULS R7, R3, R6        @ R7=R3*R6
+    
     
  loop:
-     SUBS R1, R1, R3        @ R1=R1-R3
-     ADDS R0, #1            @ Add 1 to the counter
-     CMP R1, R3             @ Compare R1 with R3
+     SUBS R1, R1, R3       @ R1=R1-R3
+     ADDS R0, #1           @ Add 1 to the counter
+     CMP R1, R3            @ Compare R1 with R3
      BLT flag              @ If R1 is less than R3 go to flag
      BAL loop              @ Otherwise go back to the start of the loop
      
  flag:
      CMP R4, #0             @ Check if flag is set
-     BEQ exit              @ If flag is set to 0 it will exit
+     BEQ exit               @ If flag is set to 0 it will exit
                             @ Otherwise it will swap registers
      MOV R4, R1             @ R1 goes to R4
      MOV R5, R0             @ R0 goes to R5
