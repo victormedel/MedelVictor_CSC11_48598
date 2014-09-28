@@ -16,11 +16,11 @@
      MOV R2, #22222        @ a
      MOV R3, #5            @ b
      MOV R4, #0            @ Used to swap R0 and R1 "flag is NOT set"
-     MOV R5, #0		   @ Sets Register R5 to 0
-     MOV R6, #0		   @ Sets Register R6 to 0
-     MOV R7, #0		   @ Sets Register R7 to 0
-     MOV R8, #10	   @ Sets Register R8 to 10
-     MOV R9, #0		   @ Sets Register R9 to 0
+     MOV R5, #0		          @ Sets Register R5 to 0
+     MOV R6, #0		          @ Sets Register R6 to 0
+     MOV R7, #0		          @ Sets Register R7 to 0
+     MOV R8, #10	          @ Sets Register R8 to 10
+     MOV R9, #0		          @ Sets Register R9 to 0
      MOV R0, #0            @ Set Counter to 0
      MOV R1, R2                @ Set R1=R2
  
