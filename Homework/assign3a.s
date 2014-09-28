@@ -2,7 +2,7 @@
  * 
  * Author: Victor Medel
  * Created On: September 27 ,2014
- * Purpose: Inefficient Technique for Calculating a/b and a%b
+ * Purpose: Inefficient Technique for Calculating a/b and a%b (Flag Is Not Set)
  * Assignment 3
  *
  */
