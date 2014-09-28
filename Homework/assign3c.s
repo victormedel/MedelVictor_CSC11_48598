@@ -7,9 +7,7 @@
  *
  */
  
- 
      .global main
- 
  main:
  
      MOV R2, #22222        @ a
