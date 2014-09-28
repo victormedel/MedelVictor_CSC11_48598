@@ -17,7 +17,7 @@
      MOV R3, #5            @ b
      MOV R4, #1            @ Used to swap R0 and R1 "flag IS set"
      MOV R0, #0            @ Set Counter to 0
-     R1, R2                @ Set R1=R2
+     MOV R1, R2                @ Set R1=R2
  
  /*   Test to make sure that R1<R3   */
 
@@ -31,7 +31,7 @@
      BLT flag              @ If R1 is less than R3 go to flag
      BAL loop              @ Otherwise go back to the start of the loop
      
- _flag:
+ flag:
      CMP R4, #0             @ Check if flag is set
      BEQ exit              @ If flag is set to 0 it will exit
                             @ Otherwise it will swap registers
@@ -41,6 +41,6 @@
      
      MOV R1, R5             @ R1 is assigned R5 value
      
- exit
+ exit:
      MOV R7, #1
      SWI 0
