@@ -9,9 +9,9 @@
  */
  
  
-     .global _start
+     .global _main
  
- _start:
+ _main:
  
      MOV R2, #111          @ a
      MOV R3, #5            @ b
