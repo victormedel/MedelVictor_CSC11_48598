@@ -17,7 +17,7 @@
      MOV R3, #5            @ b
      MOV R4, #0            @ Used to swap R0 and R1 "flag is NOT set"
      MOV R0, #0            @ Set Counter to 0
-     R1, R2                @ Set R1=R2
+     MOV R1, R2                @ Set R1=R2
  
  /*   Test to make sure that R1<R3   */
 
@@ -41,6 +41,6 @@
      
      MOV R1, R5             @ R1 is assigned R5 value
      
- _exit
+ _exit:
      MOV R7, #1
      SWI 0
