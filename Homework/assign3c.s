@@ -46,11 +46,13 @@
      BAL scalecomp          @ Back to inscale
     
  loop:
-     SUBS R1, R1, R3        @ R1=R1-R3
-     ADDS R0, #1            @ Add 1 to the counter
-     CMP R1, R3             @ Compare R1 with R3
-     BGE loop               @ If R1 is greater than or equal to R3 go to loop
-     BAL flag               @ Otherwise go to flag
+     ADDS R0, R0, R6        @ R0=R0+R6 Increase by scale
+     SUBS R1, R1, R7        @ R1=R1-R7 Subtract by scale
+     CMP R1, R7             @ Compare R1 to R7
+     BGE loop               @ If R1 is greater than or Equal to R7 go back to loop
+     CMP R6, #1             @ Compare R6 to 1
+     BGT scale              @ If R6 is greater than 1 jump back to scale
+     BLT flag               @ Otherwise go to flag
      
  flag:
      CMP R4, #0             @ Check if flag is set
