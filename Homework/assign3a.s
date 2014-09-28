@@ -12,5 +12,6 @@
      MOV R2, #111
      MOV R3, #5
      MOV R4, #0
-     MOV R5
+     MOV R0, #0
+     R1, R2
  
