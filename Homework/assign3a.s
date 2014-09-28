@@ -5,7 +5,7 @@
  *
  * Note: The program I wrote for assignment 2 already reflected the 
  *       C++ program "Inefficient technique for calculating a/b and a%b" 
- *       therefore, I kept the program intact.
+ *       therefore, I did make small modification to reflect the flowchart.
  */
  
  
