@@ -35,10 +35,9 @@
      CMP R4, #0             @ Check if flag is set
      BEQ exit               @ If flag is set to 0 it will exit
                             @ Otherwise it will swap registers
-     MOV R4, R1             @ R1 goes to R4
-     MOV R5, R0             @ R0 goes to R5
-     MOV R0, R4             @ R0 is assigned R4 value
-     MOV R1, R5             @ R1 is assigned R5 value
+    MOV R5, R0              @ R0 goes to R5
+    MOV R0, R1              @ R1 goes to R0
+    MOV R1, R5              @ R1 is assigned R5 value
      
  exit:
      MOV R7, #1
