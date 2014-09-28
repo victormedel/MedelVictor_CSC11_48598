@@ -37,7 +37,7 @@
  scalecomp:
      CMP R1, R9             @ Compare R1 and R9
      BGT inscale            @ If R1 is greater than R9 go to inscale
-     BAL loop               @ Otherwise go to loop
+     BAL loop               @ Otherwise jumps to loop
      
  inscale:
      MULS R6, R6, R8        @ R6=R6*R8
