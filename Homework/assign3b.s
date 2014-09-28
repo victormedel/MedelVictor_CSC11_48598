@@ -15,7 +15,7 @@
  
      MOV R2, #111          @ a
      MOV R3, #5            @ b
-     MOV R4, #0            @ Used to swap R0 and R1 "flag is NOT set"
+     MOV R4, #1            @ Used to swap R0 and R1 "flag IS set"
      MOV R0, #0            @ Set Counter to 0
      R1, R2                @ Set R1=R2
  
