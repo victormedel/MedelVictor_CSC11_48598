@@ -9,4 +9,8 @@
  
  _start:
  
+     MOV R2, #111
+     MOV R3, #5
+     MOV R4, #0
+     MOV R5
  
