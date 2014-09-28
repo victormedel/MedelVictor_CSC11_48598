@@ -1,11 +1,10 @@
-/* Author: Victor Medel
+/* 
+ * 
+ * Author: Victor Medel
  * Created On: September 27 ,2014
  * Purpose: More Efficient Technique for Calculating a/b and a%b
  * Assignment 3
  *
- * Note: The program I wrote for assignment 2 already reflected the 
- *       C++ program "Inefficient technique for calculating a/b and a%b" 
- *       therefore, I kept the program intact and only added to it.
  */
  
  
