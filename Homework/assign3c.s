@@ -26,7 +26,24 @@
  /*   Test if R1>=R3   */
 
      CMP R1, R3            @ Compare R1 with R3
-     BGE loop              @ If R1 is greater than or equal to R3 go to loop
+     BGE scale             @ If R1 is greater than or equal to R3 go to scale
+     BAL flag
+     
+ scale:
+     MOV R6, #1             @ R6=1 scale
+     MULS R7, R3, R6        @ R7=R3*R6 subtraction factor
+     MULS R9, R7, R8        @ R9=R7*R8 next subtraction factor to test
+     
+ scalecomp:
+     CMP R1, R9             @ Compare R1 and R9
+     BGT inscale            @ If R1 is greater than R9 go to inscale
+     BAL loop               @ Otherwise go to loop
+     
+ inscale:
+     MULS R6, R6, R8        @ R6=R6*R8
+     MULS R7, R3, R6        @ R7=R3*R6
+     MULS R9, R7, R8        @ R9=R7*R8
+     BAL scalecomp          @ Back to inscale
     
  loop:
      SUBS R1, R1, R3        @ R1=R1-R3
