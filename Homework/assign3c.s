@@ -31,8 +31,11 @@
      BGT scale             @ Otherwise go to scale
      
  scale:
-    MOV R6, #1
-    MULS R7, R3, R6        @ R7=R3*R6
+    MOV R6, #1             @ R6=1, Scale
+    MULS R7, R3, R6        @ R7=R3*R6, Subtraction factor
+    MULS R9, R7, R8        @ R9=R7*R8, Next Subtraction Factor To Test
+    CMP R1, R9             @ Compare R1 with R9
+    BLT ***
     
     
  loop:
