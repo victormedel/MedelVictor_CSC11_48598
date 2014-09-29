@@ -38,7 +38,8 @@
      BAL loop               @ Otherwise jumps to loop
      
  inscale:
-     MULS R6, R6, R8        @ R6=R6*R8
+     MOV R10, R6            @ R10=R6
+     MULS R6, R10, R8       @ R6=R6*R8
      MULS R7, R3, R6        @ R7=R3*R6
      MULS R9, R7, R8        @ R9=R7*R8
      BAL scalecomp          @ Back to inscale
