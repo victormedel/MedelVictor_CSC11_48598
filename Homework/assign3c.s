@@ -10,7 +10,7 @@
      .global main
  main:
  
-     MOV R2, #22222        @ a
+     MOV R2, #0x56CE       @ a
      MOV R3, #5            @ b
      MOV R4, #0            @ Used to swap R0 and R1 "flag is NOT set"
      MOV R5, #0		          @ Sets Register R5 to 0
@@ -38,7 +38,8 @@
      BAL loop               @ Otherwise jumps to loop
      
  inscale:
-     MULS R6, R6, R8        @ R6=R6*R8
+     MOV R10, R6            @ R10=R6
+     MULS R6, R10, R8       @ R6=R6*R8
      MULS R7, R3, R6        @ R7=R3*R6
      MULS R9, R7, R8        @ R9=R7*R8
      BAL scalecomp          @ Back to inscale
