@@ -51,6 +51,9 @@
      SUBS R1, R1, R7        @ R1=R1-R7 Subtract by scale
      CMP R1, R7             @ Compare R1 to R7
      BGE loop               @ If R1 is greater than or Equal to R7 go back to loop
+     BAL comploop
+ 
+ comploop:
      CMP R6, #1             @ Compare R6 to 1
      BGT scale              @ If R6 is greater than 1 jump back to scale
      BAL flag               @ Otherwise go to flag
