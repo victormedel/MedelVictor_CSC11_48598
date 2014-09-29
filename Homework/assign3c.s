@@ -20,7 +20,7 @@
      MOV R9, #0		          @ Sets Register R9 to 0
      MOV R10, #0           @ Sets Register R10 to 0
      MOV R0, #0            @ Set Counter to 0
-     MOV R1, R2            @ Set R1=R2
+     MOVS R1, R2            @ Set R1=R2
  
  /*   Test if R1>=R3   */
 
@@ -29,9 +29,9 @@
      BAL flag              @ Otherwise jump to flag
      
  scale:
-     MOV R6, #1             @ R6=1 scale
-     MUL R7, R3, R6        @ R7=R3*R6 subtraction factor
-     MUL R9, R7, R8        @ R9=R7*R8 next subtraction factor to test
+     MOVS R6, #1             @ R6=1 scale
+     MULS R7, R3, R6        @ R7=R3*R6 subtraction factor
+     MULS R9, R7, R8        @ R9=R7*R8 next subtraction factor to test
      BAL scalecomp
 
  scalecomp:    
@@ -40,15 +40,15 @@
      BAL loop               @ Otherwise jump to loop
      
  inscale:
-     MOV R10, R6            @ R10=R6
-     MUL R6, R10, R8       @ R6=R6*R8
-     MUL R7, R3, R6        @ R7=R3*R6
-     MUL R9, R7, R8        @ R9=R7*R8
+     MOVS R10, R6            @ R10=R6
+     MULS R6, R10, R8       @ R6=R6*R8
+     MULS R7, R3, R6        @ R7=R3*R6
+     MULS R9, R7, R8        @ R9=R7*R8
      BAL scalecomp
     
  loop:
-     ADD R0, R0, R6        @ R0=R0+R6 Increase by scale
-     SUB R1, R1, R7        @ R1=R1-R7 Subtract by scale
+     ADDS R0, R0, R6        @ R0=R0+R6 Increase by scale
+     SUBS R1, R1, R7        @ R1=R1-R7 Subtract by scale
      CMP R1, R7             @ Compare R1 to R7
      BGE loop               @ If R1 is greater than or Equal to R7 go back to loop
      CMP R6, #1             @ Compare R6 to 1
@@ -59,9 +59,9 @@
      CMP R4, #0             @ Check if flag is set
      BEQ exit               @ If flag is set to 0 it will exit
                             @ Otherwise it will swap registers
-    MOV R5, R0              @ R0 goes to R5
-    MOV R0, R1              @ R1 goes to R0
-    MOV R1, R5              @ R1 is assigned R5 value
+    MOVS R5, R0              @ R0 goes to R5
+    MOVS R0, R1              @ R1 goes to R0
+    MOVS R1, R5              @ R1 is assigned R5 value
      
  exit:
      MOV R7, #1
