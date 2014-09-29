@@ -32,8 +32,12 @@
      MULS R7, R3, R6        @ R7=R3*R6 subtraction factor
      MULS R9, R7, R8        @ R9=R7*R8 next subtraction factor to test
      CMP R1, R9             @ Compare R1 and R9
-     BGT inscale            @ If R1 is greater than R9 go to inscale
-     BAL loop               @ Otherwise jumps to loop
+     BAL scalecomp
+
+ scalecomp:    
+     CMP R1, R9
+     BGT inscale
+     BAL loop   
      
  inscale:
      MOV R10, R6            @ R10=R6
@@ -41,11 +45,6 @@
      MULS R7, R3, R6        @ R7=R3*R6
      MULS R9, R7, R8        @ R9=R7*R8
      BAL scalecomp
-     
- scalecomp:    
-     CMP R1, R9
-     BGT inscale
-     BAL loop              
     
  loop:
      ADDS R0, R0, R6        @ R0=R0+R6 Increase by scale
