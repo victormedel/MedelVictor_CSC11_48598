@@ -10,7 +10,7 @@
      .global main
  main:
  
-     LDR R2, =0x56CE        @ a
+     LDR R2, =0x56CE       @ a
      MOV R3, #5            @ b
      MOV R4, #0            @ Used to swap R0 and R1 "flag is NOT set"
      MOV R5, #0		          @ Sets Register R5 to 0
@@ -20,16 +20,16 @@
      MOV R9, #0		          @ Sets Register R9 to 0
      MOV R10, #0           @ Sets Register R10 to 0
      MOV R0, #0            @ Set Counter to 0
-     MOVS R1, R2            @ Set R1=R2
+     MOVS R1, R2           @ Set R1=R2
  
  /*   Test if R1>=R3   */
 
-     CMP R1, R3            @ Compare R1 with R3
-     BGE scale             @ If R1 is greater than or equal to R3 go to scale
-     BAL flag              @ Otherwise jump to flag
+     CMP R1, R3             @ Compare R1 with R3
+     BGE scale              @ If R1 is greater than or equal to R3 go to scale
+     BAL flag               @ Otherwise jump to flag
      
  scale:
-     MOVS R6, #1             @ R6=1 scale
+     MOVS R6, #1            @ R6=1 scale
      MULS R7, R3, R6        @ R7=R3*R6 subtraction factor
      MULS R9, R7, R8        @ R9=R7*R8 next subtraction factor to test
      BAL scalecomp
@@ -40,7 +40,7 @@
      BAL loop               @ Otherwise jump to loop
      
  inscale:
-     MOVS R10, R6            @ R10=R6
+     MOVS R10, R6           @ R10=R6
      MULS R6, R10, R8       @ R6=R6*R8
      MULS R7, R3, R6        @ R7=R3*R6
      MULS R9, R7, R8        @ R9=R7*R8
@@ -62,9 +62,9 @@
      CMP R4, #0             @ Check if flag is set
      BEQ exit               @ If flag is set to 0 it will exit
                             @ Otherwise it will swap registers
-    MOVS R5, R0              @ R0 goes to R5
-    MOVS R0, R1              @ R1 goes to R0
-    MOVS R1, R5              @ R1 is assigned R5 value
+    MOVS R5, R0             @ R0 goes to R5
+    MOVS R0, R1             @ R1 goes to R0
+    MOVS R1, R5             @ R1 is assigned R5 value
      
  exit:
      MOV R7, #1
