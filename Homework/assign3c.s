@@ -53,7 +53,7 @@
      BGE loop               @ If R1 is greater than or Equal to R7 go back to loop
      CMP R6, #1             @ Compare R6 to 1
      BGT scale              @ If R6 is greater than 1 jump back to scale
-     BLT flag               @ Otherwise go to flag
+     BAL flag               @ Otherwise go to flag
      
  flag:
      CMP R4, #0             @ Check if flag is set
