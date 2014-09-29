@@ -18,6 +18,7 @@
      MOV R7, #0		          @ Sets Register R7 to 0
      MOV R8, #10	          @ Sets Register R8 to 10
      MOV R9, #0		          @ Sets Register R9 to 0
+     MOV R10, #0           @ Sets Register R10 to 0
      MOV R0, #0            @ Set Counter to 0
      MOV R1, R2            @ Set R1=R2
  
