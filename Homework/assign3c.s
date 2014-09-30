@@ -19,7 +19,7 @@
      MOV R9, #0		          @ Sets Register R9 to 0
      MOV R10, #0           @ Sets Register R10 to 0
      MOV R0, #0            @ Set Counter to 0
-     MOV R1, R2           @ Set R1=R2
+     MOVS R1, R2           @ Set R1=R2
  
  /*   Test if R1>=R3   */
 
@@ -46,8 +46,8 @@
      BAL scalecomp
     
  loop:
-     ADD R0, R0, R6        @ R0=R0+R6 Increase by scale
-     SUB R1, R1, R7        @ R1=R1-R7 Subtract by scale
+     ADDS R0, R0, R6        @ R0=R0+R6 Increase by scale
+     SBCS R1, R1, R7        @ R1=R1-R7 Subtract by scale
      CMP R1, R7             @ Compare R1 to R7
      BGE loop               @ If R1 is greater than or Equal to R7 go back to loop
      BAL comploop
