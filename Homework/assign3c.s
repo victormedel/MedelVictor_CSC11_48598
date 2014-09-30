@@ -46,7 +46,7 @@
      BAL scalecomp
     
  loop:
-     ADDS R0, R0, R6        @ R0=R0+R6 Increase by scale
+     ADCS R0, R0, R6        @ R0=R0+R6 Increase by scale
      SBCS R1, R1, R7        @ R1=R1-R7 Subtract by scale
      CMP R1, R7             @ Compare R1 to R7
      BGE loop               @ If R1 is greater than or Equal to R7 go back to loop
