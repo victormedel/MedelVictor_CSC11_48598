@@ -9,7 +9,7 @@
      .global main
  main:
  
-     LDR R2, =22222        @ a
+     LDR R2, =0x56CE       @ a
      MOV R3, #5            @ b
      MOV R4, #0            @ Used to swap R0 and R1 "flag is NOT set"
      MOV R5, #0		          @ Sets Register R5 to 0
@@ -46,8 +46,8 @@
      BAL scalecomp
     
  loop:
-     ADDS R0, R0, R6        @ R0=R0+R6 Increase by scale
-     SUBS R1, R1, R7        @ R1=R1-R7 Subtract by scale
+     ADCS R0, R0, R6        @ R0=R0+R6 Increase by scale
+     SBCS R1, R1, R7        @ R1=R1-R7 Subtract by scale
      CMP R1, R7             @ Compare R1 to R7
      BGE loop               @ If R1 is greater than or Equal to R7 go back to loop
      BAL comploop
