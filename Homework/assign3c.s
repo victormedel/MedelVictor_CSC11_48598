@@ -10,7 +10,7 @@
      .global main
  main:
  
-     LDR R2, =0x56CE       @ a
+     LDR R2, =100       @ a
      MOV R3, #5            @ b
      MOV R4, #0            @ Used to swap R0 and R1 "flag is NOT set"
      MOV R5, #0		          @ Sets Register R5 to 0
