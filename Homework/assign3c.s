@@ -67,6 +67,5 @@
     MOVS R1, R5             @ R1 is assigned R5 value
      
  exit:
-     MOV R7, #1
-     SWI 0
+     BX LR
 
