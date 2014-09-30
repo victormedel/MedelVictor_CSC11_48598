@@ -40,9 +40,9 @@
      
  inscale:
      MOV R10, R6           @ R10=R6
-     MULS R6, R10, R8       @ R6=R6*R8
-     MULS R7, R3, R6        @ R7=R3*R6
-     MULS R9, R7, R8        @ R9=R7*R8
+     MUL R6, R10, R8       @ R6=R6*R8
+     MUL R7, R3, R6        @ R7=R3*R6
+     MUL R9, R7, R8        @ R9=R7*R8
      BAL scalecomp
     
  loop:
@@ -61,9 +61,9 @@
      CMP R4, #0             @ Check if flag is set
      BEQ exit               @ If flag is set to 0 it will exit
                             @ Otherwise it will swap registers
-    MOVS R5, R0             @ R0 goes to R5
-    MOVS R0, R1             @ R1 goes to R0
-    MOVS R1, R5             @ R1 is assigned R5 value
+    MOV R5, R0             @ R0 goes to R5
+    MOV R0, R1             @ R1 goes to R0
+    MOV R1, R5             @ R1 is assigned R5 value
      
  exit:
      BX LR
