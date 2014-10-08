@@ -3,10 +3,9 @@
  
 greeting:
  .asciz "Hello World"
- .asciz "Good-by World"
  
 .balign 4
-return: .word 1
+return: .word 0
  
 .text
  
