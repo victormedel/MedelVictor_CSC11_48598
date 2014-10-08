@@ -2,7 +2,7 @@
 .data
  
 greeting:
- .asciz "Hello world"
+ .asciz "Hello World"
  
 .balign 4
 return: .word 0
