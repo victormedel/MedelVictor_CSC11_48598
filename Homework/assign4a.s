@@ -40,6 +40,9 @@
  .balign 4
  return2: .word 0
  
+ .balign 4
+ return3: .word 0  /* Might need this return */
+ 
  
  .text
  
