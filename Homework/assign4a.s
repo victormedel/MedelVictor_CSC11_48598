@@ -11,17 +11,9 @@
  .balign 4
  message1: .asciz "Please type the numerator: "
  
- /* Echo Numerator */
- .balign 4
- message2: .asciz "I read the number %d\n"
- 
   /* Denominator Input */
  .balign 4
  message3: .asciz "Please type the denominator: "
- 
- /* Echo Denominator */
- .balign 4
- message4: .asciz "I read the number %d\n"
  
  /* Quotient Output */
  .balign 4
@@ -62,12 +54,15 @@
  	bl printf					                      /* call to printf */
  
  	ldr r0, address_of_scan_pattern		   /* r0 <- scan_pattern */
- 	ldr r1, address_of_numerator_read			/* r1 <- number read */
+ 	ldr r1, address_of_numerator_read			/* r1 <- numerator */
  	bl scanf				                       	/* call to scanf */
- 
- ldr r0, address_of_numerator_read    /* r0 <- numerator_read */
- ldr r0, [r0]                         /* r0 <- *r0 */
- bl /***Division Function Here***/
+ 	
+ 	ldr r0, address_of_message2			      /* r0 <- message2 */
+ 	bl printf					                      /* call to printf */
+ 	
+  ldr r0, address_of_numerator_read    /* r0 <- numerator_read */
+  ldr r0, [r0]                         /* r0 <- *r0 */
+  bl /***Division Function Here***/
  
 
  
