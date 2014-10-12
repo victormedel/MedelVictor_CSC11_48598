@@ -13,15 +13,15 @@
  
   /* Denominator Input */
  .balign 4
- message3: .asciz "Please type the denominator: "
+ message2: .asciz "Please type the denominator: "
  
  /* Quotient Output */
  .balign 4
- message5: .asciz "Your Quotient is %d\n"
+ message3: .asciz "Your Quotient is %d\n"
  
  /* Remainder Output */
  .balign 4
- message6: .asciz "Your Remainder is %d\n" 
+ message4: .asciz "Your Remainder is %d\n" 
  
  /* Format pattern for scanf */
  .balign 4
@@ -60,7 +60,12 @@
  	ldr r0, address_of_message2			      /* r0 <- message2 */
  	bl printf					                      /* call to printf */
  	
+ 	ldr r0, address_of_scan_pattern		   /* r0 <- scan_pattern */
+ 	ldr r2, address_of_denominator_read			/* r2 <- denomintator */
+ 	bl scanf				                       	/* call to scanf */
+ 	
   ldr r0, address_of_numerator_read    /* r0 <- numerator_read */
+  
   ldr r0, [r0]                         /* r0 <- *r0 */
   bl /***Division Function Here***/
  
@@ -73,8 +78,6 @@
  address_of_message2: .word message2
  address_of_message3: .word message3
  address_of_message4: .word message4
- address_of_message5: .word message5
- address_of_message6: .word message6
  address_of_scan_patter: .word scan_pattern
  address_of_numerator_read: .word numerator_read
  address_of_denominator_read: .word denominator_read
