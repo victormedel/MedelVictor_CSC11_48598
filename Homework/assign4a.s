@@ -38,10 +38,15 @@
  /* Where scanf will store the numbers read */
  .balign 4
  numerator_read: .word 0
+ 
+ .balign 4
  demoninator_read .word 0
  
  .balign 4
  return: .word 0
+ 
+ .balign 4
+ return2: .word 0
  
  
  .text
@@ -67,6 +72,10 @@
  
  address_of_message1: .word message1
  address_of_message2: .word message2
+ address_of_message3: .word message3
+ address_of_message4: .word message4
+ address_of_message1: .word message5
+ address_of_message2: .word message6
  address_of_scan_patter: .word scan_pattern
  address_of_numerator_read: .word numerator_read
  address_of_denominator_read: .word denominator_read
