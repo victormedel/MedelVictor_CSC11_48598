@@ -35,9 +35,10 @@
  .balign 4
  scan_patter: .asciz "%d"
  
- /* Where scanf will store the number read */
+ /* Where scanf will store the numbers read */
  .balign 4
- number_read: .word 0
+ numerator_read: .word 0
+ demoninator_read .word 0
  
  .balign 4
  return: .word 0
@@ -67,7 +68,8 @@
  address_of_message1: .word message1
  address_of_message2: .word message2
  address_of_scan_patter: .word scan_pattern
- address_of_number_read: .word number_read
+ address_of_numerator_read: .word numerator_read
+ address_of_denominator_read: .word denominator_read
  address_of_return: .word return
  
  /* External */
