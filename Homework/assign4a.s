@@ -79,7 +79,7 @@
   ldr r1, [r1]                         /* r1 <- *r1 */
   bl /***Division Function Here***/
  
-  @
+  @ Output Results
 
   mov r4, r0                            /* r4 <- r0 */
   mov r5, r1                            /* r5 <- r1 */
