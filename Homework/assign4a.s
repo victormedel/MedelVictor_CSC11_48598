@@ -71,7 +71,14 @@
   bl /***Division Function Here***/
  
 
- 
+  mov r3, r0                            /* r3 <- r0 */
+  mov r4, r1                            /* r4 <- r1 */
+  ldr r1, address_of_numerator_read     /* r1 <- numerator_read */
+  ldr r2, address_of_denominator_read   /* r2 <- denominator_read */
+  ldr r1, [r1]                          /* r1 <- *r1 */
+  ldr r2, [r2]                          /* r2 <- *r2 */
+  ldr r0, address_of_message3           /* r0 <- message3 */
+  bl printf
  
  
  
