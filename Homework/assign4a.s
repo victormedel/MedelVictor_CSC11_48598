@@ -53,18 +53,17 @@
  
  /**** Division Function Here ****/
  
-	.global main
+    .global main
  main:
+ 	ldr r1, address_or_return			/* r1 <- address_of_return */
+ 	str lr, [r1]					/* r1 <- lr */
  
- ldr r1, address_or_return			/* r1 <- address_of_return */
- str lr, [r1]					/* r1 <- lr */
+ 	ldr r0, address_of_message1			/* r0 <- message1 */
+ 	bl printf					/* call to printf */
  
- ldr r0, address_of_message1			/* r0 <- message1 */
- bl printf					/* call to printf */
- 
- ldr r0, address_of_scan_pattern		/* r0 <- scan_pattern */
- ldr r1, address_of_number_read			/* r1 <- number read */
- bl scanf					/* call to scanf */
+ 	ldr r0, address_of_scan_pattern		/* r0 <- scan_pattern */
+ 	ldr r1, address_of_number_read			/* r1 <- number read */
+ 	bl scanf					/* call to scanf */
  
  
 
