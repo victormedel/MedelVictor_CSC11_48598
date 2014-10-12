@@ -50,8 +50,8 @@
  
     .global main
  main:
- 	ldr r1, address_or_return			         /* r1 <- address_of_return */
- 	str lr, [r1]					                    /* *r1 <- lr */
+ 	ldr r6, address_or_return			         /* r6 <- address_of_return */
+ 	str lr, [r6]					                    /* *r6 <- lr */
  
  @ Numerator Input
  
@@ -90,6 +90,7 @@
   ldr r0, address_of_message3           /* r0 <- message3 */
   ldr r1, address_of_message4           /* r1 <- message4 */
   bl printf
+ 
  
  
  ldr lr, address_of_return              /* lr <- address_of_return */
