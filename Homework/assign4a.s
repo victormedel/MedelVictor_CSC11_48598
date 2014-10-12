@@ -54,14 +54,14 @@
  	bl printf					                       /* call to printf */
  
  	ldr r0, address_of_scan_pattern		    /* r0 <- scan_pattern */
- 	ldr r1, address_of_numerator_read			 /* r1 <- numerator */
+ 	ldr r2, address_of_numerator_read			 /* r2 <- numerator */
  	bl scanf				                       	 /* call to scanf */
  	
  	ldr r0, address_of_message2			       /* r0 <- message2 */
  	bl printf					                       /* call to printf */
  	
  	ldr r0, address_of_scan_pattern		    /* r0 <- scan_pattern */
- 	ldr r2, address_of_denominator_read		/* r2 <- denomintator */
+ 	ldr r3, address_of_denominator_read		/* r3 <- denomintator */
  	bl scanf				                       	 /* call to scanf */
  	
   ldr r0, address_of_numerator_read    /* r0 <- numerator_read */
@@ -71,13 +71,14 @@
   bl /***Division Function Here***/
  
 
-  mov r3, r0                            /* r3 <- r0 */
-  mov r4, r1                            /* r4 <- r1 */
-  ldr r1, address_of_numerator_read     /* r1 <- numerator_read */
-  ldr r2, address_of_denominator_read   /* r2 <- denominator_read */
-  ldr r1, [r1]                          /* r1 <- *r1 */
+  mov r4, r0                            /* r4 <- r0 */
+  mov r5, r1                            /* r5 <- r1 */
+  ldr r2, address_of_numerator_read     /* r2 <- numerator_read */
+  ldr r3, address_of_denominator_read   /* r3 <- denominator_read */
   ldr r2, [r2]                          /* r2 <- *r2 */
+  ldr r3, [r3]                          /* r3 <- *r3 */
   ldr r0, address_of_message3           /* r0 <- message3 */
+  ldr r1, address_of_message4           /* r1 <- message4 */
   bl printf
  
  
