@@ -51,14 +51,14 @@
 @ Division Function
  
  division:
-	ldr r1, address_of_return2           		@ r1 <- address_of_return
-	str lr, [r1]								@ *r1 <- lr
+	ldr r1, address_of_return2           	  @ r1 <- address_of_return
+	str lr, [r1]				  @ *r1 <- lr
 	
 	@@@ Division Here @@@
 	
-	cmp r1, r3									@ compare r1 to r3
-	bge scaleleft								@ If r1 is greater than or equal to r3 then go to scale left
-	bx lr										@ otherwise exit
+	cmp r1, r3				  @ compare r1 to r3
+	bge scaleleft				  @ If r1 is greater than or equal to r3 then go to scale left
+	bx lr					  @ otherwise exit
  
 scaleleft:
 	mov r4, r4, lsl #1
@@ -82,33 +82,33 @@ scaleright:
     .global main
  main:
  
-	mov r2, #0									 @ numerator initialization r2 = 0
-	mov r3, #0									 @ denominator initialization r3 = 0
-	mov r4, #1									 @ r4 = 1
-	mov r5, r3									 @ r5 = denominator (r3) 
-	mov r0, #0									 @ Quotient r0 initialized to 0
-	mov r1, r2									 @ Remainder r1 = r2 
+	mov r2, #0					 @ numerator initialization r2 = 0
+	mov r3, #0					 @ denominator initialization r3 = 0
+	mov r4, #1					 @ r4 = 1
+	mov r5, r3					 @ r5 = denominator (r3) 
+	mov r0, #0					 @ Quotient r0 initialized to 0
+	mov r1, r2					 @ Remainder r1 = r2 
  
- 	ldr r1, address_or_return			         @ r1 <- address_of_return
- 	str lr, [r1]					             @ *r1 <- lr
+ 	ldr r1, address_or_return			 @ r1 <- address_of_return
+ 	str lr, [r1]					 @ *r1 <- lr
  
 @ Numerator Input
  
- 	ldr r0, address_of_message1			         @ r0 <- message1
- 	bl printf					                 @ call to printf
+ 	ldr r0, address_of_message1			 @ r0 <- message1
+ 	bl printf					 @ call to printf
  
  	ldr r0, address_of_scan_pattern		         @ r0 <- scan_pattern
- 	ldr r2, address_of_numerator_read			 @ r2 <- numerator
- 	bl scanf				                     @ call to scanf
+ 	ldr r2, address_of_numerator_read		 @ r2 <- numerator
+ 	bl scanf				         @ call to scanf
  	
 @ Denominator Input
  	
- 	ldr r0, address_of_message2			       	 @ r0 <- message2
- 	bl printf					                 @ call to printf
+ 	ldr r0, address_of_message2			 @ r0 <- message2
+ 	bl printf					 @ call to printf
  	
  	ldr r0, address_of_scan_pattern		         @ r0 <- scan_pattern
- 	ldr r3, address_of_denominator_read		     @ r3 <- denomintator
- 	bl scanf				                     @ call to scanf
+ 	ldr r3, address_of_denominator_read		 @ r3 <- denomintator
+ 	bl scanf				         @ call to scanf
  	
 @ Format Input for Calculation 
  	
