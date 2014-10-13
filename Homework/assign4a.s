@@ -10,11 +10,11 @@
  
 @@ Numerator Input @@
  .balign 4
- message1: .asciz "Please type the numerator: "
+ message1: .asciz "Please type your numerator: "
  
 @@ Denominator Input @@
  .balign 4
- message2: .asciz "Please type the denominator: "
+ message2: .asciz "Please type your denominator: "
  
 @@ Quotient Output @@
  .balign 4
@@ -61,10 +61,22 @@
 	bx lr										@ otherwise exit
  
 scaleleft:
-	mov 
+	mov r4, r4, lsl #1
+	mov r5, r5, lsl #1
+	cmp r1, r5
+	bge scaleleft
+	mov r4, r4, asr #1
+	mov r5, r5, asr #1 
 	
 	
+
 addSub:
+	
+	
+
+scaleright:
+	
+	
 	
  
     .global main
