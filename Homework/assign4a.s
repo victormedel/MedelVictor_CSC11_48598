@@ -48,7 +48,8 @@
  
  /* Division Function */
  division:
- 
+ ldr r1, address_of_return2           /* r1 <- address_of_return */
+ str lr, [r1]
  
  
  
