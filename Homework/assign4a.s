@@ -46,7 +46,11 @@
  
  .text
  
- /**** Division Function Here ****/
+ /* Division Function */
+ division:
+ 
+ 
+ 
  
     .global main
  main:
@@ -71,15 +75,16 @@
  	ldr r3, address_of_denominator_read		/* r3 <- denomintator */
  	bl scanf				                       	 /* call to scanf */
  	
- 	@ Format Input for Calculation
+ 	@ Format Input for Calculation 
  	
   ldr r0, address_of_numerator_read    /* r0 <- numerator_read */
   ldr r1, address_of_denominator_read  /* r1 <- denominator_read */
   ldr r0, [r0]                         /* r0 <- *r0 */
   ldr r1, [r1]                         /* r1 <- *r1 */
-  bl /***Division Function Here***/
+  bl division                          /* Branchout to Division Funtion */
+  
  
-  @ Output Results
+  @ Output Results 
 
   mov r4, r0                            /* r4 <- r0 */
   mov r5, r1                            /* r5 <- r1 */
