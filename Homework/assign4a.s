@@ -105,23 +105,16 @@ scaleright:
  
  	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
  	ldr r2, address_of_numerator_read			@ r2 <- numerator
-	
-	ldr r0, address_of_message2			 		@ r0 <- message2
- 	bl printf					 		 		@ call to printf
- 	
- 	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern
- 	ldr r3, address_of_denominator_read		 	@ r3 <- denomintator
-	
 	bl scanf				         			@ call to scanf
  	
 @ Denominator Input
  	
- 	@ldr r0, address_of_message2			 		@ r0 <- message2
- 	@bl printf					 		 		@ call to printf
+ 	ldr r0, address_of_message2			 		@ r0 <- message2
+ 	bl printf					 		 		@ call to printf
  	
- 	@ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern
- 	@ldr r3, address_of_denominator_read		 	@ r3 <- denomintator
- 	@bl scanf				        		 	@ call to scanf
+ 	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern
+ 	ldr r3, address_of_denominator_read		 	@ r3 <- denomintator
+ 	bl scanf				        		 	@ call to scanf
  	
 @ Format Input for Calculation 
  	
