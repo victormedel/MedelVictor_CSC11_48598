@@ -56,6 +56,7 @@
 	cmp r1, r3				  				@ compare r1 to r3
 	bge scaleleft				  			@ If r1 is greater than or equal to r3 then go to scale left
 	bx lr					  				@ otherwise exit
+address_of_return2: .word return2	
  
 scaleleft:
 	mov r4, r4, lsl #1						@ Scale factor
