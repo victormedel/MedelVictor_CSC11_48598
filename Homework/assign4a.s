@@ -34,7 +34,7 @@
  numerator_read: .word 0
  
  .balign 4
- demoninator_read: .word 0
+ denominator_read: .word 0
  
  .balign 4
  return: .word 0
