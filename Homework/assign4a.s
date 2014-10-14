@@ -51,64 +51,69 @@
 @ Division Function
  
  division:
-	ldr r1, address_of_return2           	  @ r1 <- address_of_return
-	str lr, [r1]				  @ *r1 <- lr
-	
-	@@@ Division Here @@@
-	
-	cmp r1, r3				  @ compare r1 to r3
-	bge scaleleft				  @ If r1 is greater than or equal to r3 then go to scale left
-	bx lr					  @ otherwise exit
+	ldr r1, address_of_return2           	@ r1 <- address_of_return
+	str lr, [r1]				  			@ *r1 <- lr
+	cmp r1, r3				  				@ compare r1 to r3
+	bge scaleleft				  			@ If r1 is greater than or equal to r3 then go to scale left
+	bx lr					  				@ otherwise exit
  
 scaleleft:
-	mov r4, r4, lsl #1
-	mov r5, r5, lsl #1
-	cmp r1, r5
-	bge scaleleft
-	mov r4, r4, asr #1
-	mov r5, r5, asr #1 
-	
+	mov r4, r4, lsl #1						@ Scale factor
+	mov r5, r5, lsl #1						@ Subtraction factor
+	cmp r1, r5								@ Compare r1 with r5
+	bge scaleleft							@ If r1 is greater than or equal to r5 loop back to scaleleft
+	mov r4, r4, asr #1						@ Otherwise Scale factor back
+	mov r5, r5, asr #1 						@ and scale subtraction factor back
+	bal addsub								@ Continue division function by branching to addsub
 	
 
-addSub:
+addsub:
+	add r0, r0, r4							@ Count the subtracted scale factor
+	sub r1, r1, r5							@ Subtract the scaled mod
+	bal scaleright							@ Keep scaling right until less than remainder
 	
-	
+addsubcomp:	
+	cmp r4, #1 								@ Compare if r4 is greater than 1
+	bgt addsub								@ If r4 greater than 1 branch to addsub
+	bx lr									@ Otherwise exit
 
 scaleright:
-	
-	
-	
+	mov r4, r4, asr #1 						@ Division Counter
+	mov r5, r5, asr #1						@ Mod/Remainder subtraction
+	cmp r1, r5								@ Compare remainder (r1) with subtraction factor (r5)
+	bgt scaleright							@ If r1 is greater than r5 return to scaleright
+	bal addsubcomp							@ Otherwise go to addsubcomp
  
     .global main
  main:
  
-	mov r2, #0					 @ numerator initialization r2 = 0
-	mov r3, #0					 @ denominator initialization r3 = 0
-	mov r4, #1					 @ r4 = 1
-	mov r5, r3					 @ r5 = denominator (r3) 
-	mov r0, #0					 @ Quotient r0 initialized to 0
-	mov r1, r2					 @ Remainder r1 = r2 
+	mov r2, #0					 				@ numerator initialization r2 = 0
+	mov r3, #0					 				@ denominator initialization r3 = 0
+	mov r4, #1					 				@ r4 = 1
+	mov r5, r3					 				@ r5 = denominator (r3) 
+	mov r0, #0								    @ Quotient r0 initialized to 0
+	mov r1, r2					 				@ Remainder r1 = r2 
  
- 	ldr r1, address_or_return			 @ r1 <- address_of_return
- 	str lr, [r1]					 @ *r1 <- lr
+ 	ldr r1, address_or_return					@ r1 <- address_of_return
+ 	str lr, [r1]					 			@ *r1 <- lr
  
 @ Numerator Input
  
- 	ldr r0, address_of_message1			 @ r0 <- message1
- 	bl printf					 @ call to printf
+ 	ldr r0, address_of_message1					@ r0 <- message1
+ 	bl printf					 				@ call to printf
  
- 	ldr r0, address_of_scan_pattern		         @ r0 <- scan_pattern
- 	ldr r2, address_of_numerator_read		 @ r2 <- numerator
- 	bl scanf				         @ call to scanf
+ 	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
+ 	ldr r2, address_of_numerator_read			@ r2 <- numerator
+ 	bl scanf				         			@ call to scanf
  	
 @ Denominator Input
  	
- 	ldr r0, address_of_message2			 @ r0 <- message2
- 	bl printf					 @ call to printf
+ 	ldr r0, address_of_message2			 		@ r0 <- message2
+ 	bl printf					 		 		@ call to printf
  	
- 	ldr r0, address_of_scan_pattern		         @ r0 <- scan_pattern
- 	ldr r3, address_of_denominator_read		 @ r3 <- denomintator
- 	bl scanf				         @ call to scanf
+ 	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern
+ 	ldr r3, address_of_denominator_read		 	@ r3 <- denomintator
+ 	bl scanf				        		 	@ call to scanf
  	
 @ Format Input for Calculation 
  	
