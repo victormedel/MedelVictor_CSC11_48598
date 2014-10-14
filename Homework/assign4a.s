@@ -97,6 +97,7 @@ scaleright:
  
  	ldr r1, address_of_return					@ r1 <- address_of_return
  	str lr, [r1]					 			@ *r1 <- lr
+	
  
 @ Numerator Input
  
@@ -104,7 +105,7 @@ scaleright:
  	bl printf					 				@ call to printf
  
  	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
- 	ldr r2, address_of_numerator_read			@ r2 <- numerator
+ 	ldr r1, address_of_numerator_read			@ r1 <- numerator
 	bl scanf				         			@ call to scanf
  	
 @ Denominator Input
@@ -113,7 +114,7 @@ scaleright:
  	bl printf					 		 		@ call to printf
  	
  	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern
- 	ldr r3, address_of_denominator_read		 	@ r3 <- denomintator
+ 	ldr r1, address_of_denominator_read		 	@ r1 <- denomintator
  	bl scanf				        		 	@ call to scanf
  	
 @ Format Input for Calculation 
@@ -154,5 +155,5 @@ scaleright:
  address_of_return: .word return
  
  @ External
-	.global printf
-	.global scanf
+.global printf
+.global scanf
