@@ -95,7 +95,7 @@ scaleright:
 	mov r0, #0								    @ Quotient r0 initialized to 0
 	mov r1, r2					 				@ Remainder r1 = r2 
  
- 	ldr r1, address_or_return					@ r1 <- address_of_return
+ 	ldr r1, address_of_return					@ r1 <- address_of_return
  	str lr, [r1]					 			@ *r1 <- lr
  
 @ Numerator Input
