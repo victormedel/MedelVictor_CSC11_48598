@@ -148,7 +148,7 @@ scaleright:
  address_of_message2: .word message2
  address_of_message3: .word message3
  address_of_message4: .word message4
- address_of_scan_patter: .word scan_pattern
+ address_of_scan_pattern: .word scan_pattern
  address_of_numerator_read: .word numerator_read
  address_of_denominator_read: .word denominator_read
  address_of_return: .word return
