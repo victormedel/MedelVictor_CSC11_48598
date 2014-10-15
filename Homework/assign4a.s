@@ -22,7 +22,7 @@
  
 @@ Remainder Output @@
  .balign 4
- message4: .asciz "With a remainder of %d\n" 
+ message4: .asciz "with a remainder of %d\n" 
  
 @@ Format pattern for scanf @@
  .balign 4
