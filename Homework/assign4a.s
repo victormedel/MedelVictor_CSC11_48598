@@ -102,11 +102,14 @@
  division:
 	ldr r1, address_of_return2           	@ r1 <- address_of_return
 	str lr, [r1]				  			@ *r1 <- lr
+	
+	
+	
 	mov r1, r2								@ r1 = r2
 	cmp r1, r3				  				@ compare r1 to r3
 	bge prescaleleft				  		@ If r1 is greater than or equal to r3 jump to scale left
 	
-	bx lr					  				@ otherwise exit
+	
 address_of_return2: .word return2	
  
 prescaleleft:
@@ -140,6 +143,9 @@ scaleright:
 	cmp r1, r5								@ Compare remainder (r1) with subtraction factor (r5)
 	blt scaleright							@ If r1 is less than r5 return to scaleright
 	bal addsubcomp							@ Otherwise go to addsubcomp
+	
+exit:
+	
  
  
  address_of_message1: .word message1
