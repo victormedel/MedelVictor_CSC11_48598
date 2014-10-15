@@ -106,7 +106,7 @@
 	cmp r1, r3				  				@ compare r1 to r3
 	bge prescaleleft				  		@ If r1 is greater than or equal to r3 jump to scale left
 	
-	@bx lr					  				@ otherwise exit
+	bx lr					  				@ otherwise exit
 address_of_return2: .word return2	
  
 prescaleleft:
@@ -121,8 +121,7 @@ scaleleft:
 	bge scaleleft							@ If r1 is greater than or equal to r5 loop to scaleleft
 	mov r4, r4, asr #1						@ Otherwise Scale factor back
 	mov r5, r5, asr #1 						@ and scale subtraction factor back
-	bal addsubcomp							@ Continue division function by branching to addsub
-	
+	bal addsubcomp							@ Continue division function by branching to addsub	
 
 addsub:
 	mov r0, #0								@ r0 = 0
