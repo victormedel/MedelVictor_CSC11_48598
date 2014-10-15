@@ -29,7 +29,6 @@
  scan_pattern: .asciz "%d"
 
 @@ Where scanf will store the numbers read @@
- 
  .balign 4
  numerator_read: .word 0
  
@@ -50,8 +49,7 @@
  	str lr, [r1]					 			@ *r1 <- lr
 	
  
-@ Numerator Input and Format
- 
+@ Numerator Input
  	ldr r0, address_of_message1					@ r0 <- message1
  	bl printf					 				@ call to printf
  
@@ -59,11 +57,7 @@
  	ldr r1, address_of_numerator_read			@ r1 <- numerator_read
 	bl scanf				         			@ call to scanf
 	
-	ldr r0, address_of_numerator_read    		@ r2 <- numerator_read
-	ldr r2, [r0]                         		@ r2 <- *r2
- 	
-@ Denominator Input and Format
- 	
+@ Denominator Input
  	ldr r0, address_of_message2			 		@ r0 <- message2
  	bl printf					 		 		@ call to printf
  	
@@ -71,14 +65,15 @@
  	ldr r1, address_of_denominator_read		 	@ r1 <- denomintator_read
  	bl scanf				        		 	@ call to scanf
  	
+@ Input Format
+	ldr r0, address_of_numerator_read    		@ r2 <- numerator_read
+	ldr r2, [r0]                         		@ r2 <- *r2
 	ldr r0, address_of_denominator_read  		@ r3 <- denominator_read
 	ldr r3, [r0]                         		@ r3 <- *r3
-	
 	bl division                          		@ Branchout to Division Funtion
   
  
 @ Output Results 
-
 	mov r3, r0                            		@ r3 <- r0
 	mov r6, r1                         			@ r6 <- r1
 	
@@ -115,24 +110,19 @@
 	ble exit								@ If r1 is less than or equal to r3 exit
 	bal scaleleft							@ Otherwise continue to scaleleft
 	
-	
 scaleleft:	
 	mov r4, r4, lsl #1						@ Scale factor|Division counter 
 	mov r5, r5, lsl #1						@ Subtraction|Mod/Remainder subtraction
 	cmp r1, r5								@ Compare r1 with r5
 	bge scaleleft							@ If r1 is greater than or equal to r5 loop to scaleleft
-	mov r4, r4, asr #1						@ Otherwise Scale factor back
-	mov r5, r5, asr #1 						@ and scale subtraction factor back
+	mov r4, r4, lsr #1						@ Otherwise Scale factor back
+	mov r5, r5, lsr #1 						@ and scale subtraction factor back
 	bal addsub								@ Continue to addsub
 
 addsub:
 	add r0, r0, r4							@ Count the subtracted scale factor
 	sub r1, r1, r5							@ Subtract the scaled mod
 	bal scaleright							@ Continue to scaleright
-	
-addsubcomp:	
-	cmp r4, #1 								@ Compare if r4 is greater than 1
-	bge addsub								@ If r4 greater than 1 branch back to addsub
 
 scaleright:
 	mov r4, r4, lsr #1 						@ Division Counter
@@ -140,6 +130,10 @@ scaleright:
 	cmp r1, r5								@ Compare remainder (r1) with subtraction factor (r5)
 	blt scaleright							@ If r1 is less than r5 return to scaleright
 	bal addsubcomp							@ Otherwise go to addsubcomp
+	
+addsubcomp:	
+	cmp r4, #1 								@ Compare if r4 is greater than 1
+	bge addsub								@ If r4 greater than 1 branch back to addsub
 	
 exit:
 	ldr lr, address_of_return2
