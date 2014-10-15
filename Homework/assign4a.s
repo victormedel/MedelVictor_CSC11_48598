@@ -88,12 +88,12 @@ scaleright:
     .global main
  main:
  
-	mov r2, #0					 				@ numerator initialization r2 = 0
-	mov r3, #0					 				@ denominator initialization r3 = 0
-	mov r4, #1					 				@ r4 = 1
-	mov r5, r3					 				@ r5 = denominator (r3) 
-	mov r0, #0								    @ Quotient r0 initialized to 0
-	mov r1, r2					 				@ Remainder r1 = r2 
+	@mov r2, #0					 				@ numerator initialization r2 = 0
+	@mov r3, #0					 				@ denominator initialization r3 = 0
+	@mov r4, #1					 				@ r4 = 1
+	@mov r5, r3					 				@ r5 = denominator (r3) 
+	@mov r0, #0								    @ Quotient r0 initialized to 0
+	@mov r1, r2					 				@ Remainder r1 = r2 
  
  	ldr r1, address_of_return					@ r1 <- address_of_return
  	str lr, [r1]					 			@ *r1 <- lr
@@ -105,7 +105,7 @@ scaleright:
  	bl printf					 				@ call to printf
  
  	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
- 	ldr r1, address_of_numerator_read			@ r1 <- numerator
+ 	ldr r1, address_of_numerator_read			@ r1 <- numerator_read
 	bl scanf				         			@ call to scanf
  	
 @ Denominator Input
@@ -114,7 +114,7 @@ scaleright:
  	bl printf					 		 		@ call to printf
  	
  	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern
- 	ldr r1, address_of_denominator_read		 	@ r1 <- denomintator
+ 	ldr r1, address_of_denominator_read		 	@ r1 <- denomintator_read
  	bl scanf				        		 	@ call to scanf
  	
 @ Format Input for Calculation 
@@ -123,7 +123,7 @@ scaleright:
 	ldr r2, [r2]                         		@ r2 <- *r2
 	ldr r3, address_of_denominator_read  		@ r3 <- denominator_read
 	ldr r3, [r3]                         		@ r3 <- *r3
-	bl division                          		@ Branchout to Division Funtion
+	bal division                          		@ Branchout to Division Funtion
   
  
 @ Output Results 
