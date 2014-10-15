@@ -67,14 +67,14 @@
  	
 @ Input Format
 	ldr r0, address_of_numerator_read    		@ r2 <- numerator_read
-	ldr r2, [r0]                         		@ r2 <- *r2
+	ldr r2, [r0]                         		@ r2 <- *r0
 	ldr r0, address_of_denominator_read  		@ r3 <- denominator_read
-	ldr r3, [r0]                         		@ r3 <- *r3
+	ldr r3, [r0]                         		@ r3 <- *r0
 	bl division                          		@ Branchout to Division Funtion
   
  
 @ Output Results 
-	@mov r3, r0                            		@ r3 <- r0
+	mov r1, r0                            		@ r3 <- r0
 	@mov r6, r1                         			@ r6 <- r1
 	
 	ldr r1, address_of_numerator_read     		@ r1 <- numerator_read
@@ -85,7 +85,7 @@
 	ldr r0, address_of_message3           		@ r0 <- message3
 	bl printf
 
-	@mov r1, r6									@ r1 <- r6
+	mov r1, r6									@ r1 <- r6
 	ldr r0, address_of_message4           		@ r1 <- message4
 	bl printf									@ return from main using lr
  
