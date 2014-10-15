@@ -119,9 +119,9 @@ scaleright:
  	
 @ Format Input for Calculation 
  	
-	ldr r2, address_of_numerator_read    		@ r0 <- numerator_read
-	ldr r3, address_of_denominator_read  		@ r1 <- denominator_read
+	ldr r2, address_of_numerator_read    		@ r2 <- numerator_read
 	ldr r2, [r2]                         		@ r2 <- *r2
+	ldr r3, address_of_denominator_read  		@ r3 <- denominator_read
 	ldr r3, [r3]                         		@ r3 <- *r3
 	bl division                          		@ Branchout to Division Funtion
   
