@@ -132,11 +132,11 @@ addsub:
 	
 addsubcomp:	
 	cmp r4, #1 								@ Compare if r4 is greater than 1
-	bgt addsub								@ If r4 greater than 1 branch back to addsub
+	bge addsub								@ If r4 greater than 1 branch back to addsub
 
 scaleright:
-	mov r4, r4, asr #1 						@ Division Counter
-	mov r5, r5, asr #1						@ Mod/Remainder subtraction
+	mov r4, r4, lsr #1 						@ Division Counter
+	mov r5, r5, lsr #1						@ Mod/Remainder subtraction
 	cmp r1, r5								@ Compare remainder (r1) with subtraction factor (r5)
 	blt scaleright							@ If r1 is less than r5 return to scaleright
 	bal addsubcomp							@ Otherwise go to addsubcomp
