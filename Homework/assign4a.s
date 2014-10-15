@@ -104,20 +104,24 @@
 	str lr, [r1]				  			@ *r1 <- lr
 	mov r1, r2								@ r1 = r2
 	cmp r1, r3				  				@ compare r1 to r3
-	bge scaleleft				  			@ If r1 is greater than or equal to r3 jump to scale left
-	bx lr					  				@ otherwise exit
+	bge prescaleleft				  		@ If r1 is greater than or equal to r3 jump to scale left
+	
+	@bx lr					  				@ otherwise exit
 address_of_return2: .word return2	
  
-scaleleft:
-	mov r4, #1 								@ r4 = 1
+prescaleleft:
+	mov r4, #1 								@ r4 = 1 
 	mov r5, r3								@ r5 = r3
+	bal scaleleft
+	
+scaleleft:	
 	mov r4, r4, lsl #1						@ Scale factor
 	mov r5, r5, lsl #1						@ Subtraction factor
 	cmp r1, r5								@ Compare r1 with r5
 	bge scaleleft							@ If r1 is greater than or equal to r5 loop to scaleleft
 	mov r4, r4, asr #1						@ Otherwise Scale factor back
 	mov r5, r5, asr #1 						@ and scale subtraction factor back
-	bal addsub								@ Continue division function by branching to addsub
+	bal addsubcomp							@ Continue division function by branching to addsub
 	
 
 addsub:
