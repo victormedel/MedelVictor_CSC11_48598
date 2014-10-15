@@ -79,17 +79,18 @@
  
 @ Output Results 
 
-	mov r4, r2                            		@ r4 <- r2
-	mov r5, r3                            		@ r5 <- r3
+	mov r3, r0                            		@ r3 <- r0
+	mov r6, r1                         			@ r6 <- r1
 	
 	ldr r1, address_of_numerator_read     		@ r1 <- numerator_read
 	ldr r1, [r1]                          		@ r2 <- *r2
-	ldr r3, address_of_denominator_read   		@ r3 <- denominator_read
-	ldr r3, [r3]                          		@ r3 <- *r3
+	ldr r2, address_of_denominator_read   		@ r3 <- denominator_read
+	ldr r2, [r2]                          		@ r3 <- *r3
 	
 	ldr r0, address_of_message3           		@ r0 <- message3
 	bl printf
 
+	mov r1, r6									@ r1 <- r6
 	ldr r0, address_of_message4           		@ r1 <- message4
 	bl printf									@ return from main using lr
  
