@@ -18,11 +18,11 @@
  
 @@ Quotient Output @@
  .balign 4
- message3: .asciz "Your Quotient is %d\n"
+ message3: .asciz "%d divided by %d is %d\n"
  
 @@ Remainder Output @@
  .balign 4
- message4: .asciz "Your Remainder is %d\n" 
+ message4: .asciz "With a remainder of %d\n" 
  
 @@ Format pattern for scanf @@
  .balign 4
