@@ -47,13 +47,6 @@
     .global main
  main:
  
-	mov r2, #0					 				@ numerator initialization r2 = 0
-	mov r3, #0					 				@ denominator initialization r3 = 0
-	mov r4, #1					 				@ r4 = 1
-	mov r5, r3					 				@ r5 = denominator (r3) 
-	mov r0, #0								    @ Quotient r0 initialized to 0
-	mov r1, r2					 				@ Remainder r1 = r2 
- 
  	ldr r1, address_of_return					@ r1 <- address_of_return
  	str lr, [r1]					 			@ *r1 <- lr
 	
@@ -82,7 +75,7 @@
 	ldr r3, address_of_denominator_read  		@ r3 <- denominator_read
 	ldr r3, [r3]                         		@ r3 <- *r3
 	
-	bal division                          		@ Branchout to Division Funtion
+	bl division                          		@ Branchout to Division Funtion
   
  
 @ Output Results 
@@ -99,8 +92,6 @@
 	
 	bl printf									@ return from main using lr
  
- 
- 
 	ldr lr, address_of_return              		@ lr <- address_of_return
 	ldr lr, [lr]                           		@ lr <- *lr
 	bx lr                                  		@ return from main using lr
@@ -111,22 +102,26 @@
  division:
 	ldr r1, address_of_return2           	@ r1 <- address_of_return
 	str lr, [r1]				  			@ *r1 <- lr
+	mov r1, r2								@ r1 = r2
 	cmp r1, r3				  				@ compare r1 to r3
-	bge scaleleft				  			@ If r1 is greater than or equal to r3 then go to scale left
+	bge scaleleft				  			@ If r1 is greater than or equal to r3 jump to scale left
 	bx lr					  				@ otherwise exit
 address_of_return2: .word return2	
  
 scaleleft:
+	mov r4, #1 								@ r4 = 1
+	mov r5, r3								@ r5 = r3
 	mov r4, r4, lsl #1						@ Scale factor
 	mov r5, r5, lsl #1						@ Subtraction factor
 	cmp r1, r5								@ Compare r1 with r5
-	bge scaleleft							@ If r1 is greater than or equal to r5 loop back to scaleleft
+	bge scaleleft							@ If r1 is greater than or equal to r5 loop to scaleleft
 	mov r4, r4, asr #1						@ Otherwise Scale factor back
 	mov r5, r5, asr #1 						@ and scale subtraction factor back
 	bal addsub								@ Continue division function by branching to addsub
 	
 
 addsub:
+	mov r0, #0								@ r0 = 0
 	add r0, r0, r4							@ Count the subtracted scale factor
 	sub r1, r1, r5							@ Subtract the scaled mod
 	bal scaleright							@ Keep scaling right until less than remainder
@@ -140,7 +135,7 @@ scaleright:
 	mov r4, r4, asr #1 						@ Division Counter
 	mov r5, r5, asr #1						@ Mod/Remainder subtraction
 	cmp r1, r5								@ Compare remainder (r1) with subtraction factor (r5)
-	bgt scaleright							@ If r1 is greater than r5 return to scaleright
+	blt scaleright							@ If r1 is less than r5 return to scaleright
 	bal addsubcomp							@ Otherwise go to addsubcomp
  
  
