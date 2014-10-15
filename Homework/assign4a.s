@@ -107,6 +107,9 @@ scaleright:
  	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
  	ldr r1, address_of_numerator_read			@ r1 <- numerator_read
 	bl scanf				         			@ call to scanf
+	
+	ldr r2, address_of_numerator_read    		@ r2 <- numerator_read
+	ldr r2, [r2]                         		@ r2 <- *r2
  	
 @ Denominator Input
  	
@@ -117,12 +120,15 @@ scaleright:
  	ldr r1, address_of_denominator_read		 	@ r1 <- denomintator_read
  	bl scanf				        		 	@ call to scanf
  	
-@ Format Input for Calculation 
- 	
-	ldr r2, address_of_numerator_read    		@ r2 <- numerator_read
-	ldr r2, [r2]                         		@ r2 <- *r2
 	ldr r3, address_of_denominator_read  		@ r3 <- denominator_read
 	ldr r3, [r3]                         		@ r3 <- *r3
+	
+@ Format Input for Calculation 
+ 	
+	@ldr r2, address_of_numerator_read    		@ r2 <- numerator_read
+	@ldr r2, [r2]                         		@ r2 <- *r2
+	@ldr r3, address_of_denominator_read  		@ r3 <- denominator_read
+	@ldr r3, [r3]                         		@ r3 <- *r3
 	bal division                          		@ Branchout to Division Funtion
   
  
