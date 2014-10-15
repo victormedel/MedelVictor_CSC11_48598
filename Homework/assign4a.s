@@ -74,8 +74,8 @@
   
  
 @ Output Results 
-	mov r1, r0                            		@ r3 <- r0
-	@mov r6, r1                         			@ r6 <- r1
+	mov r3, r0                            		@ r3 <- r0
+	mov r6, r1                         			@ r6 <- r1
 	
 	ldr r1, address_of_numerator_read     		@ r1 <- numerator_read
 	ldr r1, [r1]                          		@ r2 <- *r2
