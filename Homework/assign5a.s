@@ -16,7 +16,7 @@
  
  
 											@ Division Function
- division:
+division:
 	push {r2, r3, lr}						@ Push r2, r3, and lr onto the stack
 											@ The stack is now 8 byte aligned
 	mov r2, r0								@ Keep a copy of the numerator value from r0 in r2
@@ -64,7 +64,7 @@ exit:
  .text
  
     .global main
- main:
+main:
 	str lr, [sp,#-4]! 							@ Push lr onto the top of the stack
 	sub sp, sp, #4 								@ Make room for one 4 byte integer in the stack
 												@ In these 4 bytes we will keep the number
