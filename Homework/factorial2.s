@@ -27,7 +27,7 @@ factorial:
 										/* After the call r0 contains factorial(n-1) */
 										/* Load r0 (that we kept in th stack) into r1 */
 	@ ldr r1, r4 							/* r1 ? r4 */
-	mul r0, r1, r0 						/* r0 ? r0 * r1 */
+	mul r0, r4, r0 						/* r0 ? r0 * r1 */
  
 end:
 	ldr r4, [sp], #+4 					/* Pop the top of the stack and put it in r4 */
