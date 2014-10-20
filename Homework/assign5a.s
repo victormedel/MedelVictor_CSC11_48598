@@ -13,9 +13,10 @@
  message3: .asciz "%d divided by %d is %d\n"
  message4: .asciz "with a remainder of %d\n" 
  scan_pattern: .asciz "%d"
+
+ .text
  
- 
-											@ Division Function
+  											@ Division Function
 division:
 	push {r2, r3, lr}						@ Push r2, r3, and lr onto the stack
 											@ The stack is now 8 byte aligned
@@ -60,8 +61,6 @@ addsubcomp:
 exit:
 	pop {r2, r3, lr}						@ Pop lr, r3, and r2 from the stack
 	bx lr
- 
- .text
  
     .global main
 main:
@@ -111,6 +110,7 @@ main:
 	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr */
 	bx lr                                  		@ return from main using lr
  
+
  address_of_message1: .word message1
  address_of_message2: .word message2
  address_of_message3: .word message3
