@@ -25,8 +25,8 @@ factorial:
  
 										/* After the call r0 contains factorial(n-1) */
 										/* Load r0 (that we kept in th stack) into r1 */
-	ldr r1, r4 							/* r1 ? r4 */
-	mul r0, r1, r0 						/* r0 ? r0 * r1 */
+	@ ldr r1, r4 							/* r1 ? r4 */
+	mul r0, r4, r0 						/* r0 ? r0 * r1 */
  
 end:
 	ldmia sp!, {r4, lr}					/* Pop lr and r4 from the stack */
