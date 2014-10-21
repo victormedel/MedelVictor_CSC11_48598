@@ -7,11 +7,9 @@
  */
  
 .data
- 
- message1: .asciz "Please type your numerator: "
- message2: .asciz "Please type your denominator: "
- message3: .asciz "Your numerator input is %d and your denominator input is %d/n"
- message4: .asciz "Your Answer is %d with a remainder of %d/n" 
+ message1: .asciz "Type two numbers your numerator and then your denominator: "
+ message2: .asciz "Your numerator input is %d and your denominator input is %d/n"
+ message3: .asciz "Your Answer is %d with a remainder of %d/n" 
  scan_pattern: .asciz "%d"
 
  .text
@@ -59,7 +57,7 @@ addsubcomp:
 	bge addsub								@ If r4 greater than 1 branch back to addsub
 	
 exit:
-	pop {lr}						@ Pop lr, r3, and r2 from the stack
+	pop {lr}								@ Pop lr, r3, and r2 from the stack
 	bx lr
  
     .global main
@@ -75,20 +73,13 @@ main:
  	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
  	mov r2, sp 									@ Set variable of the stack as b	
 	add r1, r2, #4								@ and second value as a of scanf	
-	bl scanf				         			@ call to scanf
-	
-												@ Denominator Input
- 	ldr r0, address_of_message2			 		@ r0 <- message2
- 	bl printf					 		 		@ call to printf
- 	
- 	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern											
- 	bl scanf				        		 	@ call to scanf
+	bl scanf				         			@ call to scanf											
 	
 												@ Echo Results
 	add r1, sp, #4               				@ Place sp+4 -> r1
 	ldr r1, [r1]								@ Load the integer a read by scanf into r1
 	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
-	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
+	ldr r0, address_of_message2 				@ Set &message2 as the first parameter of printf
 	bl printf
 												@ Prepare and send to division function
 	add r1, sp, #4               				@ Place sp+4 -> r1
@@ -98,7 +89,7 @@ main:
 												
 	mov r2, r1                            		@ r2 <- r1 | division function returning r1 for quotient
 	mov r1, r0                         			@ r1 <- r0 | division function returning r0 for remainder
-	ldr r0, address_of_message4 				@ Set &message4 as the first parameter of printf
+	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
 	bl printf
  
 	add sp, sp, #8								@ Discard the integer read by scanf
@@ -109,5 +100,4 @@ main:
  address_of_message1: .word message1
  address_of_message2: .word message2
  address_of_message3: .word message3
- address_of_message4: .word message4
  address_of_scan_pattern: .word scan_pattern
