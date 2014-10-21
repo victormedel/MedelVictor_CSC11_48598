@@ -20,21 +20,20 @@ division:
 											@ The stack is now 8 byte aligned
 	mov r0, #0									
 	mov r3, #1								@ r3=1, Counter initialized
-	
 	cmp r1, r2				  				@ Compare r1 to r3
 	ble exit								@ If r1 is less than or equal to r3 exit
-	bal scaleleft							@ Otherwise continue to scaleleft
+	bl scaleleft							@ Otherwise continue to scaleleft
 	
 
 scaleleft:	
 	push {lr}								@ Push lr onto the stack
 	mov r3, r3, lsl #1						@ Scale factor|Division counter 
 	mov r2, r2, lsl #1						@ Subtraction|Mod/Remainder subtraction
-	cmp r1, r2								@ Compare r1 with r5
+	cmp r1, r2								@ Compare r1 with r2
 	bge scaleleft							@ If r1 is greater than or equal to r5 loop to scaleleft
 	mov r3, r3, asr #1						@ Otherwise Scale factor back
 	mov r2, r2, asr #1 						@ and scale subtraction factor back
-	bal addsub								@ Continue to addsub
+	bl addsub								@ Continue to addsub
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 
@@ -43,7 +42,7 @@ addsub:
 	push {lr}								@ Push lr onto the stack
 	add r0, r0, r3							@ Count the subtracted scale factor
 	sub r1, r1, r2							@ Subtract the scaled mod
-	bal scaleright							@ Continue to scaleright
+	bl scaleright							@ Continue to scaleright
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 
@@ -52,16 +51,16 @@ scaleright:
 	push {lr}								@ Push lr onto the stack
 	mov r3, r3, asr #1 						@ Division Counter
 	mov r2, r2, asr #1						@ Mod/Remainder subtraction
-	cmp r1, r2								@ Compare remainder (r1) with subtraction factor (r5)
+	cmp r1, r2								@ Compare remainder (r1) with subtraction factor (r2)
 	blt scaleright							@ If r1 is less than r5 return to scaleright
-	bal addsubcomp							@ Otherwise go to addsubcomp
+	bl addsubcomp							@ Otherwise go to addsubcomp
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 	
 
 addsubcomp:	
 	push {lr}								@ Push lr onto the stack
-	cmp r3, #1 								@ Compare if r4 is greater than 1
+	cmp r3, #1 								@ Compare if r3 is greater than 1
 	bge addsub								@ If r4 greater than 1 branch back to addsub
 	pop {lr}								@ Pop lr from the stack
 	bx lr
