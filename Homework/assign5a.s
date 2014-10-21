@@ -8,8 +8,8 @@
  
 .data
  message1: .asciz "Type numerator and then denominator: "
- message2: .asciz "You typed %d for the numerator and %d for the denominator"
- message3: .asciz "Your Answer is %d with a remainder of %d/n" 
+ message2: .asciz "You typed %d for the numerator and %d for the denominator \n"
+ message3: .asciz "Your Answer is %d with a remainder of %d\n" 
  scan_pattern: .asciz "%d %d"
 
  .text
