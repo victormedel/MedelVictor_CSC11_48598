@@ -18,7 +18,7 @@
  
   											@ Division Function
 division:
-	push {r2, r3, lr}						@ Push r2, r3, and lr onto the stack
+	push {lr}								@ Push r2, r3, and lr onto the stack
 											@ The stack is now 8 byte aligned
 	mov r2, r0								@ Keep a copy of the numerator value from r0 in r2
 	mov r3, r1								@ Keep a copy of the numerator value from r1 in r3
@@ -59,13 +59,13 @@ addsubcomp:
 	bge addsub								@ If r4 greater than 1 branch back to addsub
 	
 exit:
-	pop {r2, r3, lr}						@ Pop lr, r3, and r2 from the stack
+	pop {lr}						@ Pop lr, r3, and r2 from the stack
 	bx lr
  
     .global main
 main:
 	str lr, [sp,#-4]! 							@ Push lr onto the top of the stack
-	sub sp, sp, #4 								@ Make room for one 4 byte integer in the stack
+	sub sp, sp, #8 								@ Make room for two 4 byte integer in the stack
 												@ In these 4 bytes we will keep the number
 												@ entered by the user
 	
@@ -89,7 +89,7 @@ main:
 												@ of scanf
  	bl scanf				        		 	@ call to scanf
  	ldr r1, [sp] 								@ Load the integer read by scanf into r1
-												@ So we set it as the third parameter
+												@ So we set it as the second parameter
 	
 	bl division                          		@ Branchout to Division Funtion
   
