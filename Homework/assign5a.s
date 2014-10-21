@@ -32,8 +32,8 @@ scaleleft:
 	mov r2, r2, lsl #1						@ Subtraction|Mod/Remainder subtraction
 	cmp r1, r2								@ Compare r1 with r5
 	bge scaleleft							@ If r1 is greater than or equal to r5 loop to scaleleft
-	mov r3, r3, lsr #1						@ Otherwise Scale factor back
-	mov r2, r2, lsr #1 						@ and scale subtraction factor back
+	mov r3, r3, asr #1						@ Otherwise Scale factor back
+	mov r2, r2, asr #1 						@ and scale subtraction factor back
 	bal addsub								@ Continue to addsub
 	pop {lr}								@ Pop lr from the stack
 	bx lr
@@ -50,8 +50,8 @@ addsub:
 	.global scaleright
 scaleright:
 	push {lr}								@ Push lr onto the stack
-	mov r3, r3, lsr #1 						@ Division Counter
-	mov r2, r2, lsr #1						@ Mod/Remainder subtraction
+	mov r3, r3, asr #1 						@ Division Counter
+	mov r2, r2, asr #1						@ Mod/Remainder subtraction
 	cmp r1, r2								@ Compare remainder (r1) with subtraction factor (r5)
 	blt scaleright							@ If r1 is less than r5 return to scaleright
 	bal addsubcomp							@ Otherwise go to addsubcomp
