@@ -72,42 +72,39 @@ main:
 												@ Numerator Input
  	ldr r0, address_of_message1					@ r0 <- message1
  	bl printf					 				@ call to printf
- 
  	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
- 	mov r1, sp 									@ Set the top of the stack as the second parameter
-												@ of scanf
+ 	mov r2, sp 									@ Set variable of the stack as b									
 	bl scanf				         			@ call to scanf
-	ldr r0, [sp] 								@ Load the integer read by scanf into r0
-												@ So we set it as the first parameter
 	
 												@ Denominator Input
  	ldr r0, address_of_message2			 		@ r0 <- message2
  	bl printf					 		 		@ call to printf
- 	
- 	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern
- 	mov r2, sp 									@ Set the top of the stack as the third parameter
-												@ of scanf
+ 	add r1, r2, #4								@ and second value as a of scanf
+ 	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern											
  	bl scanf				        		 	@ call to scanf
- 	ldr r1, [sp] 								@ Load the integer read by scanf into r1
-												@ So we set it as the second parameter
 	
+												@ Prepare and send to division function
+	add r1, sp, #4               				@ Place sp+4 -> r1
+	ldr r1, [r1]								@ Load the integer a read by scanf into r1
+	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
 	bl division                          		@ Branchout to Division Funtion
   
+												@ Echo Results
+  add r1, sp, #4               					@ Place sp+4 -> r1
+	ldr r1, [r1]								@ Load the integer a read by scanf into r1
+	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
+	
 												@ Output Results 
-	mov r2, r0                            		@ r2 <- r0
-	mov r3, r1                         			@ r3 <- r1
+	mov r2, r1                            		@ r2 <- r1 | division function returning r1 for quotient
+	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
+	bl printf
 	
-	ldr r1, [sp] 								@ Load the integer read by scanf into r1 */
-												@ So we set it as the second parameter of printf */
-	ldr r0, address_of_message3 				@ Set &message2 as the first parameter of printf */
-	
-	ldr r1, [sp] 								@ Load the integer read by scanf into r1 */
-												@ So we set it as the second parameter of printf */
-	ldr r0, address_of_message4 				@ Set &message2 as the first parameter of printf */
+	mov r1, r0                         			@ r1 <- r0 | division function returning r0 for remainder
+	ldr r0, address_of_message4 				@ Set &message4 as the first parameter of printf
 	bl printf
  
-	add sp, sp, #+4 							@ Discard the integer read by scanf */
-	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr */
+	add sp, sp, #8								@ Discard the integer read by scanf
+	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
 	bx lr                                  		@ return from main using lr
  
 
