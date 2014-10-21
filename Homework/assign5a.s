@@ -73,13 +73,14 @@ main:
  	ldr r0, address_of_message1					@ r0 <- message1
  	bl printf					 				@ call to printf
  	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
- 	mov r2, sp 									@ Set variable of the stack as b									
+ 	mov r2, sp 									@ Set variable of the stack as b	
+	add r1, r2, #4								@ and second value as a of scanf	
 	bl scanf				         			@ call to scanf
 	
 												@ Denominator Input
  	ldr r0, address_of_message2			 		@ r0 <- message2
  	bl printf					 		 		@ call to printf
- 	add r1, r2, #4								@ and second value as a of scanf
+ 	
  	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern											
  	bl scanf				        		 	@ call to scanf
 	
