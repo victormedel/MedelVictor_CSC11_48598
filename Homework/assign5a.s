@@ -18,11 +18,12 @@
 division:
 	push {lr}								@ Push lr onto the stack
 											@ The stack is now 8 byte aligned
+	mov r6, r2										
 	mov r2, r1								@ Keep a copy of the numerator value from r0 in r2
-	mov r3, r2								@ Keep a copy of the numerator value from r1 in r3
+	mov r3, r6								@ Keep a copy of the numerator value from r1 in r3
 											
 											@ Register Initilization
-	mov r0, #0										
+											
 	mov r4, #1								@ r4=1, Counter initialized
 	mov r5, r3								@ r5=r3, Set r5 equal to denominator
 	mov r1, r2								@ r1=r2, Set r1 equal to numerator
