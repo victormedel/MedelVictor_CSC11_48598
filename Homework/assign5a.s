@@ -78,28 +78,28 @@ main:
 	
 												@ Numerator Input
  	ldr r0, address_of_message1					@ r0 <- message1
- 	bal printf					 				@ call to printf
+ 	bl printf					 				@ call to printf
  	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
  	mov r2, sp 									@ Set variable of the stack as b	
 	add r1, r2, #4								@ and second value as a of scanf	
-	bal scanf				         			@ call to scanf											
+	bl scanf				         			@ call to scanf											
 	
 												@ Echo Results
 	add r1, sp, #4               				@ Place sp+4 -> r1
 	ldr r1, [r1]								@ Load the integer a read by scanf into r1
 	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
 	ldr r0, address_of_message2 				@ Set &message2 as the first parameter of printf
-	bal printf
+	bl printf
 												@ Prepare and send to division function
 	add r1, sp, #4               				@ Place sp+4 -> r1
 	ldr r1, [r1]								@ Load the integer a read by scanf into r1
 	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
-	bal division                          		@ Branchout to Division Funtion
+	bl division                          		@ Branchout to Division Funtion
 												
 	mov r2, r1                            		@ r2 <- r1 | division function returning r1 for quotient
 	mov r1, r0                         			@ r1 <- r0 | division function returning r0 for remainder
 	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
-	bal printf
+	bl printf
  
 	add sp, sp, #8								@ Discard the integer read by scanf
 	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
