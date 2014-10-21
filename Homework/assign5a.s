@@ -16,13 +16,13 @@
  
   											@ Division Function
 division:
-	push {lr}								@ Push r2, r3, and lr onto the stack
+	push {lr}								@ Push lr onto the stack
 											@ The stack is now 8 byte aligned
-	mov r2, r0								@ Keep a copy of the numerator value from r0 in r2
-	mov r3, r1								@ Keep a copy of the numerator value from r1 in r3
+	mov r2, r1								@ Keep a copy of the numerator value from r0 in r2
+	mov r3, r2								@ Keep a copy of the numerator value from r1 in r3
 											
 											@ Register Initilization
-											
+	mov r0, #0										
 	mov r4, #1								@ r4=1, Counter initialized
 	mov r5, r3								@ r5=r3, Set r5 equal to denominator
 	mov r1, r2								@ r1=r2, Set r1 equal to numerator
@@ -57,7 +57,7 @@ addsubcomp:
 	bge addsub								@ If r4 greater than 1 branch back to addsub
 	
 exit:
-	pop {lr}								@ Pop lr, r3, and r2 from the stack
+	pop {lr}								@ Pop lr from the stack
 	bx lr
  
     .global main
