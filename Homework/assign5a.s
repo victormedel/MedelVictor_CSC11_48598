@@ -14,7 +14,7 @@
 
  .text
  
-	.global division
+
 division:
 	push {lr}								@ Push lr onto the stack
 											@ The stack is now 8 byte aligned
@@ -25,7 +25,7 @@ division:
 	ble exit								@ If r1 is less than or equal to r3 exit
 	bal scaleleft							@ Otherwise continue to scaleleft
 	
-	.global scaleleft
+
 scaleleft:	
 	push {lr}								@ Push lr onto the stack
 	mov r3, r3, lsl #1						@ Scale factor|Division counter 
@@ -38,7 +38,7 @@ scaleleft:
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 
-	.global addsub
+
 addsub:
 	push {lr}								@ Push lr onto the stack
 	add r0, r0, r3							@ Count the subtracted scale factor
@@ -47,7 +47,7 @@ addsub:
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 
-	.global scaleright
+
 scaleright:
 	push {lr}								@ Push lr onto the stack
 	mov r3, r3, asr #1 						@ Division Counter
@@ -58,7 +58,7 @@ scaleright:
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 	
-	.global addsubcomp
+
 addsubcomp:	
 	push {lr}								@ Push lr onto the stack
 	cmp r3, #1 								@ Compare if r4 is greater than 1
