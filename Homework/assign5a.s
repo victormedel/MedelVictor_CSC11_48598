@@ -22,7 +22,7 @@ division:
 	mov r3, #1								@ r3=1, Counter initialized
 	cmp r1, r2				  				@ Compare r1 to r3
 	ble exit								@ If r1 is less than or equal to r3 exit
-	bl scaleleft							@ Otherwise continue to scaleleft
+	bal scaleleft							@ Otherwise continue to scaleleft
 	
 
 scaleleft:	
@@ -33,7 +33,7 @@ scaleleft:
 	bge scaleleft							@ If r1 is greater than or equal to r5 loop to scaleleft
 	mov r3, r3, asr #1						@ Otherwise Scale factor back
 	mov r2, r2, asr #1 						@ and scale subtraction factor back
-	bl addsub								@ Continue to addsub
+	bal addsub								@ Continue to addsub
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 
@@ -42,7 +42,7 @@ addsub:
 	push {lr}								@ Push lr onto the stack
 	add r0, r0, r3							@ Count the subtracted scale factor
 	sub r1, r1, r2							@ Subtract the scaled mod
-	bl scaleright							@ Continue to scaleright
+	bal scaleright							@ Continue to scaleright
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 
@@ -53,7 +53,7 @@ scaleright:
 	mov r2, r2, asr #1						@ Mod/Remainder subtraction
 	cmp r1, r2								@ Compare remainder (r1) with subtraction factor (r2)
 	blt scaleright							@ If r1 is less than r5 return to scaleright
-	bl addsubcomp							@ Otherwise go to addsubcomp
+	bal addsubcomp							@ Otherwise go to addsubcomp
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 	
