@@ -14,11 +14,12 @@
 
  .text
  
-  											@ Division Function
+	.global division
 division:
 	push {lr}								@ Push lr onto the stack
 											@ The stack is now 8 byte aligned
-	mov r6, r2										
+	mov r6, r2
+	
 	mov r2, r1								@ Keep a copy of the numerator value from r0 in r2
 	mov r3, r6								@ Keep a copy of the numerator value from r1 in r3
 											
@@ -32,7 +33,9 @@ division:
 	ble exit								@ If r1 is less than or equal to r3 exit
 	bal scaleleft							@ Otherwise continue to scaleleft
 	
+	.global scaleleft
 scaleleft:	
+	push {lr}								@ Push lr onto the stack
 	mov r4, r4, lsl #1						@ Scale factor|Division counter 
 	mov r5, r5, lsl #1						@ Subtraction|Mod/Remainder subtraction
 	cmp r1, r5								@ Compare r1 with r5
@@ -40,22 +43,36 @@ scaleleft:
 	mov r4, r4, lsr #1						@ Otherwise Scale factor back
 	mov r5, r5, lsr #1 						@ and scale subtraction factor back
 	bal addsub								@ Continue to addsub
+	pop {lr}								@ Pop lr from the stack
+	bx lr
 
+	.global addsub
 addsub:
+	push {lr}								@ Push lr onto the stack
 	add r0, r0, r4							@ Count the subtracted scale factor
 	sub r1, r1, r5							@ Subtract the scaled mod
 	bal scaleright							@ Continue to scaleright
+	pop {lr}								@ Pop lr from the stack
+	bx lr
 
+	.global scaleright
 scaleright:
+	push {lr}								@ Push lr onto the stack
 	mov r4, r4, lsr #1 						@ Division Counter
 	mov r5, r5, lsr #1						@ Mod/Remainder subtraction
 	cmp r1, r5								@ Compare remainder (r1) with subtraction factor (r5)
 	blt scaleright							@ If r1 is less than r5 return to scaleright
 	bal addsubcomp							@ Otherwise go to addsubcomp
+	pop {lr}								@ Pop lr from the stack
+	bx lr
 	
+	.global addsubcomp
 addsubcomp:	
+	push {lr}								@ Push lr onto the stack
 	cmp r4, #1 								@ Compare if r4 is greater than 1
 	bge addsub								@ If r4 greater than 1 branch back to addsub
+	pop {lr}								@ Pop lr from the stack
+	bx lr
 	
 exit:
 	pop {lr}								@ Pop lr from the stack
