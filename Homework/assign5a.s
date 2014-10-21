@@ -10,8 +10,8 @@
  
  message1: .asciz "Please type your numerator: "
  message2: .asciz "Please type your denominator: "
- message3: .asciz "%d divided by %d is %d\n"
- message4: .asciz "with a remainder of %d\n" 
+ message3: .asciz "Your numerator input is %d and your denominator input is %d/n"
+ message4: .asciz "Your Answer is %d with a remainder of %d/n" 
  scan_pattern: .asciz "%d"
 
  .text
@@ -84,22 +84,19 @@ main:
  	ldr r0, address_of_scan_pattern		        @ r0 <- scan_pattern											
  	bl scanf				        		 	@ call to scanf
 	
+												@ Echo Results
+	add r1, sp, #4               				@ Place sp+4 -> r1
+	ldr r1, [r1]								@ Load the integer a read by scanf into r1
+	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
+	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
+	bl printf
 												@ Prepare and send to division function
 	add r1, sp, #4               				@ Place sp+4 -> r1
 	ldr r1, [r1]								@ Load the integer a read by scanf into r1
 	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
 	bl division                          		@ Branchout to Division Funtion
-  
-												@ Echo Results
-  add r1, sp, #4               					@ Place sp+4 -> r1
-	ldr r1, [r1]								@ Load the integer a read by scanf into r1
-	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
-	
-												@ Output Results 
+												
 	mov r2, r1                            		@ r2 <- r1 | division function returning r1 for quotient
-	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
-	bl printf
-	
 	mov r1, r0                         			@ r1 <- r0 | division function returning r0 for remainder
 	ldr r0, address_of_message4 				@ Set &message4 as the first parameter of printf
 	bl printf
