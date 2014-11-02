@@ -150,17 +150,17 @@ ask:
  	ldr r0, address_of_message6					@ r0 <- message6
  	bl printf					 				@ call to printf
  	ldr r0, address_of_format					@ r0 <- scan_pattern
- 	mov r2, sp 									@ Set variable of the stack as 	
+ 	mov r1, sp 									@ Set variable of the stack as 	
 	bl scanf				         			@ call to scanf	
 	
 												@ Echo Results
 	add r1, sp, #4               				@ Place sp+4 -> r1
-	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
+	ldr r1, [sp] 								@ Load the integer b read by scanf into r2
 	ldr r0, address_of_message7 				@ Set &message2 as the first parameter of printf
 	bl printf
 	
 	add r1, sp, #4               				@ Place sp+4 -> r1
-	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
+	ldr r1, [sp] 								@ Load the integer b read by scanf into r2
 	bl compare
 	
 	add sp, sp, #4								@ Discard the integer read by scanf
@@ -169,7 +169,7 @@ ask:
 
 	.global compare
 compare:	
-	cmp r2, #1
+	cmp r1, #1
 	ble face3
 	bgt house
 
