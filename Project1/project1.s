@@ -89,7 +89,7 @@ face1:	 							@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	
 	mov r5, r1 						@ Set face value as to r5
-	@ldr r5, [r1]					@ Load face value to r5
+	ldr r5, [r1]					@ Load face value to r5
 	
 	ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
@@ -104,7 +104,7 @@ suit1:
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	
 	mov r6, r1 						@ Set face value as to r6
-	@ldr r6, [r1]					@ Load face value to r6
+	ldr r6, [r1]					@ Load face value to r6
 	
 	ldr r0, address_of_message2	@ Set message2 as the first parameter of printf
 	bl printf 						@ Call printf
@@ -119,7 +119,7 @@ face2:	 							@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	
 	mov r7, r1 						@ Set face value as to r7
-	@ldr r7, [r1]					@ Load face value to r7
+	ldr r7, [r1]					@ Load face value to r7
 	
 	ldr r0, address_of_message3		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf
@@ -135,7 +135,7 @@ suit2:
 	ldr r0, address_of_message4		@ Set message2 as the first parameter of printf
 	
 	mov r8, r1 						@ Set face value as to r8
-	@ldr r8, [r1]					@ Load face value to r8
+	ldr r8, [r1]					@ Load face value to r8
 	
 	bl printf 						@ Call printf
 	
