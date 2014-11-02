@@ -11,6 +11,7 @@
  message2: .asciz "of %d"
  message3: .asciz " and a %d "
  message4: .asciz "of %d\n"
+ message5: .asciz "Your cards total: %d"
 
  
  .text
@@ -77,7 +78,7 @@ main:
 	
 	mov r4,#0 						@ Setup loop counter
 
-	
+	.global face1
 face1:	 							@ Create a random number
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
@@ -90,6 +91,7 @@ face1:	 							@ Create a random number
 	bl printf 						@ Call printf	
 	bl suit1
 
+	.global suit1
 suit1:	
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
@@ -102,6 +104,7 @@ suit1:
 	bl printf 						@ Call printf
 	bl face2
 
+	.global face2
 face2:	 							@ Create a random number
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
@@ -110,10 +113,11 @@ face2:	 							@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r7, r1
-	ldr r0, address_of_message3		@ Set message1 as the first parameter of printf
+	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl suit2
 
+	.global suit2
 suit2:	
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
@@ -122,9 +126,13 @@ suit2:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r8, r1
-	ldr r0, address_of_message4		@ Set message2 as the first parameter of printf
+	ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
 	bl printf 						@ Call printf
 	
+	add r7, r7, r5
+	mov r1, r7
+	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
+	bl printf
 	
 	add r4,#1
 	cmp r4,#1						@ How many hands do you want the dealer to deal?
@@ -139,7 +147,8 @@ suit2:
  address_of_message1: .word message1
  address_of_message2: .word message2
  address_of_message3: .word message3
- address_of_message4: .word message4	
+ address_of_message4: .word message4
+ address_of_message5: .word message5	 
  
 									@ External Functions
  .global printf
