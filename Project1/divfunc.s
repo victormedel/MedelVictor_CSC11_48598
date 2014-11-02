@@ -10,7 +10,7 @@ scaleRight:
 			cmp r1,r2
 			blt doWhile_r1_lt_r2
 	pop {lr} 						@ Pop lr from the stack
-	bx lr 							@ Leave scaleRight
+	bx lr 							
 
 
 	.global addSub
@@ -23,7 +23,7 @@ addSub:
 		cmp r3,#1
 		bge doWhile_r3_ge_1
 	pop {lr}						 @ Pop lr from the stack
-	bx lr 							 @ Leave addSub
+	bx lr 							 
 
 	
 	.global scaleLeft
@@ -37,7 +37,7 @@ scaleLeft:
 	mov r3,r3,ASR #1 				@ Scale factor back
 	mov r2,r2,ASR #1 				@ Scale subtraction factor back
 	pop {lr} 						@ Pop lr from the stack
-	bx lr							@ Leave addSub
+	bx lr							
 
 	
 	.global division
@@ -53,4 +53,4 @@ division:
 
 end:
 	pop {lr} 						@ Pop lr from the stack
-	bx lr 							@ Leave addSub
+	bx lr 							

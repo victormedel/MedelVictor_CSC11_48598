@@ -76,11 +76,12 @@ suit2:
 	bl printf 						@ Call printf
 	
 	
+	mov r0, r8
+	
+	
 	add r4,#1
 	cmp r4,#1						@ How many hands do you want the dealer to deal?
 	blt face1
-	
-	
 	
 	pop {lr} 						@ Pop the top of the stack and put it in lr
 	bx lr 							@ Leave main
