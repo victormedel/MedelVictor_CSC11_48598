@@ -6,7 +6,7 @@
 	beq hearts
 	cmp r1, #4
 	beq spades
-	bl end
+
 									@ Suit name selection
 clubs:
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
