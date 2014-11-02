@@ -13,6 +13,7 @@
  message4: .asciz "of %d\n"
  message5: .asciz "Your current score is %d\n"
  message6: .asciz "Would you like another card? \n(Enter 1 for yes, anything else for no.): "
+ message7: .asciz "You entered the following number: "
  format: .asciz "%d"
  
  .text
@@ -149,14 +150,26 @@ ask:
  	ldr r0, address_of_message6					@ r0 <- message6
  	bl printf					 				@ call to printf
  	ldr r0, address_of_format					@ r0 <- scan_pattern
- 	mov r8, sp 									@ Set variable of the stack as 	
+ 	mov r2, sp 									@ Set variable of the stack as 	
 	bl scanf				         			@ call to scanf	
+	
+												@ Echo Results
+	add r1, sp, #4               				@ Place sp+4 -> r1
+	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
+	ldr r0, address_of_message7 				@ Set &message2 as the first parameter of printf
+	bl printf
+	
+	add r1, sp, #4               				@ Place sp+4 -> r1
+	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
+	bl compare
 	
 	add sp, sp, #4								@ Discard the integer read by scanf
 	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
 	bx lr                                  		@ return from main using lr
-	
-	cmp r8, #1
+
+	.global compare
+compare:	
+	cmp r2, #1
 	ble face3
 	bgt house
 
@@ -209,6 +222,7 @@ house:
  address_of_message4: .word message4
  address_of_message5: .word message5	 
  address_of_message6: .word message6
+ address_of_message7: .word message7
  address_of_format: .word format
 									@ External Functions
  .global printf
