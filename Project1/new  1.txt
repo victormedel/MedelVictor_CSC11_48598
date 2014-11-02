@@ -1,13 +1,23 @@
 	cmp r1, #1
-	beq clubs
-	cmp r1, #2
-	beq diamonds
-	cmp r1, #3
-	beq hearts
-	cmp r1, #4
-	beq spades
+	ble clubs
+	bgt comp1
 
-									@ Suit name selection
+comp1:	
+	cmp r1, #2
+	ble diamonds
+	bgt comp2
+	
+comp2:	
+	cmp r1, #3
+	ble hearts
+	bgt comp3
+
+comp3:	
+	cmp r1, #4
+	ble spades
+	bgt end
+	
+										@ Suit name selection
 clubs:
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf 						@ Call printf
@@ -27,9 +37,4 @@ spades:
 	ldr r0, address_of_message8		@ Set message8 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl face2
-									@ End of suit name selection
-	
-	@ldr r0, address_of_message2	@ Set message2 as the first parameter of printf
-	@bl printf 						@ Call printf
-	@bl face2
 	

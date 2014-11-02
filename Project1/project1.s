@@ -106,7 +106,7 @@ suit1:
 	mov r6, r1 						@ Set face value as to r6
 	ldr r6, [r1]					@ Load face value to r6
 	
-	ldr r0, address_of_message2	@ Set message2 as the first parameter of printf
+	ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl face2
 
