@@ -15,16 +15,16 @@
  
  .text
  
- 	
-division:
+scaleRight:
 	push {lr} 						@ Push lr onto the stack
-									@ Determine the quotient and remainder
-	mov r0,#0
-	mov r3,#1
-	cmp r1,r2
-	blt end
-	bl scaleLeft
-	bl addSub
+		doWhile_r1_lt_r2: 			@ Shift right until just under the remainder
+			mov r3,r3,ASR #1; 		@ Division counter
+			mov r2,r2,ASR #1 		@ Mod/Remainder subtraction
+			cmp r1,r2
+			blt doWhile_r1_lt_r2
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 							
+
 
 addSub:
 	push {lr} 						@ Push lr onto the stack
@@ -37,6 +37,7 @@ addSub:
 	pop {lr}						 @ Pop lr from the stack
 	bx lr 							 
 
+	
 scaleLeft:
 	push {lr} 						@ Push lr onto the stack
 		doWhile_r1_ge_r2: 			@ Scale left till overshoot with remainder
@@ -47,21 +48,23 @@ scaleLeft:
 	mov r3,r3,ASR #1 				@ Scale factor back
 	mov r2,r2,ASR #1 				@ Scale subtraction factor back
 	pop {lr} 						@ Pop lr from the stack
-	bx lr	
+	bx lr							
+
 	
-scaleRight:
+division:
 	push {lr} 						@ Push lr onto the stack
-		doWhile_r1_lt_r2: 			@ Shift right until just under the remainder
-			mov r3,r3,ASR #1; 		@ Division counter
-			mov r2,r2,ASR #1 		@ Mod/Remainder subtraction
-			cmp r1,r2
-			blt doWhile_r1_lt_r2
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 							
-						
+									@ Determine the quotient and remainder
+	mov r0,#0
+	mov r3,#1
+	cmp r1,r2
+	blt end
+	bl scaleLeft
+	bl addSub
+
 end:
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 							
+		
  
  
 
