@@ -106,41 +106,9 @@ suit1:
 	mov r6, r1 						@ Set face value as to r6
 	@ldr r6, [r1]					@ Load face value to r6
 	
-	cmp r1, #1
-	beq clubs
-	cmp r1, #2
-	beq diamonds
-	cmp r1, #3
-	beq hearts
-	cmp r1, #4
-	beq spades
-	bl end
-									@ Suit name selection
-clubs:
-	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
+	ldr r0, address_of_message2	@ Set message2 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl face2
-	
-diamonds:
-	ldr r0, address_of_message6		@ Set message6 as the first parameter of printf
-	bl printf 						@ Call printf
-	bl face2
-	
-hearts:
-	ldr r0, address_of_message7		@ Set message7 as the first parameter of printf
-	bl printf 						@ Call printf
-	bl face2
-	
-spades:	
-	ldr r0, address_of_message8		@ Set message8 as the first parameter of printf
-	bl printf 						@ Call printf
-	bl face2
-									@ End of suit name selection
-	
-	@ldr r0, address_of_message2	@ Set message2 as the first parameter of printf
-	@bl printf 						@ Call printf
-	@bl face2
-	
 
 face2:	 							@ Create a random number
 	bl rand 						@ Call rand
