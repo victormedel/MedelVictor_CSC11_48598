@@ -15,7 +15,61 @@
  @message6: .asciz " "
  format:   .asciz "%d"
  
+ 
  .text
+ 
+ 
+scaleRight:
+	push {lr} 						@ Push lr onto the stack
+		doWhile_r1_lt_r2: 			@ Shift right until just under the remainder
+			mov r3,r3,ASR #1; 		@ Division counter
+			mov r2,r2,ASR #1 		@ Mod/Remainder subtraction
+			cmp r1,r2
+			blt doWhile_r1_lt_r2
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 							
+
+
+addSub:
+	push {lr} 						@ Push lr onto the stack
+	doWhile_r3_ge_1:
+		add r0,r0,r3
+		sub r1,r1,r2
+		bl scaleRight
+		cmp r3,#1
+		bge doWhile_r3_ge_1
+	pop {lr}						 @ Pop lr from the stack
+	bx lr 							 
+
+	
+scaleLeft:
+	push {lr} 						@ Push lr onto the stack
+		doWhile_r1_ge_r2: 			@ Scale left till overshoot with remainder
+			mov r3,r3,LSL #1 		@ scale factor
+			mov r2,r2,LSL #1 		@ subtraction factor
+			cmp r1,r2
+			bge doWhile_r1_ge_r2 	@ End loop at overshoot
+	mov r3,r3,ASR #1 				@ Scale factor back
+	mov r2,r2,ASR #1 				@ Scale subtraction factor back
+	pop {lr} 						@ Pop lr from the stack
+	bx lr							
+
+	
+division:
+	push {lr} 						@ Push lr onto the stack
+									@ Determine the quotient and remainder
+	mov r0,#0
+	mov r3,#1
+	cmp r1,r2
+	blt end
+	bl scaleLeft
+	bl addSub
+
+end:
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 							
+ 
+ 
  
 	.global main
 main:
@@ -34,9 +88,9 @@ face1:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	mov r5, sp						@ **** Move the random number that will represent the value of the card into r5
 	ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf
+ 	mov r5, sp 						@ Set face value as to r5
 	bl suit1
 
 suit1:	
@@ -46,9 +100,9 @@ suit1:
 									@ We want rand()%4+1 so cal division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
-	mov r7, sp						@ **** Move the random number that will represent the suit into r7
 	ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
 	bl printf 						@ Call printf
+	mov r6, sp 						@ Set face value as to r6
 	bl face2
 	
 
@@ -59,9 +113,9 @@ face2:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	mov r6, sp						@ **** Move the random number that will represent the value of the card into r6
 	ldr r0, address_of_message3		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf
+	mov r7, sp 						@ Set face value as to r7
 	bl suit2
 
 suit2:	
@@ -71,8 +125,8 @@ suit2:
 									@ We want rand()%4+1 so cal division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
-	mov r8, sp						@ **** Move the random number that will represent the suit into r8
 	ldr r0, address_of_message4		@ Set message2 as the first parameter of printf
+	mov r8, sp 						@ Set face value as to r8
 	bl printf 						@ Call printf
 	
 	
