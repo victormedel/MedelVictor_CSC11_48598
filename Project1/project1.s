@@ -85,6 +85,7 @@ face1:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r5, r1
 	ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
 	bl suit1
@@ -96,6 +97,7 @@ suit1:
 									@ We want rand()%4+1 so call division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r6, r1
 	ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl face2
@@ -107,6 +109,7 @@ face2:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r7, r1
 	ldr r0, address_of_message3		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl suit2
@@ -118,6 +121,7 @@ suit2:
 									@ We want rand()%4+1 so cal division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r8, r1
 	ldr r0, address_of_message4		@ Set message2 as the first parameter of printf
 	bl printf 						@ Call printf
 	
