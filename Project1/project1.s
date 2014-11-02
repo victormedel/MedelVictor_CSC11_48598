@@ -153,12 +153,6 @@ ask:
  	mov r1, sp 									@ Set variable of the stack as 	
 	bl scanf				         			@ call to scanf	
 	
-												@ Echo Results
-	add r1, sp, #4               				@ Place sp+4 -> r1
-	ldr r1, [sp] 								@ Load the integer b read by scanf into r2
-	ldr r0, address_of_message7 				@ Set &message2 as the first parameter of printf
-	bl printf
-	
 	add r1, sp, #4               				@ Place sp+4 -> r1
 	ldr r1, [sp] 								@ Load the integer b read by scanf into r2
 	bl compare
@@ -185,7 +179,7 @@ face3:	 							@ Create a random number
 	mov r7, r1
 	ldr r0, address_of_message1		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
-	bl suit2
+	bl suit3
 
 	.global suit3
 suit3:	
