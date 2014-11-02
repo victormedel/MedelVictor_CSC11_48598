@@ -11,7 +11,7 @@
  message2: .asciz "of %d"
  message3: .asciz " and a %d "
  message4: .asciz "of %d\n"
- message5: .asciz "Your cards score is %d\n"
+ message5: .asciz "Your current score is %d\n"
 
  
  .text
