@@ -187,9 +187,8 @@ suit3:
 	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf
-	
-	
-	
+		
+house: 	
 	
 	add r4,#1
 	cmp r4,#1						@ How many hands do you want the dealer to deal?
