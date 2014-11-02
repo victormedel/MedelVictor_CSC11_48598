@@ -108,19 +108,10 @@ suit1:
 	
 	cmp r1, #1
 	beq clubs
-	bl suitcomp1
-	
-suitcomp1:	
 	cmp r1, #2
 	beq diamonds
-	bl suitcomp2
-
-suitcomp2:	
 	cmp r1, #3
 	beq hearts
-	bl suitcomp3
-
-suitcomp3:	
 	cmp r1, #4
 	beq spades
 	bl end
