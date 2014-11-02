@@ -11,12 +11,7 @@
  message2: .asciz "of %d"
  message3: .asciz " and a %d "
  message4: .asciz "of %d\n"
- message5: .asciz " of (%d)Clubs\n"
- message6: .asciz " of (%d)Diamonds\n"
- message7: .asciz " of (%d)Hearts\n"
- message8: .asciz " of (%d)Spades\n"
- format:   .asciz "%d"
- 
+
  
  .text
  
@@ -87,10 +82,6 @@ face1:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	
-	@mov r5, r1 						@ Set face value as to r5
-	@ldr r5, [r1]					@ Load face value to r5
-	
 	ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
 	bl suit1
@@ -99,13 +90,9 @@ suit1:
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
 	mov r2,#4 						@ Move 4 to r2
-									@ We want rand()%4+1 so cal division function with rand()%4
+									@ We want rand()%4+1 so call division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
-	
-	@mov r6, r1 						@ Set face value as to r6
-	@ldr r6, [r1]					@ Load face value to r6
-	
 	ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl face2
@@ -117,10 +104,6 @@ face2:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	
-	@mov r7, r1 						@ Set face value as to r7
-	@ldr r7, [r1]					@ Load face value to r7
-	
 	ldr r0, address_of_message3		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl suit2
@@ -133,10 +116,6 @@ suit2:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	ldr r0, address_of_message4		@ Set message2 as the first parameter of printf
-	
-	@mov r8, r1 						@ Set face value as to r8
-	@ldr r8, [r1]					@ Load face value to r8
-	
 	bl printf 						@ Call printf
 	
 	
@@ -153,12 +132,7 @@ suit2:
  address_of_message1: .word message1
  address_of_message2: .word message2
  address_of_message3: .word message3
- address_of_message4: .word message4
- address_of_message5: .word message5
- address_of_message6: .word message6
- address_of_message7: .word message7
- address_of_message8: .word message8
- address_of_format: .word format	
+ address_of_message4: .word message4	
  
 									@ External Functions
  .global printf
