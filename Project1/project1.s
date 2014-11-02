@@ -139,6 +139,7 @@ suit2:
 	ble	ask							@ Ask player if the would like another card
 	bgt	house						@ Otherwise display house's hand
 	
+	.global ask
 ask:
 	str lr, [sp,#-4]! 							@ Push lr onto the top of the stack
 	sub sp, sp, #4 								@ Make room for one 4 byte integer in the stack
@@ -156,6 +157,7 @@ ask:
 	
 	add sp, sp, #4								@ Discard the integer read by scanf
 	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
+	bx lr                                  		@ return from main using lr
 	
 	cmp r8, #1
 	ble face3
