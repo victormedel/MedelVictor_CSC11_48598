@@ -151,8 +151,12 @@ ask:
  	mov r8, sp 									@ Set variable of the stack as 	
 	bl scanf				         			@ call to scanf	
 
+	add r1, sp, #4               				@ Place sp+4 -> r1
+	ldr r8, [r1]								@ Load the integer a read by scanf into r1
+	
 	add sp, sp, #4								@ Discard the integer read by scanf
 	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
+	
 	cmp r8, #1
 	ble face3
 	bgt house
