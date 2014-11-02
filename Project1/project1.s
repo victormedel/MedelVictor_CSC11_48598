@@ -7,12 +7,13 @@
  
  .data
  
- message1: .asciz "You have been delt the following cards:  %d "
+ message1: .asciz "You have been delt the following card(s):  %d "
  message2: .asciz "of %d"
  message3: .asciz " and a %d "
  message4: .asciz "of %d\n"
  message5: .asciz "Your current score is %d\n"
-
+ message6: .asciz "Would you like another card? \n(Enter "1" for yes, anything else for no.): "
+ format: "%d"
  
  .text
  
@@ -99,7 +100,7 @@ suit1:
 									@ We want rand()%4+1 so call division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
-	mov r6, r1
+	mov r10, r1
 	ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl face2
@@ -112,7 +113,7 @@ face2:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	mov r7, r1
+	mov r6, r1
 	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl suit2
@@ -125,14 +126,70 @@ suit2:
 									@ We want rand()%4+1 so cal division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
-	mov r8, r1
+	mov r10, r1
 	ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
 	bl printf 						@ Call printf
 	
-	add r7, r7, r5
+	add r6, r6, r5					@ Add players score and print it out
+	mov r1, r6
+	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
+	bl printf
+	
+	cmp r6, #21						@ Compare players score with 21
+	ble	ask							@ Ask player if the would like another card
+	bgt	house						@ Otherwise display house's hand
+	
+ask:
+	str lr, [sp,#-4]! 							@ Push lr onto the top of the stack
+	sub sp, sp, #4 								@ Make room for one 4 byte integer in the stack
+												@ In these 4 bytes we will keep the number
+												@ entered by the user
+	
+ 	ldr r0, address_of_message6					@ r0 <- message6
+ 	bl printf					 				@ call to printf
+ 	ldr r0, address_of_format					@ r0 <- scan_pattern
+ 	mov r8, sp 									@ Set variable of the stack as 	
+	bl scanf				         			@ call to scanf	
+
+	add sp, sp, #4								@ Discard the integer read by scanf
+	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
+	cmp r8, #1
+	ble face3
+	bgt house
+
+	
+	.global face3
+face3:	 							@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r7, r1
+	ldr r0, address_of_message1		@ Set message3 as the first parameter of printf
+	bl printf 						@ Call printf
+	bl suit2
+
+	.global suit3
+suit3:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so cal division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	ldr r0, address_of_message2		@ Set message4 as the first parameter of printf
+	bl printf 						@ Call printf
+	
+	add r7, r7, r6					@ Add players score and print it out
 	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf
+	
+	
+	
 	
 	add r4,#1
 	cmp r4,#1						@ How many hands do you want the dealer to deal?
@@ -149,7 +206,8 @@ suit2:
  address_of_message3: .word message3
  address_of_message4: .word message4
  address_of_message5: .word message5	 
- 
+ address_of_message6: .word message6
+ address_of_format: .word format
 									@ External Functions
  .global printf
  .global time
