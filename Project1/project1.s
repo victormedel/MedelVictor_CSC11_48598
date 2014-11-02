@@ -12,7 +12,7 @@
  message3: .asciz "and a %d "
  message4: .asciz "of %d\n"
  message5: .asciz "Your current score is %d\n"
- message6: .asciz "Would you like another card? \n(Enter 1 for yes, anything else for no.): "
+ message6: .asciz "Would you like another card? \n(Enter 0 for yes, anything else for no.): "
  message7: .asciz "You entered the following number: "
  format: .asciz "%d"
  
@@ -163,9 +163,9 @@ ask:
 
 	.global compare
 compare:	
-	cmp r1, #1
-	ble face3
-	bgt house
+	cmp r1, #0
+	beq face3
+	bne house
 
 	
 	.global face3
