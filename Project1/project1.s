@@ -11,24 +11,25 @@
  message2: .asciz "of %d"
  message3: .asciz " and a %d "
  message4: .asciz "of %d\n"
- @message5: .asciz " "
- @message6: .asciz " "
+ message5: .asciz " of Clubs"
+ message6: .asciz " of Diamonds"
+ message7: .asciz " of Hearts"
+ message8: .asciz " of Spades"
  format:   .asciz "%d"
  
  
  .text
  
- 
-scaleRight:
+ 	
+division:
 	push {lr} 						@ Push lr onto the stack
-		doWhile_r1_lt_r2: 			@ Shift right until just under the remainder
-			mov r3,r3,ASR #1; 		@ Division counter
-			mov r2,r2,ASR #1 		@ Mod/Remainder subtraction
-			cmp r1,r2
-			blt doWhile_r1_lt_r2
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 							
-
+									@ Determine the quotient and remainder
+	mov r0,#0
+	mov r3,#1
+	cmp r1,r2
+	blt end
+	bl scaleLeft
+	bl addSub
 
 addSub:
 	push {lr} 						@ Push lr onto the stack
@@ -41,7 +42,6 @@ addSub:
 	pop {lr}						 @ Pop lr from the stack
 	bx lr 							 
 
-	
 scaleLeft:
 	push {lr} 						@ Push lr onto the stack
 		doWhile_r1_ge_r2: 			@ Scale left till overshoot with remainder
@@ -52,25 +52,24 @@ scaleLeft:
 	mov r3,r3,ASR #1 				@ Scale factor back
 	mov r2,r2,ASR #1 				@ Scale subtraction factor back
 	pop {lr} 						@ Pop lr from the stack
-	bx lr							
-
+	bx lr	
 	
-division:
+scaleRight:
 	push {lr} 						@ Push lr onto the stack
-									@ Determine the quotient and remainder
-	mov r0,#0
-	mov r3,#1
-	cmp r1,r2
-	blt end
-	bl scaleLeft
-	bl addSub
-
+		doWhile_r1_lt_r2: 			@ Shift right until just under the remainder
+			mov r3,r3,ASR #1; 		@ Division counter
+			mov r2,r2,ASR #1 		@ Mod/Remainder subtraction
+			cmp r1,r2
+			blt doWhile_r1_lt_r2
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 							
+						
 end:
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 							
  
  
- 
+
 	.global main
 main:
 	push {lr}	 					@ Push lr onto the top of the stack	
@@ -88,9 +87,12 @@ face1:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	
+	mov r5, r1 						@ Set face value as to r5
+	ldr r5, [r1]					@ Load face value to r5
+	
 	ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
-	bl printf 						@ Call printf
- 	mov r5, sp 						@ Set face value as to r5
+	bl printf 						@ Call printf	
 	bl suit1
 
 suit1:	
@@ -100,10 +102,43 @@ suit1:
 									@ We want rand()%4+1 so cal division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
-	ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
+	
+	mov r6, r1 						@ Set face value as to r6
+	ldr r6, [r1]					@ Load face value to r6
+	
+	cmp r1, #1
+	beq clubs
+	cmp r1, #2
+	beq diamonds
+	cmp r1, #3
+	beq hearts
+	cmp r1, #4
+	beq spades
+									@ Suit name selection
+clubs:
+	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf 						@ Call printf
-	mov r6, sp 						@ Set face value as to r6
 	bl face2
+	
+diamonds:
+	ldr r0, address_of_message6		@ Set message6 as the first parameter of printf
+	bl printf 						@ Call printf
+	bl face2
+	
+hearts:
+	ldr r0, address_of_message7		@ Set message7 as the first parameter of printf
+	bl printf 						@ Call printf
+	bl face2
+	
+spades:	
+	ldr r0, address_of_message8		@ Set message8 as the first parameter of printf
+	bl printf 						@ Call printf
+	bl face2
+									@ End of suit name selection
+	
+	@ldr r0, address_of_message2	@ Set message2 as the first parameter of printf
+	@bl printf 						@ Call printf
+	@bl face2
 	
 
 face2:	 							@ Create a random number
@@ -113,9 +148,12 @@ face2:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	
+	mov r7, r1 						@ Set face value as to r7
+	ldr r7, [r1]					@ Load face value to r7
+	
 	ldr r0, address_of_message3		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf
-	mov r7, sp 						@ Set face value as to r7
 	bl suit2
 
 suit2:	
@@ -126,11 +164,11 @@ suit2:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	ldr r0, address_of_message4		@ Set message2 as the first parameter of printf
-	mov r8, sp 						@ Set face value as to r8
+	
+	mov r8, r1 						@ Set face value as to r8
+	ldr r8, [r1]					@ Load face value to r8
+	
 	bl printf 						@ Call printf
-	
-	
-	mov r0, r8
 	
 	
 	add r4,#1
@@ -147,8 +185,10 @@ suit2:
  address_of_message2: .word message2
  address_of_message3: .word message3
  address_of_message4: .word message4
- @address_of_message5: .word message5
- @address_of_message6: .word message6
+ address_of_message5: .word message5
+ address_of_message6: .word message6
+ address_of_message7: .word message7
+ address_of_message8: .word message8
  address_of_format: .word format	
  
 									@ External Functions
