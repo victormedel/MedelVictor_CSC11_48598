@@ -155,30 +155,27 @@ spades:
 				
 faceselect:
 	cmp r1, #1
-	beq ace
+	ble ace
 	bal facesel
-	
 
 facesel:
-	cmp r1, #11
-	beq ace
+	cmp r1, #14
+	bge king
 	bal facesel1
 
-
 facesel1:
-	cmp r1, #12
-	beq jack
+	cmp r1, #13
+	bge queen
 	bal facesel2
-	
 
 facesel2:
-	cmp r1, #13
-	beq queen
+	cmp r1, #12
+	bge jack
 	bal facesel3
 
 facesel3:
-	cmp r1, #14
-	beq king
+	cmp r1, #11
+	bge ace
 	bal regular
 	
 ace:
@@ -214,7 +211,7 @@ king:
 	
 regular:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_message19	@ Set message19 as the first parameter of printf
+	ldr r0, address_of_message1		@ Set message19 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 		
