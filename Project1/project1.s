@@ -188,7 +188,6 @@ ace:
 	
 jack:
 	push {lr} 						@ Push lr onto the stack
-	mov r1, #10
 	ldr r0, address_of_message21	@ Set message21 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
@@ -198,7 +197,6 @@ jack:
 queen:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_message22	@ Set message22 as the first parameter of printf
-	mov r1, #10
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
@@ -206,7 +204,6 @@ queen:
 
 king:
 	push {lr} 						@ Push lr onto the stack
-	mov r1, #10
 	ldr r0, address_of_message23	@ Set message23 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
@@ -240,9 +237,7 @@ face1:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	@mov r5, r1
-	cmp r1, #11
-	movgt r5, #10
+	mov r5, r1
 	
 	@ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
 	@bl printf 						@ Call printf	
@@ -274,9 +269,9 @@ face2:	 							@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r6, r1
 	
-	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
-	bl printf 						@ Call printf
-	
+	@ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl faceselect
 	bl suit2
 
 	.global suit2
@@ -339,9 +334,9 @@ face3:	 							@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r8, r1
 	
-	ldr r0, address_of_message1		@ Set message3 as the first parameter of printf
-	bl printf 						@ Call printf
-	
+	@ldr r0, address_of_message1		@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl faceselect
 	bl suit3
 
 	.global suit3
@@ -375,9 +370,9 @@ houseface1:	 							@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r5, r1
 	
-	ldr r0, address_of_message7		@ Set message1 as the first parameter of printf
-	bl printf 						@ Call printf	
-
+	@ldr r0, address_of_message7		@ Set message1 as the first parameter of printf
+	@bl printf 						@ Call printf	
+	bl faceselect
 	bl housesuit1
 
 	.global housesuit1
@@ -404,9 +399,9 @@ houseface2:	 						@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r6, r1	
 	
-	ldr r0, address_of_message9		@ Set message3 as the first parameter of printf
-	bl printf 						@ Call printf
-
+	@ldr r0, address_of_message9		@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl faceselect
 	bl housesuit2
 
 	.global housesuit2
@@ -433,9 +428,9 @@ houseface3:	 						@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r7, r1	
 	
-	ldr r0, address_of_message11	@ Set message3 as the first parameter of printf
-	bl printf 						@ Call printf
-
+	@ldr r0, address_of_message11	@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl faceselect
 	bl housesuit3
 
 	.global housesuit3
