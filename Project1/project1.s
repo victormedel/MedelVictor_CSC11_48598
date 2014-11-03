@@ -116,7 +116,6 @@ select2:
 	push {lr} 						@ Push lr onto the stack
 	cmp r1, #4
 	ble spades
-	bal 
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 
