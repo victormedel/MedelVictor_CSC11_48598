@@ -26,6 +26,11 @@
  message14: .asciz "You Win!\n"
  message15: .asciz "You Lose\n"
  
+ message16: .asciz "Clubs | "
+ message17: .asciz "Diamonds | "
+ message18: .asciz "Hearts | "
+ message19: .asciz "Spades | "
+ 
  format: .asciz "%d"
  
  .text
@@ -81,8 +86,73 @@ end:
 	bx lr 							
 		
  
+				@Suit Selection
  
+suitselect:
+	push {lr} 						@ Push lr onto the stack
+	cmp r1, #1
+	ble clubs
+	bal select
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 		
 
+select:
+	push {lr} 						@ Push lr onto the stack
+	cmp r1, #2
+	ble diamonds
+	bal selectcnt1
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+
+select1:
+	push {lr} 						@ Push lr onto the stack
+	cmp r1, #3
+	ble hearts
+	bal select2
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 		
+
+select2:
+	push {lr} 						@ Push lr onto the stack
+	cmp r1, #4
+	ble spades
+	bal 
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+
+clubs:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message16	@ Set message16 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+	
+	
+diamonds:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message17	@ Set message17 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+
+
+hearts:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message18	@ Set message18 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+	
+
+spades:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message19	@ Set message19 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+ 
+				@End of Suit Selection
+ 
 	.global main
 main:
 	push {lr}	 					@ Push lr onto the top of the stack	
@@ -114,8 +184,9 @@ suit1:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
-	ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
-	bl printf 						@ Call printf
+	@ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
 	bl face2
 
 	.global face2
@@ -140,6 +211,7 @@ suit2:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
+	
 	ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
 	bl printf 						@ Call printf
 	
@@ -294,8 +366,8 @@ housesuit3:
 	ldr r0, address_of_message13	@ Set message5 as the first parameter of printf
 	bl printf
 	bal scorecomp0
-
-scorecomp0:	
+	
+scorecomp0:							@ The following compare numonics are used to compare score and determine winner
 	cmp r7, #21
 	ble housescore
 	bgt youlose
@@ -346,6 +418,10 @@ exit:
  address_of_message13: .word message13
  address_of_message14: .word message14
  address_of_message15: .word message15
+ address_of_message16: .word message16
+ address_of_message17: .word message17
+ address_of_message18: .word message18
+ address_of_message19: .word message19
  address_of_format: .word format
  
 									@ External Functions
