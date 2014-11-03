@@ -21,7 +21,7 @@
  message10: .asciz "%d | "
  message11: .asciz "%d of "
  message12: .asciz "%d\n"
- message13: .asciz "The House's score is %d\n"
+ message13: .asciz "\nThe House's score is %d\n"
  
  message14: .asciz "You Win!\n"
  message15: .asciz "You Lose\n"
