@@ -241,8 +241,6 @@ face1:	 							@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r5, r1
-	ldr r0, address_of_message0
-	bl printf
 	ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
 	bl suit1
@@ -370,8 +368,6 @@ houseface1:	 							@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r5, r1
 	
-	ldr r0, address_of_message0
-	bl printf
 	ldr r0, address_of_message7		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
 	bl housesuit1
