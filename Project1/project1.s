@@ -298,22 +298,21 @@ housesuit3:
 	bgt youwin
 	blt youlose
 
-	
-	.global youwin
 youwin:	
 	ldr r0, address_of_message14
 	bl printf
-	
-	.global youlose
+	bal exit
+
 youlose:
 	ldr r0, address_of_message15
 	bl printf
-
+	bal exit
 	
 	@add r4,#1
 	@cmp r4,#1						@ How many hands do you want the dealer to deal?
 	@blt face1
-	
+
+exit:	
 	pop {lr} 						@ Pop the top of the stack and put it in lr
 	bx lr 							@ Leave main
  
