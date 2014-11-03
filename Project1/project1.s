@@ -89,35 +89,27 @@ end:
 				@Suit Selection
  
 suitselect:
-	push {lr} 						@ Push lr onto the stack
 	cmp r1, #1
 	ble clubs
 	bal select
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 		
+	
 
 select:
-	push {lr} 						@ Push lr onto the stack
 	cmp r1, #2
 	ble diamonds
 	bal select1
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 	
+
 
 select1:
-	push {lr} 						@ Push lr onto the stack
 	cmp r1, #3
 	ble hearts
 	bal select2
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 		
+	
 
 select2:
-	push {lr} 						@ Push lr onto the stack
 	cmp r1, #4
 	ble spades
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 	
+	bal exit
 
 clubs:
 	push {lr} 						@ Push lr onto the stack
