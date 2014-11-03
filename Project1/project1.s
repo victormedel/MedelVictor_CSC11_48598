@@ -100,7 +100,7 @@ select:
 	push {lr} 						@ Push lr onto the stack
 	cmp r1, #2
 	ble diamonds
-	bal selectcnt1
+	bal select1
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 
