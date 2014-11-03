@@ -455,6 +455,12 @@ housesuit3:
 	bal addhand2
 	
 addhand2:	
+	cmp r5, #11
+	movgt r5, #10
+	cmp r6, #11
+	movgt r6, #10
+	cmp r7, #11
+	movgt r7, #10
 	add r9, r5, r6					@ Add players score and print it out
 	add r9, r9, r7
 	mov r1, r9
