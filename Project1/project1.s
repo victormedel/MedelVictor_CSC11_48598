@@ -16,7 +16,8 @@
  message6: .asciz "Would you like another card? \n(Enter 0 for yes, anything else for no.): "
 
  
- message7: .asciz "The house has been delt the following cards: %d of "
+ message50: .asciz "The house has been delt the following cards: "
+ message7: .asciz "%d of "
  message8: .asciz "%d | "
  message9: .asciz "%d of "
  message10: .asciz "%d | "
@@ -369,6 +370,8 @@ houseface1:	 							@ Create a random number
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r5, r1
 	
+	ldr r0, address_of_message0
+	bl printf
 	ldr r0, address_of_message7		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
 	bl housesuit1
@@ -510,6 +513,8 @@ exit:
  address_of_message21: .word message21
  address_of_message22: .word message22
  address_of_message23: .word message23
+ 
+ address_of_message50: .word message50
  address_of_format: .word format
  
 									@ External Functions
