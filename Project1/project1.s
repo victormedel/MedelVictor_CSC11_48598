@@ -362,6 +362,9 @@ housesuit3:
 	@ldr r0, address_of_message12	@ Set message4 as the first parameter of printf
 	@bl printf 						@ Call printf
 	bl suitselect
+	pop {lr} 						@ Pop the top of the stack and put it in lr
+	bx lr 							@ Leave main
+	
 	
 	add r9, r5, r6					@ Add players score and print it out
 	add r9, r9, r7
