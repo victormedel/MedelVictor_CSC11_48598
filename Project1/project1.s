@@ -155,30 +155,30 @@ spades:
 				
 faceselect:
 	cmp r1, #1
-	ble ace
+	beq ace
 	bal facesel
 	
 
 facesel:
 	cmp r1, #11
-	ble ace
+	beq ace
 	bal facesel1
 
 
 facesel1:
 	cmp r1, #12
-	ble jack
+	beq jack
 	bal facesel2
 	
 
 facesel2:
 	cmp r1, #13
-	ble queen
+	beq queen
 	bal facesel3
 
 facesel3:
 	cmp r1, #14
-	ble king
+	beq king
 	bal regular
 	
 ace:
