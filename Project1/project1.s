@@ -10,7 +10,7 @@
  message1: .asciz "You have been delt the following card(s):  %d of "
  message2: .asciz "%d | "
  message3: .asciz "%d "
- message4: .asciz "of %d\n"
+ message4: .asciz "of %d"
  message5: .asciz "\nYour current score is %d\n"
  message6: .asciz "Would you like another card? \n(Enter 0 for yes, anything else for no.): "
 
