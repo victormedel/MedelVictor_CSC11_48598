@@ -11,7 +11,7 @@
  message2: .asciz "%d | "
  message3: .asciz "%d "
  message4: .asciz "of %d\n"
- message5: .asciz "Your current score is %d\n"
+ message5: .asciz "\nYour current score is %d\n"
  message6: .asciz "Would you like another card? \n(Enter 0 for yes, anything else for no.): "
 
  
@@ -293,9 +293,9 @@ housesuit3:
 	
 	
 	
-	add r4,#1
-	cmp r4,#1						@ How many hands do you want the dealer to deal?
-	blt face1
+	@add r4,#1
+	@cmp r4,#1						@ How many hands do you want the dealer to deal?
+	@blt face1
 	
 	pop {lr} 						@ Pop the top of the stack and put it in lr
 	bx lr 							@ Leave main
