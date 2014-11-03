@@ -7,13 +7,22 @@
  
  .data
  
- message1: .asciz "You have been delt the following card(s):  %d "
- message2: .asciz "of %d\n"
- message3: .asciz "and a %d "
+ message1: .asciz "You have been delt the following card(s):  %d of "
+ message2: .asciz "%d | "
+ message3: .asciz "%d "
  message4: .asciz "of %d\n"
  message5: .asciz "Your current score is %d\n"
  message6: .asciz "Would you like another card? \n(Enter 0 for yes, anything else for no.): "
- message7: .asciz "You entered the following number: "
+
+ 
+ message7: .asciz "The house has been delt the following cards: %d of "
+ message8: .asciz "%d | "
+ message9: .asciz "%d of "
+ message10: .asciz "%d | "
+ message11: .asciz "%d of "
+ message12: .asciz "%d\n"
+ message13: .asciz "The House's score is %d\n"
+ 
  format: .asciz "%d"
  
  .text
@@ -138,7 +147,7 @@ suit2:
 	
 	cmp r6, #21						@ Compare players score with 21
 	ble	ask							@ Ask player if the would like another card
-	bgt	house						@ Otherwise display house's hand
+	bgt	houseface1						@ Otherwise display house's hand
 	
 	.global ask
 ask:
@@ -165,7 +174,7 @@ ask:
 compare:	
 	cmp r1, #0
 	beq face3
-	bne house
+	bne houseface1
 
 	
 	.global face3
@@ -197,8 +206,92 @@ suit3:
 	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf
-		
-house: 	
+	bal houseface1	
+
+	.global houseface1
+houseface1:	 							@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r5, r1
+	ldr r0, address_of_message7		@ Set message1 as the first parameter of printf
+	bl printf 						@ Call printf	
+	bl housesuit1
+
+	.global housesuit1
+housesuit1:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so call division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	ldr r0, address_of_message8		@ Set message2 as the first parameter of printf
+	bl printf 						@ Call printf
+	bl houseface2
+
+	.global houseface2
+houseface2:	 							@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r6, r1
+	ldr r0, address_of_message9		@ Set message3 as the first parameter of printf
+	bl printf 						@ Call printf
+	bl housesuit2
+
+	.global housesuit2
+housesuit2:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so cal division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	ldr r0, address_of_message10		@ Set message4 as the first parameter of printf
+	bl printf 						@ Call printf
+	bal houseface3
+	
+	.global houseface3
+houseface3:	 							@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r7, r1
+	ldr r0, address_of_message11		@ Set message3 as the first parameter of printf
+	bl printf 						@ Call printf
+	bl housesuit3
+
+	.global housesuit3
+housesuit3:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so cal division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	ldr r0, address_of_message12		@ Set message4 as the first parameter of printf
+	bl printf 						@ Call printf
+	
+	add r9, r5, r6					@ Add players score and print it out
+	add r9, r9, r7
+	mov r1, r9
+	ldr r0, address_of_message13		@ Set message5 as the first parameter of printf
+	bl printf	
+	
+	
 	
 	add r4,#1
 	cmp r4,#1						@ How many hands do you want the dealer to deal?
@@ -217,7 +310,14 @@ house:
  address_of_message5: .word message5	 
  address_of_message6: .word message6
  address_of_message7: .word message7
+ address_of_message8: .word message8
+ address_of_message9: .word message9
+ address_of_message10: .word message10
+ address_of_message11: .word message11
+ address_of_message12: .word message12
+ address_of_message13: .word message13
  address_of_format: .word format
+ 
 									@ External Functions
  .global printf
  .global time
