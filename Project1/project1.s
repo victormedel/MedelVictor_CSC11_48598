@@ -292,8 +292,10 @@ housesuit3:
 	add r9, r9, r7
 	mov r1, r9
 	ldr r0, address_of_message13	@ Set message5 as the first parameter of printf
-	bl printf	
-	
+	bl printf
+	bal scorecomp0
+
+scorecomp0:	
 	cmp r7, #21
 	ble housescore
 	bgt youlose
