@@ -143,8 +143,8 @@ suit2:
 	ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
 	bl printf 						@ Call printf
 	
-	add r6, r6, r5					@ Add players score and print it out
-	mov r1, r6
+	add r7, r6, r5					@ Add players score and print it out
+	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf
 	
@@ -294,7 +294,7 @@ housesuit3:
 	ldr r0, address_of_message13	@ Set message5 as the first parameter of printf
 	bl printf	
 	
-	cmp r9, r7						@ Compare Scores and designate winner
+	cmp r7, r9						@ Compare Scores and designate winner
 	bgt youwin
 	blt youlose
 
