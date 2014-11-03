@@ -241,8 +241,9 @@ face1:	 							@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r5, r1
-	ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
-	bl printf 						@ Call printf	
+	@ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
+	@bl printf 						@ Call printf	
+	bl faceselect
 	bl suit1
 
 	.global suit1
@@ -461,7 +462,7 @@ housescore:
 	bgt youwin
 	
 scorecomp:
-	cmp r9, r7
+	cmp r7, r9
 	bgt youwin
 	blt youlose
 	
