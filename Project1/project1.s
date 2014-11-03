@@ -294,10 +294,20 @@ housesuit3:
 	ldr r0, address_of_message13	@ Set message5 as the first parameter of printf
 	bl printf	
 	
-	cmp r7, r9						@ Compare Scores and designate winner
+	cmp r7, #21
+	ble housescore
+	bgt youlose
+	
+housescore:
+	cmp r9, #21
+	ble scorecomp
+	bgt youwin
+	
+scorecomp:
+	cmp r7, r9
 	bgt youwin
 	blt youlose
-
+	
 youwin:	
 	ldr r0, address_of_message14
 	bl printf
