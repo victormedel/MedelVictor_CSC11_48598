@@ -276,7 +276,9 @@ suit3:
 	@ldr r0, address_of_message2		@ Set message4 as the first parameter of printf
 	@bl printf 						@ Call printf
 	bl suitselect
-	
+	bal addhand
+
+addhand:	
 	add r7, r7, r8					@ Add players score and print it out
 	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
@@ -362,10 +364,9 @@ housesuit3:
 	@ldr r0, address_of_message12	@ Set message4 as the first parameter of printf
 	@bl printf 						@ Call printf
 	bl suitselect
-	pop {lr} 						@ Pop the top of the stack and put it in lr
-	bx lr 							@ Leave main
+	bal addhand2
 	
-	
+addhand2:	
 	add r9, r5, r6					@ Add players score and print it out
 	add r9, r9, r7
 	mov r1, r9
