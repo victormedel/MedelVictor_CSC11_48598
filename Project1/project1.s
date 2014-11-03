@@ -188,6 +188,7 @@ ace:
 	
 jack:
 	push {lr} 						@ Push lr onto the stack
+	mov r1, #10
 	ldr r0, address_of_message21	@ Set message21 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
@@ -196,6 +197,7 @@ jack:
 
 queen:
 	push {lr} 						@ Push lr onto the stack
+	mov r1, #10
 	ldr r0, address_of_message22	@ Set message22 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
@@ -204,6 +206,7 @@ queen:
 
 king:
 	push {lr} 						@ Push lr onto the stack
+	mov r1, #10
 	ldr r0, address_of_message23	@ Set message23 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
