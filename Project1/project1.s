@@ -287,6 +287,11 @@ suit2:
 	@bl printf 						@ Call printf
 	bl suitselect
 	
+	cmp r5, #11
+	movgt r5, #10
+	cmp r6, #11
+	movgt r6, #10
+	
 	add r7, r6, r5					@ Add players score and print it out
 	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
@@ -354,6 +359,8 @@ suit3:
 	bal addhand
 
 addhand:	
+	cmp r7, #11
+	movgt r7, #10
 	add r7, r7, r8					@ Add players score and print it out
 	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
