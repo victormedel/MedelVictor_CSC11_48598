@@ -205,7 +205,7 @@ suit3:
 	ldr r0, address_of_message2		@ Set message4 as the first parameter of printf
 	bl printf 						@ Call printf
 	
-	add r7, r6, r8					@ Add players score and print it out
+	add r7, r7, r8					@ Add players score and print it out
 	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf
