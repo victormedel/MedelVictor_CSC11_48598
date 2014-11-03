@@ -7,10 +7,11 @@
  
  .data
  
- message1: .asciz "You have been delt the following card(s):  %d of "
+ message0: .asciz "You have been delt the following card(s): "
+ message1: .asciz "%d of "
  message2: .asciz "%d | "
- message3: .asciz "%d "
- message4: .asciz "of %d"
+ message3: .asciz "%d of "
+ message4: .asciz "%d"
  message5: .asciz "\nYour current score is %d\n"
  message6: .asciz "Would you like another card? \n(Enter 0 for yes, anything else for no.): "
 
@@ -30,6 +31,11 @@
  message17: .asciz "Diamonds | "
  message18: .asciz "Hearts | "
  message19: .asciz "Spades | "
+ 
+ message20: .asciz "Ace of "
+ message21: .asciz "Jack of "
+ message22: .asciz "Queen of "
+ message23: .asciz "King of "
  
  format: .asciz "%d"
  
@@ -143,6 +149,78 @@ spades:
 	bx lr 	
  
 				@End of Suit Selection
+				
+				@Ace, Jack, Queen, and King Selection
+				
+faceselect:
+	cmp r1, #1
+	ble ace
+	bal facesel
+	
+
+facesel:
+	cmp r1, #11
+	ble ace
+	bal facesel1
+
+
+facesel1:
+	cmp r1, #12
+	ble jack
+	bal facesel2
+	
+
+facesel2:
+	cmp r1, #13
+	ble queen
+	bal facesel3
+
+facesel3:
+	cmp r1, #14
+	ble king
+	bal regular
+	
+ace:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message20	@ Set message20 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+	
+	
+jack:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message21	@ Set message21 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+
+
+queen:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message22	@ Set message22 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+	
+
+king:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message23	@ Set message23 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 	
+	
+regular:
+	push {lr} 						@ Push lr onto the stack
+	ldr r0, address_of_message19	@ Set message19 as the first parameter of printf
+	bl printf 						@ Call printf
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 		
+ 
+				@ End Ace, Jack, Queen , and King Selection
+				
+				
  
 	.global main
 main:
@@ -162,6 +240,8 @@ face1:	 							@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r5, r1
+	ldr r0, address_of_message0
+	bl printf
 	ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
 	bl suit1
@@ -189,6 +269,7 @@ face2:	 							@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r6, r1
+	
 	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl suit2
@@ -252,6 +333,7 @@ face3:	 							@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r8, r1
+	
 	ldr r0, address_of_message1		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl suit3
@@ -286,6 +368,7 @@ houseface1:	 							@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r5, r1
+	
 	ldr r0, address_of_message7		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
 	bl housesuit1
@@ -313,6 +396,7 @@ houseface2:	 						@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r6, r1
+	
 	ldr r0, address_of_message9		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl housesuit2
@@ -340,6 +424,7 @@ houseface3:	 						@ Create a random number
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r7, r1
+	
 	ldr r0, address_of_message11	@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
 	bl housesuit3
@@ -401,7 +486,7 @@ exit:
  
  
  
- 
+ address_of_message0: .word message0
  address_of_message1: .word message1
  address_of_message2: .word message2
  address_of_message3: .word message3
@@ -421,6 +506,10 @@ exit:
  address_of_message17: .word message17
  address_of_message18: .word message18
  address_of_message19: .word message19
+ address_of_message20: .word message20
+ address_of_message21: .word message21
+ address_of_message22: .word message22
+ address_of_message23: .word message23
  address_of_format: .word format
  
 									@ External Functions
