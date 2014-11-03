@@ -377,7 +377,7 @@ housescore:
 	bgt youwin
 	
 scorecomp:
-	cmp r7, r9
+	cmp r9, r7
 	bgt youwin
 	blt youlose
 	
