@@ -300,13 +300,19 @@ housesuit3:
 	
 	.global youwin
 youwin:	
+	push {lr}	 					@ Push lr onto the top of the stack	
 	ldr r0, address_of_message14
 	bl printf
+	pop {lr}
+	bx lr
 	
 	.global youlose
 youlose:
+	push {lr}	 					@ Push lr onto the top of the stack	
 	ldr r0, address_of_message15
 	bl printf
+	pop {lr}
+	bx lr
 	
 	@add r4,#1
 	@cmp r4,#1						@ How many hands do you want the dealer to deal?
