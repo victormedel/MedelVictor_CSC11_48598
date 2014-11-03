@@ -240,11 +240,14 @@ face1:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-
+	@mov r5, r1
+	cmp r1, #11
+	movgt r5, #10
+	
 	@ldr r0, address_of_message1		@ Set message1 as the first parameter of printf
 	@bl printf 						@ Call printf	
 	bl faceselect
-	mov r5, r1
+
 	bl suit1
 
 	.global suit1
@@ -269,11 +272,11 @@ face2:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	
+	mov r6, r1
 	
 	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
-	mov r6, r1
+	
 	bl suit2
 
 	.global suit2
@@ -334,11 +337,11 @@ face3:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	
+	mov r8, r1
 	
 	ldr r0, address_of_message1		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
-	mov r8, r1
+	
 	bl suit3
 
 	.global suit3
@@ -370,11 +373,11 @@ houseface1:	 							@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	
+	mov r5, r1
 	
 	ldr r0, address_of_message7		@ Set message1 as the first parameter of printf
 	bl printf 						@ Call printf	
-	mov r5, r1
+
 	bl housesuit1
 
 	.global housesuit1
@@ -399,11 +402,11 @@ houseface2:	 						@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	
+	mov r6, r1	
 	
 	ldr r0, address_of_message9		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
-	mov r6, r1
+
 	bl housesuit2
 
 	.global housesuit2
@@ -428,11 +431,11 @@ houseface3:	 						@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	
+	mov r7, r1	
 	
 	ldr r0, address_of_message11	@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf
-	mov r7, r1
+
 	bl housesuit3
 
 	.global housesuit3
