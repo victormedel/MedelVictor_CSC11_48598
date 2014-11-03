@@ -210,9 +210,9 @@ suit2:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
-	
-	ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
-	bl printf 						@ Call printf
+	@ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
 	
 	add r7, r6, r5					@ Add players score and print it out
 	mov r1, r7
@@ -273,8 +273,9 @@ suit3:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
-	ldr r0, address_of_message2		@ Set message4 as the first parameter of printf
-	bl printf 						@ Call printf
+	@ldr r0, address_of_message2		@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
 	
 	add r7, r7, r8					@ Add players score and print it out
 	mov r1, r7
@@ -304,8 +305,9 @@ housesuit1:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
-	ldr r0, address_of_message8		@ Set message2 as the first parameter of printf
-	bl printf 						@ Call printf
+	@ldr r0, address_of_message8		@ Set message2 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
 	bl houseface2
 
 	.global houseface2
@@ -330,8 +332,9 @@ housesuit2:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
-	ldr r0, address_of_message10	@ Set message4 as the first parameter of printf
-	bl printf 						@ Call printf
+	@ldr r0, address_of_message10	@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
 	bal houseface3
 	
 	.global houseface3
@@ -356,8 +359,9 @@ housesuit3:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
-	ldr r0, address_of_message12	@ Set message4 as the first parameter of printf
-	bl printf 						@ Call printf
+	@ldr r0, address_of_message12	@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
 	
 	add r9, r5, r6					@ Add players score and print it out
 	add r9, r9, r7
