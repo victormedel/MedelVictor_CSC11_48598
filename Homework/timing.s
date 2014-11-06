@@ -38,7 +38,7 @@ ends:
 	ldr r1, [r1]					/* Load the start time to r1 */
 	sub r3, r2, r1					/* r3 = end time - start time
 	
-	ldr r0, addr_of_message			/* Load answer to r0 */
+	ldr r0, address_of_message			/* Load answer to r0 */
 	bl printf						/* Print message with start, ends, and diffrece of time
 	
 	pop {lr}
