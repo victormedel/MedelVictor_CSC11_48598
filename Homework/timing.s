@@ -37,15 +37,15 @@ ending:
 	ldr r1, address_of_begin		/* Set start address the second parameter of ending */
 	ldr r1, [r1]					/* Load the start time to r1 */
 	sub r3, r2, r1					/* r3 = end time - start time
-	
+
 	ldr r0, address_of_message		/* Load answer to r0 */
 	bl printf						/* Print message with start, ending, and diffrece of time
 	
 	pop {lr}
 	bx lr
 	
-address_of_message: .word message
 address_of_begin: .word begin
+address_of_message: .word message
 	
 	.global time
 	.global printf
