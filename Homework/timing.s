@@ -22,7 +22,7 @@ starts:
 	str r0, [r2]					/* Store start time in r2 */
 	
 	pop {lr}
-	bx 
+	bx lr
 
 
 
@@ -42,7 +42,7 @@ ends:
 	bl printf						/* Print message with start, ends, and diffrece of time
 	
 	pop {lr}
-	bx 
+	bx lr
 	
 address_of_message: .word message
 address_of_start: .word starts
