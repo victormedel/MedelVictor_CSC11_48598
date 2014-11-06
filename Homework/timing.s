@@ -47,5 +47,4 @@ ending:
 address_of_begin: .word begin
 address_of_message: .word message
 	
-	.global time
 	.global printf
