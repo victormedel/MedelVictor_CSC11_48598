@@ -12,13 +12,13 @@ begin: .word 0
 
 .text
 
-	.global begin
-begin:
+	.global start
+start:
 	push {lr}
 	
 	mov r0, #0						/* Set time to zero */
 	bl time
-	ldr r2, address_of_begin		/* Set address of start as the third parameter of begin */
+	ldr r2, address_of_begin		/* Set address of start as the third parameter of start */
 	str r0, [r2]					/* Store start time in r2 */
 	
 	pop {lr}
