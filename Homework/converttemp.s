@@ -1,27 +1,32 @@
 /*
  * Author: Victor Medel
- * Created On: October 19, 2014
- * Purpose: Input and Output Division Program
- * Assignment 5
+ * Created On: November 11, 2014
+ * Assignment 7a
+ * Purpose: Convert via Input Fahrenheit to Celsius.
  *
  */
  
-.data
- message1: .asciz "Type numerator and then denominator: "
- message2: .asciz "You typed %d for the numerator and %d for the denominator \n"
- message3: .asciz "Your Answer is %d with a remainder of %d\n" 
- scan_pattern: .asciz "%d %d"
-
+ .data
+ 
+ message1: .asciz "Your Temperature in Fahrenheit: %d"
+ message2: .asciz "\nYou entered %d degrees Fahrenheit"
+ message3: .asciz "\nYour Temperature in Celsius is %d"
+ format: .asciz "%d"
+ 
+ 
  .text
  
-
 division:
 	push {lr}								@ Push lr onto the stack
-											@ The stack is now 8 byte aligned
+											@ The stack is now 4 byte aligned
+											
+	mov r4, r1								@ Move input to r4
 	mov r0, #0									
+	mov r1, #5								@ Numerator
+	mov r2, #9								@ Denominator
 	mov r3, #1								@ r3=1, Counter initialized
 	cmp r1, r2				  				@ Compare r1 to r3
-	ble exit								@ If r1 is less than or equal to r3 exit 
+	ble convert								@ If r1 is less than or equal to r3 exit
 	bal scaleleft							@ Otherwise continue to scaleleft
 	
 
@@ -65,48 +70,62 @@ addsubcomp:
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 	
+convert:
+	push {lr}								@ Push lr onto the stack
+											@ The stack is now 4 byte aligned
+
+	mov r5, r0								@ Divisor/Quotient from division function
+	mov r6, r1								@ Remainder from division function
+	
+											@ *** Possible check for negative number here ***
+	sub r4, r4, #32							@ Subtract Input by 32
+	mul r0, r4, r5							@ Multiply input by divisor
+	bal exit
+	
 exit:
 	pop {lr}								@ Pop lr from the stack
 	bx lr
- 
-    .global main
+	
+	
+	
+	
+	.global main
 main:
+
 	str lr, [sp,#-4]! 							@ Push lr onto the top of the stack
-	sub sp, sp, #8 								@ Make room for two 4 byte integer in the stack
+	sub sp, sp, #4 								@ Make room for one 4 byte integer in the stack
 												@ In these 4 bytes we will keep the number
 												@ entered by the user
+												
 	
-												@ Numerator and Denominator Input
+												@ Enter Temperature in Fahrenheit
  	ldr r0, address_of_message1					@ r0 <- message1
  	bl printf					 				@ call to printf
- 	ldr r0, address_of_scan_pattern				@ r0 <- scan_pattern
- 	mov r2, sp 									@ Set variable of the stack as b	
-	add r1, r2, #4								@ and second value as a of scanf	
+ 	ldr r0, address_format						@ r0 <- format
+ 	mov r1, sp 									@ Set variable of the stack as r1 (Temp in F)	
 	bl scanf				         			@ call to scanf											
 	
 												@ Echo Results
 	add r1, sp, #4               				@ Place sp+4 -> r1
-	ldr r1, [r1]								@ Load the integer a read by scanf into r1
-	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
+	ldr r1, [sp] 								@ Load the integer temp in f read by scanf into r1
 	ldr r0, address_of_message2 				@ Set &message2 as the first parameter of printf
 	bl printf
-												@ Prepare and send to division function
+												@ Prepare and send to convert function
 	add r1, sp, #4               				@ Place sp+4 -> r1
-	ldr r1, [r1]								@ Load the integer a read by scanf into r1
-	ldr r2, [sp] 								@ Load the integer b read by scanf into r2
-	bl division                          		@ Branchout to Division Funtion
+	ldr r1, [sp] 								@ Load the temperature read by scanf into r1
+	bl division                          		@ Branch out to Convert Function											
 												
-	mov r2, r1                            		@ r2 <- r1 | division function returning r1 for quotient
-	mov r1, r0                         			@ r1 <- r0 | division function returning r0 for remainder
+	
+												@ Return Answer
+	mov r1, r0                         			@ r1 <- r0 | convert function returning r0
 	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
-	bl printf
- 
-	add sp, sp, #8								@ Discard the integer read by scanf
+	bl printf	
+												
+												
+	add sp, sp, #4								@ Discard the integer read by scanf
 	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
 	bx lr                                  		@ return from main using lr
  
-
  address_of_message1: .word message1
  address_of_message2: .word message2
- address_of_message3: .word message3
- address_of_scan_pattern: .word scan_pattern
+ address_of_format: .word format												
