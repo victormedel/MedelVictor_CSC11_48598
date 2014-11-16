@@ -8,7 +8,7 @@
  
  .data
  
- message1: .asciz "Enter your temperature in Fahrenheit: %d\n"
+ message1: .asciz "Enter your temperature in Fahrenheit: "
  message2: .asciz "You entered %d degrees Fahrenheit\n"
  message3: .asciz "Your temperature in Celsius is %d\n"
  format: .asciz "%d"
