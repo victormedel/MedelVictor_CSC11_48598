@@ -96,7 +96,7 @@ main:
 												@ Enter Temperature in Fahrenheit
  	ldr r0, address_of_message1					@ r0 <- message1
  	bl printf					 				@ call to printf
- 	ldr r0, address_format						@ r0 <- format
+ 	ldr r0, address_of_format						@ r0 <- format
  	mov r1, sp 									@ Set variable of the stack as r1 (Temp in F)	
 	bl scanf				         			@ call to scanf											
 	
