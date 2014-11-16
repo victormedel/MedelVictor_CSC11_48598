@@ -8,9 +8,9 @@
  
  .data
  
- message1: .asciz "Enter your temperature in Fahrenheit: %d"
- message2: .asciz "\nYou entered %d degrees Fahrenheit"
- message3: .asciz "\nYour temperature in Celsius is %d"
+ message1: .asciz "Enter your temperature in Fahrenheit: %d\n"
+ message2: .asciz "You entered %d degrees Fahrenheit\n"
+ message3: .asciz "Your temperature in Celsius is %d"
  format: .asciz "%d"
  
  
@@ -21,9 +21,11 @@ convert:
 											@ The stack is now 4 byte aligned
 	mov r5, #5								@ r5=5
 	sub r1, r1, #32							@ r1=(input-32)
-	mul r1, r5, r1							@ r1=r1*r5
-											
-	bal division 
+	mul r1, r5, r1							@ r1=r1*r5									
+	bl division 
+	pop {lr}								@ Pop lr from the stack
+	bx lr
+
  
 division:
 	push {lr}								@ Push lr onto the stack
@@ -86,7 +88,6 @@ exit:
 	
 	.global main
 main:
-
 	str lr, [sp,#-4]! 							@ Push lr onto the top of the stack
 	sub sp, sp, #4 								@ Make room for one 4 byte integer in the stack
 												@ In these 4 bytes we will keep the number
@@ -102,14 +103,14 @@ main:
 	
 	bl scanf				         			@ call to scanf											
 	
-	/*											@ Echo Results
-	 *add r1, sp, #4               				@ Place sp+4 -> r1
-	 *ldr r1, [sp] 								@ Load the integer temp in f read by scanf into r1
-	 *ldr r0, address_of_message2 				@ Set &message2 as the first parameter of printf
-	 *bl printf
-	 */
+												@ Echo Results
+	 add r1, sp, #4               				@ Place sp+4 -> r1
+	 ldr r1, [sp] 								@ Load the integer temp in f read by scanf into r1
+	 ldr r0, address_of_message2 				@ Set &message2 as the first parameter of printf
+	 bl printf
+	 
 												@ Prepare and send to convert function
-	/*add r1, sp, #4               				@ Place sp+4 -> r1*/
+	add r1, sp, #4               				@ Place sp+4 -> r1
 	ldr r1, [sp] 								@ Load the temperature read by scanf into r1
 	bl convert	                         		@ Branch out to Convert Function											
 												
@@ -120,7 +121,7 @@ main:
 	bl printf	
 												
 												
-	add sp, sp, #4								@ Discard the integer read by scanf
+	add sp, sp, #+4								@ Discard the integer read by scanf
 	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
 	bx lr                                  		@ return from main using lr
  
