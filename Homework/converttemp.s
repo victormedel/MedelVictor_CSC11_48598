@@ -8,9 +8,9 @@
  
  .data
  
- message1: .asciz "Your Temperature in Fahrenheit %d"
+ message1: .asciz "Enter your temperature in Fahrenheit: %d"
  message2: .asciz "\nYou entered %d degrees Fahrenheit"
- message3: .asciz "\nYour Temperature in Celsius is %d"
+ message3: .asciz "\nYour temperature in Celsius is %d"
  format: .asciz "%d"
  
  
@@ -96,17 +96,20 @@ main:
 												@ Enter Temperature in Fahrenheit
  	ldr r0, address_of_message1					@ r0 <- message1
  	bl printf					 				@ call to printf
- 	ldr r0, address_of_format						@ r0 <- format
+ 	
+	ldr r0, address_of_format						@ r0 <- format
  	mov r1, sp 									@ Set variable of the stack as r1 (Temp in F)	
+	
 	bl scanf				         			@ call to scanf											
 	
-												@ Echo Results
-	add r1, sp, #4               				@ Place sp+4 -> r1
-	ldr r1, [sp] 								@ Load the integer temp in f read by scanf into r1
-	ldr r0, address_of_message2 				@ Set &message2 as the first parameter of printf
-	bl printf
+	/*											@ Echo Results
+	 *add r1, sp, #4               				@ Place sp+4 -> r1
+	 *ldr r1, [sp] 								@ Load the integer temp in f read by scanf into r1
+	 *ldr r0, address_of_message2 				@ Set &message2 as the first parameter of printf
+	 *bl printf
+	 */
 												@ Prepare and send to convert function
-	add r1, sp, #4               				@ Place sp+4 -> r1
+	/*add r1, sp, #4               				@ Place sp+4 -> r1*/
 	ldr r1, [sp] 								@ Load the temperature read by scanf into r1
 	bl convert	                         		@ Branch out to Convert Function											
 												
