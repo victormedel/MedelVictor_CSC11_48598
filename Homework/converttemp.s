@@ -19,7 +19,7 @@
 convert:
 	push {lr}								@ Push lr onto the stack
 											@ The stack is now 4 byte aligned
-	mov, r5, #5								@ r5=5
+	mov r5, #5								@ r5=5
 	sub r1, r1, #32							@ r1=(input-32)
 	mul r1, r5, r1							@ r1=r1*r5
 											
@@ -123,4 +123,8 @@ main:
  
  address_of_message1: .word message1
  address_of_message2: .word message2
+ address_of_message3: .word message3
  address_of_format: .word format												
+ 
+ .global scanf
+ .global printf
