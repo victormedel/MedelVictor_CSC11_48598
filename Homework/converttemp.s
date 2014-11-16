@@ -16,17 +16,24 @@
  
  .text
  
+convert:
+	push {lr}								@ Push lr onto the stack
+											@ The stack is now 4 byte aligned
+	mov, r5, #5								@ r5=5
+	sub r1, r1, #32							@ r1=(input-32)
+	mul r1, r5, r1							@ r1=r1*r5
+											
+	bal division 
+ 
 division:
 	push {lr}								@ Push lr onto the stack
 											@ The stack is now 4 byte aligned
 											
-	mov r4, r1								@ Move input to r4
 	mov r0, #0									
-	mov r1, #5								@ Numerator
-	mov r2, #9								@ Denominator
 	mov r3, #1								@ r3=1, Counter initialized
+	mov r2, #9								@ r2=9 from (5/9)
 	cmp r1, r2				  				@ Compare r1 to r3
-	ble convert								@ If r1 is less than or equal to r3 exit
+	ble exit								@ If r1 is less than or equal to r3 exit
 	bal scaleleft							@ Otherwise continue to scaleleft
 	
 
@@ -70,18 +77,6 @@ addsubcomp:
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 	
-convert:
-	push {lr}								@ Push lr onto the stack
-											@ The stack is now 4 byte aligned
-
-	mov r5, r0								@ Divisor/Quotient from division function
-	mov r6, r1								@ Remainder from division function
-	
-											@ *** Possible check for negative number here ***
-	sub r4, r4, #32							@ Subtract Input by 32
-	mul r0, r4, r5							@ Multiply input by divisor
-	bal exit
-	
 exit:
 	pop {lr}								@ Pop lr from the stack
 	bx lr
@@ -113,7 +108,7 @@ main:
 												@ Prepare and send to convert function
 	add r1, sp, #4               				@ Place sp+4 -> r1
 	ldr r1, [sp] 								@ Load the temperature read by scanf into r1
-	bl division                          		@ Branch out to Convert Function											
+	bl convert	                         		@ Branch out to Convert Function											
 												
 	
 												@ Return Answer
