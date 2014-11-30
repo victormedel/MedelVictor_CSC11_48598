@@ -9,9 +9,9 @@
  
  .data
  
- message1: .asciz "Enter the radius  and velocity: "
+ message1: .asciz "Enter the radius and velocity: "
  message2: .asciz "You entered %d inches for radius and %d feet/sec. for your velocity.\n"
- message3: .asciz "Your Drag Force is %d"
+ message3: .asciz "Your Drag Force is %d\n"
  format: .asciz "%d %d"
  
  .text
