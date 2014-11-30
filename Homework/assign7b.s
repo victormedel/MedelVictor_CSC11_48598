@@ -22,13 +22,13 @@ drag:
 	
 	mov r3, #1									@ Setup for [1/2]
 	mov r3, r3, asr #1							@ r3 = 1/2
-	ldr r4, #0x9B5								@ Setup for (0.00237) [Density]
+	ldr r4, =0x9b5								@ Setup for (0.00237) [Density]
 	mov r4, r4, asr #20							@ r4 = 0.00237
-	ldr r5, #0x3243F7							@ Setup for (3.1415..) [Pi]
+	ldr r5, =0x3243f7							@ Setup for (3.1415..) [Pi]
 	mov r5, r5, asr #20							@ r5 = 3.14159265359
-	ldr r6, #0x1C7								@ Setup for Unit Converstion [1/144]
+	ldr r6, =0x1c7								@ Setup for Unit Converstion [1/144]
 	mov r6, r6, asr #16							@ r6 = (1/144)
-	ldr r7, #0x667								@ Coefficient of Density | r7 = 0.4
+	ldr r7, =0x667								@ Coefficient of Density | r7 = 0.4
 	mul r0, r3, r4								@ r0 = r3 x r4
 	mul r0, r5, r0								@ r0 = r5 x r0
 	mul r0, r6, r0								@ r0 = r6 x r0
