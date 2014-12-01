@@ -20,33 +20,35 @@ drag:
 	push {lr}									@ Push lr onto the stack
 												@ The stack is now 4 byte aligned
 	
-	mov r3, #1									@ Setup for [1/2]
+	ldr r3, #1									@ Setup for [1/2]
 	mov r3, r3, asr #1							@ r3 = 1/2
-	
 	ldr r4, =0x9b5								@ Setup for (0.00237) [Density]
 	mov r4, r4, asr #20							@ r4 = 0.00237
-	
 	ldr r5, =0x3243f7							@ Setup for (3.1415..) [Pi]
 	mov r5, r5, asr #20							@ r5 = 3.14159265359
-	
 	ldr r6, =0x1c7								@ Setup for Unit Converstion [1/144]
 	mov r6, r6, asr #16							@ r6 = (1/144)
-	
 	ldr r7, =0x667								@ Coefficient of Density | r7 = 0.4
 	
-	mov r8, r1
-	mov r9, r2
-	
-	mul r10, r1, r8								@ r10 = radius*radius
-	mul r11, r2, r9								@ r11 = velocity*velocity
-	
-	mul r12, r11, r10							@ r12 = (radius^2)*(velocity^2)
-	mul r10, r3, r4								@ r10 = (1/2)*(Density)
-	mul r13, r5, r6								@ r13 = (1/144)*(Pi)
-	
-	mul r8, r7, r12
-	mul r9, r10, r13
-	mul r0, r8, r9	
+												@ Dynamic Pressure
+	mov r8, r3
+	mul r8, r4, r8
+	mul r8, r2, r8
+	mul r8, r2, r8
+	mov r8, r8, asr #13
+												@ Area Equation
+	mov r9, r5
+	mul r9, r1, r9
+	mov r9, r9, asr #16
+	mul r9, r1, r9
+	mul r9, r6, r9
+	mov r9, r9, ars #12
+												@ Drag Equation
+	mul r10, r8, r9
+	mov r10, r10, asr #16
+	mul r10, r7, r10
+	mov r10, r10, asr #12
+	mov r0, r10
 	
 	pop {lr}									@ Pop lr from the stack
 	bx lr
