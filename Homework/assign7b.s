@@ -20,7 +20,7 @@ drag:
 	push {lr}									@ Push lr onto the stack
 												@ The stack is now 4 byte aligned
 	
-	ldr r3, #1									@ Setup for [1/2]
+	ldr r3, =1									@ Setup for [1/2]
 	mov r3, r3, asr #1							@ r3 = 1/2
 	ldr r4, =0x9b5								@ Setup for (0.00237) [Density]
 	mov r4, r4, asr #20							@ r4 = 0.00237
@@ -42,7 +42,7 @@ drag:
 	mov r9, r9, asr #16
 	mul r9, r1, r9
 	mul r9, r6, r9
-	mov r9, r9, ars #12
+	mov r9, r9, asr #12
 												@ Drag Equation
 	mul r10, r8, r9
 	mov r10, r10, asr #16
