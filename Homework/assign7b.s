@@ -20,35 +20,33 @@ drag:
 	push {lr}									@ Push lr onto the stack
 												@ The stack is now 4 byte aligned
 	
-	ldr r3, =1									@ Setup for [1/2]
-	@mov r3, r3, asr #1							@ r3 = 1/2
-	ldr r4, =0x9b5								@ Setup for (0.00237) [Density]
-	@mov r4, r4, asr #20							@ r4 = 0.00237
-	ldr r5, =0x3243f7							@ Setup for (3.1415..) [Pi]
-	@mov r5, r5, asr #20							@ r5 = 3.14159265359
-	ldr r6, =0x1c7								@ Setup for Unit Converstion [1/144]
-	@mov r6, r6, asr #16							@ r6 = (1/144)
-	ldr r7, =0x667								@ Coefficient of Density | r7 = 0.4
+	ldr r3, =1									@ 1 bit, >>1 [1/2]
+	ldr r4, =0x9b5								@ 12 bits, >>20 [density=0.00237]
+	ldr r5, =0x3243f7							@ pi >>20 [Pi=3.1415...]
+	ldr r6, =0x1c7								@ >>16 [Unit Converstion=1/144]
+	ldr r7, =0x667								@ 1bit >>12 [Coefficient of Density=0.4]
 	
-												@ Dynamic Pressure
-	mov r8, r3
-	mul r8, r4, r8
-	mul r8, r2, r8
-	mul r8, r2, r8
-	mov r8, r8, asr #13
-												@ Area Equation
-	mov r9, r5
-	mul r9, r1, r9
-	mov r9, r9, asr #16
-	mul r9, r1, r9
-	mul r9, r6, r9
-	mov r9, r9, asr #12
+												@ Dynamic Pressure = r8
+	mov r8, r3									@ r8 = 1
+	mul r8, r4, r8								@ r8 = density*1
+	mul r8, r2, r8								@ r8 = velocity*r8
+	mul r8, r2, r8								@ r8 = velocity*r8
+	mov r8, r8, asr #13							@ r8 >>13
+	
+												@ Area Equation = r9
+	mov r9, r5									@ r9 = pi
+	mul r9, r1, r9								@ r9 = radius*r9
+	mov r9, r9, asr #16							@ r9 >>16
+	mul r9, r1, r9								@ r9 = radius*r9
+	mul r9, r6, r9								@ r9 = (1/144)*r9
+	mov r9, r9, asr #12							@ r9 >>12
+	
 												@ Drag Equation
-	mul r10, r8, r9
-	mov r10, r10, asr #16
-	mul r10, r7, r10
-	mov r10, r10, asr #12
-	mov r0, r10
+	mul r10, r8, r9								@ r10 = (dynamic pressure)*(area)
+	mov r10, r10, asr #16						@ r10 >> 16
+	mul r10, r7, r10							@ r10 = (Coeff. of Density)*r10
+	mov r10, r10, asr #12						@ r10 >> 12
+	mov r0, r10									@ r0 = r10
 	
 	pop {lr}									@ Pop lr from the stack
 	bx lr
@@ -78,7 +76,7 @@ main:
 	add r1, sp, #4               				@ Place sp+4 -> r1
 	ldr r1, [r1]								@ Load the integer radius read by scanf into r1
 	ldr r2, [sp] 								@ Load the integer velocity read by scanf into r2
-	bl drag		                         		@ Branchout to Division Funtion
+	bl drag		                         		@ Branchout to Drag Funtion
 	
 	mov r1, r0                         			@ r1 <- r0 | return of drag force
 	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
