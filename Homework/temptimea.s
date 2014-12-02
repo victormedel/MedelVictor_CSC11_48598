@@ -8,17 +8,35 @@
  
  .data
  
- message1: .asciz "Enter your temperature in Fahrenheit: "
- message2: .asciz "You entered %d degrees Fahrenheit\n"
- message3: .asciz "Your temperature in Celsius is %d\n"
- format: .asciz "%d"
+ begTime: .word 0
+ endTime: .word 0
+ 
+ message1: .asciz "Converting 50 degrees Fahrenheit in a Loop of 1000000"
+ message2: .asciz "Total Time: %d seconds"
+
  
  
  .text
 
+loop:
+	ldr r6, =1000000
+	
+    mov r0, #0								@ begTime=time(0)
+    bl time									@ Time function
+    ldr r7, address_of_begTime				@ Point r7 to address of begTime
+    str r0, [r7]							@ Store the beginning of time in r7
+	bal for
+
+for:
+	cmp r6, #0								@ Does r6 = 0
+	beq exit								@ If it does exit
+	bal convert								@ Otherwise continue to convert function
+
 convert:
 	push {lr}								@ Push lr onto the stack
 											@ The stack is now 4 byte aligned
+	sub r6, r6, #1							@ r6 = r6 - 1
+	mov r1, #50								@ Initialize temperature for test purposes
 	mov r5, #5								@ r5=5
 	sub r1, r1, #32							@ r1=(input-32)
 	mul r1, r5, r1							@ r1=r1*r5									
@@ -75,10 +93,15 @@ addsubcomp:
 	push {lr}								@ Push lr onto the stack
 	cmp r3, #1 								@ Compare if r3 is greater than 1
 	bge addsub								@ If r3 greater than 1 branch back to addsub
+	bal for
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 	
 exit:
+    mov r0, #0	 							@endTime=time(0);
+    bl time
+    ldr r7, address_of_endTime
+    str r0, [r7]
 	pop {lr}								@ Pop lr from the stack
 	bx lr
 	
@@ -86,48 +109,30 @@ exit:
 	
 	
 	.global main
-main:
-	str lr, [sp,#-4]! 							@ Push lr onto the top of the stack
-	sub sp, sp, #4 								@ Make room for one 4 byte integer in the stack
-												@ In these 4 bytes we will keep the number
-												@ entered by the user
+main:									
 												
+ 	ldr r0, address_of_message1					@ Setup and printout message 1
+	bl printf
 	
-												@ Enter Temperature in Fahrenheit
- 	ldr r0, address_of_message1					@ r0 <- message1
- 	bl printf					 				@ call to printf
- 	
-	ldr r0, address_of_format					@ r0 <- format
- 	mov r1, sp 									@ Set variable of the stack as r1 (Temp in F)	
-	
-	bl scanf				         			@ call to scanf											
-	
-												@ Echo Results
-	 add r1, sp, #4               				@ Place sp+4 -> r1
-	 ldr r1, [sp] 								@ Load the integer temp in f read by scanf into r1
-	 ldr r0, address_of_message2 				@ Set &message2 as the first parameter of printf
-	 bl printf
-	 
-												@ Prepare and send to convert function
-	add r1, sp, #4               				@ Place sp+4 -> r1
-	ldr r1, [sp] 								@ Load the temperature read by scanf into r1
-	bl convert	                         		@ Branch out to Convert Function											
+	bl loop	                         			@ Branch out to Loop Function											
 												
-	
-												@ Return Answer
-	mov r1, r0                         			@ r1 <- r0 | convert function returning r0
-	ldr r0, address_of_message3 				@ Set &message3 as the first parameter of printf
-	bl printf	
+												@ Result
+	ldr r2, address_of_endTime
+    ldr r2, [r2]
+    ldr r1, address_of_begTime
+    ldr r1, [r1]
+    sub r1, r2, r1
+    ldr r0, address_of_message2
+    bl printf
 												
-												
-	add sp, sp, #+4								@ Discard the integer read by scanf
-	ldr lr, [sp], #+4 							@ Pop the top of the stack and put it in lr
 	bx lr                                  		@ return from main using lr
  
  address_of_message1: .word message1
  address_of_message2: .word message2
- address_of_message3: .word message3
- address_of_format: .word format												
+
+ address_of_begTime: .word begTime
+ address_of_endTime: .word endTime
  
  .global scanf
  .global printf
+ .global time
