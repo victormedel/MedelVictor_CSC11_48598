@@ -215,6 +215,7 @@ regular:
 									@ End Ace, Jack, Queen , and King Selection
  
 									@ Card Selector
+	.global card_face
  card_face:	 						@ Create a random number
 	
 	
@@ -229,7 +230,7 @@ regular:
 	bl card_suit
 	
 
-	
+	.global card_suit
  card_suit:	
 	
 	
@@ -243,7 +244,7 @@ regular:
 	bl suit1
 	
 	
-	
+	.global ask
  ask:
 	str lr, [sp,#-4]! 				@ Push lr onto the top of the stack
 	sub sp, sp, #4 					@ Make room for one 4 byte integer in the stack
@@ -264,21 +265,19 @@ regular:
 	ldr lr, [sp], #+4 				@ Pop the top of the stack and put it in lr
 	bx lr                           @ return from main using lr
 
+	.global compare
  compare:	
-	
 	cmp r1, #0
 	beq additionalpc
 	bne comparehouse
 	
-	
+	.global comparehouse
  comparehouse:
-
 	cmp r8, #16
 	blt additionalhc
 
- 
+	.global additionalpc
  additionalpc:
-	
 									@ Additional card dealt to the player
 	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf	
@@ -293,9 +292,8 @@ regular:
 	bl printf
 	bl comparehouse
 
-	
+	.global additionalhc
  additionalhc:
-	
 									@ Additional card dealt to the player
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf 						@ Call printf	
