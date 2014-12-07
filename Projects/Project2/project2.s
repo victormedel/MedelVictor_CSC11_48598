@@ -329,9 +329,9 @@ regular:
 	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf	
 	
-	bl card_face
+	bal card_face
 	mov r5, r5
-	bl card_face
+	bal card_face
 	mov r6, r5
 	
 	cmp r5, #11
@@ -348,9 +348,9 @@ regular:
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf 						@ Call printf	
 	
-	bl card_face
+	bal card_face
 	mov r5, r5
-	bl card_face
+	bal card_face
 	mov r6, r5
 	
 	cmp r5, #11
@@ -362,7 +362,7 @@ regular:
 	mov r1, r8
 	ldr r0, address_of_message6		@ Set message6 as the first parameter of printf
 	bl printf
-	bl ask
+	bal ask
 	
 	
 scorecomp0:							@ The following compare numonics are used to compare score and determine winner
