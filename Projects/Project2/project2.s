@@ -36,7 +36,7 @@
  king: .asciz "King of "
  
  format: .asciz "%d"
- bet_format: .asciz "%f"
+
  
  .text
 									@ Start of Randomize Division
@@ -425,6 +425,8 @@ exit:
  address_of_jack: .word jack
  address_of_queen: .word queen
  address_of_king: .word king
+ 
+ address_of_format: .word format
  
  									@ External Functions
  .global printf
