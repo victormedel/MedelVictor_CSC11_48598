@@ -150,31 +150,31 @@ spade:
 				
 face1:
 	cmp r1, #1
-	ble ace
+	ble aces
 	bal face2
 
 face2:
 	cmp r1, #14
-	bge king
+	bge kings
 	bal face3
 
 face3:
 	cmp r1, #13
-	bge queen
+	bge queens
 	bal face4
 
 face4:
 	cmp r1, #12
-	bge jack
+	bge jacks
 	bal face5
 
 face5:
 	cmp r1, #11
-	bge ace
+	bge aces
 	bal regular
 	
 									@ Ace, Jack, Queen , and King Selection
-ace:
+aces:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_ace			@ Set ace as the first parameter of printf
 	bl printf 						@ Call printf
@@ -182,7 +182,7 @@ ace:
 	bx lr 	
 	
 	
-jack:
+jacks:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_jack			@ Set jack as the first parameter of printf
 	bl printf 						@ Call printf
@@ -190,7 +190,7 @@ jack:
 	bx lr 	
 
 
-queen:
+queens:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_queen		@ Set queen as the first parameter of printf
 	bl printf 						@ Call printf
@@ -198,7 +198,7 @@ queen:
 	bx lr 	
 	
 
-king:
+kings:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_king			@ Set king as the first parameter of printf
 	bl printf 						@ Call printf
