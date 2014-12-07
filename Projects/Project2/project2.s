@@ -216,7 +216,7 @@ regular:
  
 									@ Card Selector
  card_face:	 						@ Create a random number
-	push {lr} 						@ Push lr onto the stack
+	
 	
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
@@ -228,11 +228,10 @@ regular:
 	bl face1
 	bl card_suit
 	
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 
+
 	
  card_suit:	
-	push {lr} 						@ Push lr onto the stack
+	
 	
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
@@ -243,8 +242,7 @@ regular:
 	mov r10, r1
 	bl suit1
 	
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 
+	
 	
  ask:
 	str lr, [sp,#-4]! 				@ Push lr onto the top of the stack
@@ -267,22 +265,20 @@ regular:
 	bx lr                           @ return from main using lr
 
  compare:	
-	push {lr} 						@ Push lr onto the stack
+	
 	cmp r1, #0
 	beq additionalpc
 	bne comparehouse
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 
+	
 	
  comparehouse:
-	push {lr} 						@ Push lr onto the stack
+
 	cmp r8, #16
 	blt additionalhc
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 
+
  
  additionalpc:
-	push {lr} 						@ Push lr onto the stack
+	
 									@ Additional card dealt to the player
 	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf	
@@ -296,11 +292,10 @@ regular:
 	ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
 	bl printf
 	bl comparehouse
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 	
+
 	
  additionalhc:
-	push {lr} 						@ Push lr onto the stack
+	
 									@ Additional card dealt to the player
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf 						@ Call printf	
@@ -313,8 +308,7 @@ regular:
 	mov r1, r8
 	ldr r0, address_of_message6		@ Set message6 as the first parameter of printf
 	bl printf
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 		
+		
  
  	
   .global main
@@ -329,9 +323,9 @@ regular:
 	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
 	bl printf 						@ Call printf	
 	
-	bal card_face
+	bl card_face
 	mov r5, r5
-	bal card_face
+	bl card_face
 	mov r6, r5
 	
 	cmp r5, #11
@@ -348,9 +342,9 @@ regular:
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf 						@ Call printf	
 	
-	bal card_face
+	bl card_face
 	mov r5, r5
-	bal card_face
+	bl card_face
 	mov r6, r5
 	
 	cmp r5, #11
@@ -362,7 +356,7 @@ regular:
 	mov r1, r8
 	ldr r0, address_of_message6		@ Set message6 as the first parameter of printf
 	bl printf
-	bal ask
+	bl ask
 	
 	
 scorecomp0:							@ The following compare numonics are used to compare score and determine winner
@@ -383,16 +377,12 @@ scorecomp:
 youwin:	
 	ldr r0, address_of_win
 	bl printf
-	bal exit
+	bl exit
 
 youlose:
 	ldr r0, address_of_lose
 	bl printf
-	bal exit
-	
-	@add r4,#1
-	@cmp r4,#1						@ How many hands do you want the dealer to deal?
-	@blt face1
+	bl exit
 
 exit:	
 	pop {lr} 						@ Pop the top of the stack and put it in lr
