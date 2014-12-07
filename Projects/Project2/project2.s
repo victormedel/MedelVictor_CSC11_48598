@@ -7,7 +7,7 @@
  
  .data
  
- message0: .asciz "You have been delt the following card(s): "
+ message0: .asciz "You have been delt the following card(s): \n"
  message1: .asciz "%d of "
  message2: .asciz "%d | "
  message3: .asciz "%d of "
@@ -16,7 +16,7 @@
  message6: .asciz "Would you like another card? \n(Enter 0 for yes, anything else for no.): "
 
  
- message50: .asciz "The house has been delt the following cards: "
+ message50: .asciz "The house has been delt the following cards: \n"
  message7: .asciz "%d of "
  message8: .asciz "%d | "
  message9: .asciz "%d of "
@@ -299,76 +299,7 @@ suit2:
 	mov r1, r7
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf
-	
-	cmp r7, #21						@ Compare players score with 21
-	blt	ask							@ Ask player if the would like another card
-	bge	houseface1					@ Otherwise display house's hand
-	
-	.global ask
-ask:
-	str lr, [sp,#-4]! 				@ Push lr onto the top of the stack
-	sub sp, sp, #4 					@ Make room for one 4 byte integer in the stack
-									@ In these 4 bytes we will keep the number
-									@ entered by the user
-	
- 	ldr r0, address_of_message6		@ r0 <- message6
- 	bl printf					 	@ call to printf
- 	ldr r0, address_of_format		@ r0 <- scan_pattern
- 	mov r1, sp 						@ Set variable of the stack as 	
-	bl scanf				        @ call to scanf	
-	
-	add r1, sp, #4               	@ Place sp+4 -> r1
-	ldr r1, [sp] 					@ Load the integer b read by scanf into r2
-	bl compare
-	
-	add sp, sp, #4					@ Discard the integer read by scanf
-	ldr lr, [sp], #+4 				@ Pop the top of the stack and put it in lr
-	bx lr                           @ return from main using lr
 
-	.global compare
-compare:	
-	cmp r1, #0
-	beq face3
-	bne houseface1
-
-	
-	.global face3
-face3:	 							@ Create a random number
-	bl rand 						@ Call rand
-	mov r1,r0,asr #1 				@ In case random return is negative
-	mov r2,#14 						@ Move 14 to r2
-									@ We want rand()%14+1 so cal division function with rand()%14
-	bl division						@ Call division function to get remainder
-	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	mov r8, r1
-	
-	@ldr r0, address_of_message1		@ Set message3 as the first parameter of printf
-	@bl printf 						@ Call printf
-	bl faceselect
-	bl suit3
-
-	.global suit3
-suit3:	
-	bl rand 						@ Call rand
-	mov r1,r0,asr #1 				@ In case random return is negative
-	mov r2,#4 						@ Move 4 to r2
-									@ We want rand()%4+1 so cal division function with rand()%4
-	bl division						@ Call division function to get remainder
-	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
-	mov r10, r1
-	@ldr r0, address_of_message2		@ Set message4 as the first parameter of printf
-	@bl printf 						@ Call printf
-	bl suitselect
-	bal addhand
-
-addhand:	
-	cmp r7, #11
-	movgt r7, #10
-	add r7, r7, r8					@ Add players score and print it out
-	mov r1, r7
-	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
-	bl printf
-	bal houseface1	
 
 	.global houseface1
 houseface1:	 							@ Create a random number
@@ -428,6 +359,85 @@ housesuit2:
 	bl suitselect
 	bal houseface3
 	
+	cmp r5, #11
+	movgt r5, #10
+	cmp r6, #11
+	movgt r6, #10
+	
+	add r9, r6, r5					@ Add players score and print it out
+	mov r1, r9
+	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
+	bl printf
+
+cmp r7, #21						@ Compare players score with 21
+	blt	ask							@ Ask player if the would like another card
+	bge	scorecomp0
+	
+	.global ask
+ask:
+	str lr, [sp,#-4]! 				@ Push lr onto the top of the stack
+	sub sp, sp, #4 					@ Make room for one 4 byte integer in the stack
+									@ In these 4 bytes we will keep the number
+									@ entered by the user
+	
+ 	ldr r0, address_of_message6		@ r0 <- message6
+ 	bl printf					 	@ call to printf
+ 	ldr r0, address_of_format		@ r0 <- scan_pattern
+ 	mov r1, sp 						@ Set variable of the stack as 	
+	bl scanf				        @ call to scanf	
+	
+	add r1, sp, #4               	@ Place sp+4 -> r1
+	ldr r1, [sp] 					@ Load the integer b read by scanf into r2
+	bl compare
+	
+	add sp, sp, #4					@ Discard the integer read by scanf
+	ldr lr, [sp], #+4 				@ Pop the top of the stack and put it in lr
+	bx lr                           @ return from main using lr
+
+	.global compare
+compare:	
+	cmp r1, #0
+	beq face3
+	bne scorecomp0
+
+	
+	.global face3
+face3:	 							@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r8, r1
+
+	bl faceselect
+	bl suit3
+
+	.global suit3
+suit3:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so cal division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	@ldr r0, address_of_message2		@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
+	bal addhand
+
+addhand:	
+	cmp r8, #11
+	movgt r8, #10
+	add r7, r7, r8					@ Add players score and print it out
+	mov r1, r7
+	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
+	bl printf
+	bal houseface3	
+
+
 	.global houseface3
 houseface3:	 						@ Create a random number
 	bl rand 						@ Call rand
@@ -436,10 +446,8 @@ houseface3:	 						@ Create a random number
 									@ We want rand()%14+1 so cal division function with rand()%14
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
-	mov r7, r1	
-	
-	@ldr r0, address_of_message11	@ Set message3 as the first parameter of printf
-	@bl printf 						@ Call printf
+	mov r5, r1	
+
 	bl faceselect
 	bl housesuit3
 
@@ -460,12 +468,8 @@ housesuit3:
 addhand2:	
 	cmp r5, #11
 	movgt r5, #10
-	cmp r6, #11
-	movgt r6, #10
-	cmp r7, #11
-	movgt r7, #10
-	add r9, r5, r6					@ Add players score and print it out
-	add r9, r9, r7
+	
+	add r9, r5, r9					@ Add house's score and print it out
 	mov r1, r9
 	ldr r0, address_of_message13	@ Set message5 as the first parameter of printf
 	bl printf
