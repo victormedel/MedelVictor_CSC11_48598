@@ -211,14 +211,11 @@ regular:
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 		
- 
 									@ End Ace, Jack, Queen , and King Selection
- 
-									@ Card Selector
-	.global card_face
+									
+	
  card_face:	 						@ Create a random number
-	
-	
+	push {lr} 						@ Push lr onto the stack
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
 	mov r2,#14 						@ Move 14 to r2
@@ -228,12 +225,12 @@ regular:
 	mov r5, r1
 	bl face1
 	bl card_suit
-	
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 		
 
-	.global card_suit
+	
  card_suit:	
-	
-	
+	push {lr} 						@ Push lr onto the stack
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
 	mov r2,#4 						@ Move 4 to r2
@@ -242,9 +239,10 @@ regular:
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
 	bl suit1
+	pop {lr} 						@ Pop lr from the stack
+	bx lr 		
 	
 	
-	.global ask
  ask:
 	str lr, [sp,#-4]! 				@ Push lr onto the top of the stack
 	sub sp, sp, #4 					@ Make room for one 4 byte integer in the stack
@@ -265,18 +263,18 @@ regular:
 	ldr lr, [sp], #+4 				@ Pop the top of the stack and put it in lr
 	bx lr                           @ return from main using lr
 
-	.global compare
+	
  compare:	
 	cmp r1, #0
 	beq additionalpc
 	bne comparehouse
 	
-	.global comparehouse
+	
  comparehouse:
 	cmp r8, #16
 	blt additionalhc
 
-	.global additionalpc
+	
  additionalpc:
 									@ Additional card dealt to the player
 	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
@@ -292,7 +290,7 @@ regular:
 	bl printf
 	bl comparehouse
 
-	.global additionalhc
+	
  additionalhc:
 									@ Additional card dealt to the player
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
@@ -307,8 +305,6 @@ regular:
 	ldr r0, address_of_message6		@ Set message6 as the first parameter of printf
 	bl printf
 		
- 
- 	
   .global main
  main:
  
@@ -318,10 +314,10 @@ regular:
 	bl srand 						@ Call srand
 	
 									@ Initial cards dealt to the player
-	@ldr r0, address_of_message3	@ Set message3 as the first parameter of printf
-	@bl printf 						@ Call printf	
+	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
+	bl printf 						@ Call printf	
 	
-	bl card_face
+	bal card_face
 	mov r5, r5
 	bl card_face
 	mov r6, r5
