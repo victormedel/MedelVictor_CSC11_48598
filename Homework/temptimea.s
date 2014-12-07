@@ -10,7 +10,6 @@
  
  begTime: .word 0
  endTime: .word 0
- 
  message1: .asciz "Converting 50 degrees Fahrenheit in a Loop of 1000000"
  message2: .asciz "Total Time: %d seconds"
 
