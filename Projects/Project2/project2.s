@@ -318,8 +318,8 @@ regular:
 	bl srand 						@ Call srand
 	
 									@ Initial cards dealt to the player
-	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
-	bl printf 						@ Call printf	
+	@ldr r0, address_of_message3	@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf	
 	
 	bl card_face
 	mov r5, r5
