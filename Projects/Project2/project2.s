@@ -95,25 +95,25 @@ end:
  
 suit1:
 	cmp r1, #1
-	ble clubs
+	ble club
 	bal suit2
 
 suit2:
 	cmp r1, #2
-	ble diamonds
+	ble diamond
 	bal suit3
 
 suit3:
 	cmp r1, #3
-	ble hearts
+	ble heart
 	bal suit4
 
 suit4:
 	cmp r1, #4
-	ble spades
+	ble spade
 	bal exit
 
-clubs:
+club:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_clubs		@ Set clubs as the first parameter of printf
 	bl printf 						@ Call printf
@@ -121,7 +121,7 @@ clubs:
 	bx lr 	
 	
 	
-diamonds:
+diamond:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_diamonds		@ Set diamonds as the first parameter of printf
 	bl printf 						@ Call printf
@@ -129,7 +129,7 @@ diamonds:
 	bx lr 	
 
 
-hearts:
+heart:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_hearts		@ Set hearts as the first parameter of printf
 	bl printf 						@ Call printf
@@ -137,7 +137,7 @@ hearts:
 	bx lr 	
 	
 
-spades:
+spade:
 	push {lr} 						@ Push lr onto the stack
 	ldr r0, address_of_spades		@ Set spades as the first parameter of printf
 	bl printf 						@ Call printf
