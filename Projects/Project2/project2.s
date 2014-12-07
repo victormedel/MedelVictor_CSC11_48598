@@ -300,9 +300,11 @@ suit2:
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf
 
-
+	ldr r0, address_of_message50	@ Set message50 as the first parameter of printf
+	bl printf 						@ Call printf	
+	
 	.global houseface1
-houseface1:	 							@ Create a random number
+houseface1:	 						@ Create a random number
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
 	mov r2,#14 						@ Move 14 to r2
@@ -357,14 +359,13 @@ housesuit2:
 	@ldr r0, address_of_message10	@ Set message4 as the first parameter of printf
 	@bl printf 						@ Call printf
 	bl suitselect
-	bal houseface3
+	
 	
 	cmp r5, #11
 	movgt r5, #10
 	cmp r6, #11
 	movgt r6, #10
-	
-	add r9, r6, r5					@ Add players score and print it out
+	add r9, r6, r5					@ Add house's score and print it out
 	mov r1, r9
 	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
 	bl printf
