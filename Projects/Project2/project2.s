@@ -274,7 +274,7 @@ regular:
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 
 	
- comparehouse
+ comparehouse:
 	push {lr} 						@ Push lr onto the stack
 	cmp r8, #16
 	blt additionalhc
