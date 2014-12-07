@@ -1,56 +1,48 @@
-/* 
+/*
  * Author: Victor Medel
- * Created on December 6, 2014
- * CSC11 Project 2 - Simple Game of Black Jack
+ * Created on December 5, 2014
+ * CSC11 Project 1 - Simple Game of Black Jack
  *
  */
  
  .data
  
- message1: .asciz "You have $50. Place your bet to start the game: $"
- message2: .asciz "\nYou placed a bet of $%f"
- message3: .asciz "\nYou have been dealt the following card(s):\n"
- message4: .asciz "Your current score is %d\n"
+ message0: .asciz "You have been delt the following card(s): "
+ message1: .asciz "%d of "
+ message2: .asciz "%d | "
+ message3: .asciz "%d of "
+ message4: .asciz "%d"
+ message5: .asciz "\nYour current score is %d\n"
+ message6: .asciz "Would you like another card? \n(Enter 0 for yes, anything else for no.): "
 
- message5: .asciz "\nThe House has been dealt the following card(s):\n"
- message6: .asciz "The house's score is %d\n"
-
- message7: .asciz "Would you like another card? (0 for yes, 1 for no): "
- message8: .asciz "\The house has been dealt the following additional cards:\n"
  
+ message50: .asciz "The house has been delt the following cards: "
+ message7: .asciz "%d of "
+ message8: .asciz "%d | "
+ message9: .asciz "%d of "
+ message10: .asciz "%d | "
+ message11: .asciz "%d of "
+ message12: .asciz "%d\n"
+ message13: .asciz "\nThe House's score is %d\n"
  
- face: .asciz "%d of "
- suit: .asciz "%d |"
+ message14: .asciz "You Win!\n"
+ message15: .asciz "You Lose\n"
  
- win: .asciz "You Win!\n"
- lose: .asciz "You Lose\n"
+ message16: .asciz "Clubs | "
+ message17: .asciz "Diamonds | "
+ message18: .asciz "Hearts | "
+ message19: .asciz "Spades | "
  
- clubs: .asciz "Clubs | "
- diamonds: .asciz "Diamonds | "
- hearts: .asciz "Hearts | "
- spades: .asciz "Spades | "
- 
- ace: .asciz "Ace of "
- jack: .asciz "Jack of "
- queen: .asciz "Queen of "
- king: .asciz "King of "
+ message20: .asciz "Ace of "
+ message21: .asciz "Jack of "
+ message22: .asciz "Queen of "
+ message23: .asciz "King of "
  
  format: .asciz "%d"
-
  
  .text
-									@ Start of Randomize Division
- division:
-	push {lr} 						@ Push lr onto the stack
-									@ Determine the quotient and remainder
-	mov r0,#0
-	mov r3,#1
-	cmp r1,r2
-	blt end
-	bl scaleLeft
-	bl addSub
  
- scaleRight:
+scaleRight:
 	push {lr} 						@ Push lr onto the stack
 		doWhile_r1_lt_r2: 			@ Shift right until just under the remainder
 			mov r3,r3,ASR #1; 		@ Division counter
@@ -61,7 +53,7 @@
 	bx lr 							
 
 
- addSub:
+addSub:
 	push {lr} 						@ Push lr onto the stack
 	doWhile_r3_ge_1:
 		add r0,r0,r3
@@ -73,7 +65,7 @@
 	bx lr 							 
 
 	
- scaleLeft:
+scaleLeft:
 	push {lr} 						@ Push lr onto the stack
 		doWhile_r1_ge_r2: 			@ Scale left till overshoot with remainder
 			mov r3,r3,LSL #1 		@ scale factor
@@ -86,144 +78,240 @@
 	bx lr							
 
 	
+division:
+	push {lr} 						@ Push lr onto the stack
+									@ Determine the quotient and remainder
+	mov r0,#0
+	mov r3,#1
+	cmp r1,r2
+	blt end
+	bl scaleLeft
+	bl addSub
+
 end:
 	pop {lr} 						@ Pop lr from the stack
-	bx lr 				
-									@ End of Randomizer Division
+	bx lr 							
+		
  
-									@ Suit Selection
+				@Suit Selection
  
-suit1:
+suitselect:
 	cmp r1, #1
-	ble club
-	bal suit2
+	ble clubs
+	bal select
+	
 
-suit2:
+select:
 	cmp r1, #2
-	ble diamond
-	bal suit3
+	ble diamonds
+	bal select1
 
-suit3:
+
+select1:
 	cmp r1, #3
-	ble heart
-	bal suit4
+	ble hearts
+	bal select2
+	
 
-suit4:
+select2:
 	cmp r1, #4
-	ble spade
+	ble spades
 	bal exit
 
-club:
+clubs:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_clubs		@ Set clubs as the first parameter of printf
+	ldr r0, address_of_message16	@ Set message16 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 	
 	
-diamond:
+diamonds:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_diamonds		@ Set diamonds as the first parameter of printf
+	ldr r0, address_of_message17	@ Set message17 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 
 
-heart:
+hearts:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_hearts		@ Set hearts as the first parameter of printf
+	ldr r0, address_of_message18	@ Set message18 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 	
 
-spade:
+spades:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_spades		@ Set spades as the first parameter of printf
+	ldr r0, address_of_message19	@ Set message19 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
  
-									@End of Suit Selection
+				@End of Suit Selection
 				
-									@Ace, Jack, Queen, and King Selection
+				@Ace, Jack, Queen, and King Selection
 				
-face1:
+faceselect:
 	cmp r1, #1
-	ble aces
-	bal face2
+	ble ace
+	bal facesel
 
-face2:
+facesel:
 	cmp r1, #14
-	bge kings
-	bal face3
+	bge king
+	bal facesel1
 
-face3:
+facesel1:
 	cmp r1, #13
-	bge queens
-	bal face4
+	bge queen
+	bal facesel2
 
-face4:
+facesel2:
 	cmp r1, #12
-	bge jacks
-	bal face5
+	bge jack
+	bal facesel3
 
-face5:
+facesel3:
 	cmp r1, #11
-	bge aces
+	bge ace
 	bal regular
 	
-									@ Ace, Jack, Queen , and King Selection
-aces:
+ace:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_ace			@ Set ace as the first parameter of printf
+	ldr r0, address_of_message20	@ Set message20 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 	
 	
-jacks:
+jack:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_jack			@ Set jack as the first parameter of printf
+	ldr r0, address_of_message21	@ Set message21 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 
 
-queens:
+queen:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_queen		@ Set queen as the first parameter of printf
+	ldr r0, address_of_message22	@ Set message22 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 	
 
-kings:
+king:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_king			@ Set king as the first parameter of printf
+	ldr r0, address_of_message23	@ Set message23 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 	
 	
 regular:
 	push {lr} 						@ Push lr onto the stack
-	ldr r0, address_of_face			@ Set face as the first parameter of printf
+	ldr r0, address_of_message1		@ Set message19 as the first parameter of printf
 	bl printf 						@ Call printf
 	pop {lr} 						@ Pop lr from the stack
 	bx lr 		
-									@ End Ace, Jack, Queen , and King Selection
-									
+ 
+				@ End Ace, Jack, Queen , and King Selection
+				
+				
+ 
+	.global main
+main:
+	push {lr}	 					@ Push lr onto the top of the stack	
+	mov r0,#0 						@ Set time(0)
+	bl time 						@ Call time 
+	bl srand 						@ Call srand
 	
+	mov r4,#0 						@ Setup loop counter
 
+	ldr r0, address_of_message0		@ Set message0 as the first parameter of printf
+	bl printf 						@ Call printf	
 	
+	.global face1
+face1:	 							@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r5, r1
 	
- ask:
+	@ldr r0, address_of_message1	@ Set message1 as the first parameter of printf
+	@bl printf 						@ Call printf	
+	bl faceselect
+
+	bl suit1
+
+	.global suit1
+suit1:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so call division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	@ldr r0, address_of_message2		@ Set message2 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
+	bl face2
+
+	.global face2
+face2:	 							@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r6, r1
+	
+	@ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl faceselect
+	bl suit2
+
+	.global suit2
+suit2:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so cal division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	@ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
+	
+	cmp r5, #11
+	movgt r5, #10
+	cmp r6, #11
+	movgt r6, #10
+	
+	add r7, r6, r5					@ Add players score and print it out
+	mov r1, r7
+	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
+	bl printf
+	
+	cmp r7, #21						@ Compare players score with 21
+	blt	ask							@ Ask player if the would like another card
+	bge	houseface1					@ Otherwise display house's hand
+	
+	.global ask
+ask:
 	str lr, [sp,#-4]! 				@ Push lr onto the top of the stack
 	sub sp, sp, #4 					@ Make room for one 4 byte integer in the stack
 									@ In these 4 bytes we will keep the number
 									@ entered by the user
 	
- 	ldr r0, address_of_message7		@ r0 <- message6
+ 	ldr r0, address_of_message6		@ r0 <- message6
  	bl printf					 	@ call to printf
  	ldr r0, address_of_format		@ r0 <- scan_pattern
  	mov r1, sp 						@ Set variable of the stack as 	
@@ -237,64 +325,53 @@ regular:
 	ldr lr, [sp], #+4 				@ Pop the top of the stack and put it in lr
 	bx lr                           @ return from main using lr
 
-	
- compare:	
+	.global compare
+compare:	
 	cmp r1, #0
-	beq additionalpc
-	bne comparehouse
-	
-	
- comparehouse:
-	cmp r8, #16
-	blt additionalhc
+	beq face3
+	bne houseface1
 
 	
- additionalpc:
-									@ Additional card dealt to the player
-	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
-	bl printf 						@ Call printf	
-	bl card_face
-		
-	cmp r5, #11
-	movgt r5, #10
+	.global face3
+face3:	 							@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r8, r1
 	
-	add r7, r7, r5					@ Add player's score and print it out
-	mov r1, r7
-	ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
-	bl printf
-	bl comparehouse
+	@ldr r0, address_of_message1		@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl faceselect
+	bl suit3
 
-	
- additionalhc:
-									@ Additional card dealt to the player
-	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
-	bl printf 						@ Call printf	
-	bl card_face
-		
-	cmp r5, #11
-	movgt r5, #10
-	
-	add r8, r8, r5					@ Add player's score and print it out
-	mov r1, r8
-	ldr r0, address_of_message6		@ Set message6 as the first parameter of printf
-	bl printf
-
-	
- card_suit:	
-	push {lr} 						@ Push lr onto the stack
+	.global suit3
+suit3:	
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
 	mov r2,#4 						@ Move 4 to r2
-									@ We want rand()%4+1 so call division function with rand()%4
+									@ We want rand()%4+1 so cal division function with rand()%4
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
 	mov r10, r1
-	bl suit1
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 		
- 
- card_face:	 						@ Create a random number
-	push {lr} 						@ Push lr onto the stack
+	@ldr r0, address_of_message2		@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
+	bal addhand
+
+addhand:	
+	cmp r7, #11
+	movgt r7, #10
+	add r7, r7, r8					@ Add players score and print it out
+	mov r1, r7
+	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
+	bl printf
+	bal houseface1	
+
+	.global houseface1
+houseface1:	 							@ Create a random number
 	bl rand 						@ Call rand
 	mov r1,r0,asr #1 				@ In case random return is negative
 	mov r2,#14 						@ Move 14 to r2
@@ -302,59 +379,97 @@ regular:
 	bl division						@ Call division function to get remainder
 	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
 	mov r5, r1
-	bl face1
-	bl card_suit
-	pop {lr} 						@ Pop lr from the stack
-	bx lr 		
+	
+	@ldr r0, address_of_message7		@ Set message1 as the first parameter of printf
+	@bl printf 						@ Call printf	
+	bl faceselect
+	bl housesuit1
 
+	.global housesuit1
+housesuit1:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so call division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	@ldr r0, address_of_message8		@ Set message2 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
+	bl houseface2
+
+	.global houseface2
+houseface2:	 						@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r6, r1	
 	
-  .global main
- main:
- 
-	push {lr}	 					@ Push lr onto the top of the stack	
-	mov r0,#0 						@ Set time(0)
-	bl time 						@ Call time 
-	bl srand 						@ Call srand
+	@ldr r0, address_of_message9		@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl faceselect
+	bl housesuit2
+
+	.global housesuit2
+housesuit2:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so cal division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	@ldr r0, address_of_message10	@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
+	bal houseface3
 	
-									@ Initial cards dealt to the player
-	ldr r0, address_of_message3		@ Set message3 as the first parameter of printf
-	bl printf 						@ Call printf	
+	.global houseface3
+houseface3:	 						@ Create a random number
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#14 						@ Move 14 to r2
+									@ We want rand()%14+1 so cal division function with rand()%14
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 14
+	mov r7, r1	
 	
-	bl card_face
-	mov r5, r5
-	bl card_face
-	mov r6, r5
+	@ldr r0, address_of_message11	@ Set message3 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl faceselect
+	bl housesuit3
+
+	.global housesuit3
+housesuit3:	
+	bl rand 						@ Call rand
+	mov r1,r0,asr #1 				@ In case random return is negative
+	mov r2,#4 						@ Move 4 to r2
+									@ We want rand()%4+1 so cal division function with rand()%4
+	bl division						@ Call division function to get remainder
+	add r1,#1 						@ Remainder in r1 so add 1 giving between 1 and 4
+	mov r10, r1
+	@ldr r0, address_of_message12	@ Set message4 as the first parameter of printf
+	@bl printf 						@ Call printf
+	bl suitselect
+	bal addhand2
 	
+addhand2:	
 	cmp r5, #11
 	movgt r5, #10
 	cmp r6, #11
 	movgt r6, #10
-	
-	add r7, r6, r5					@ Add player's score and print it out
-	mov r1, r7
-	ldr r0, address_of_message4		@ Set message4 as the first parameter of printf
+	cmp r7, #11
+	movgt r7, #10
+	add r9, r5, r6					@ Add players score and print it out
+	add r9, r9, r7
+	mov r1, r9
+	ldr r0, address_of_message13	@ Set message5 as the first parameter of printf
 	bl printf
- 
-									@ Initial cards dealt to the house
-	ldr r0, address_of_message5		@ Set message5 as the first parameter of printf
-	bl printf 						@ Call printf	
-	
-	bl card_face
-	mov r5, r5
-	bl card_face
-	mov r6, r5
-	
-	cmp r5, #11
-	movgt r5, #10
-	cmp r6, #11
-	movgt r6, #10
-	
-	add r8, r6, r5					@ Add house's score and print it out
-	mov r1, r8
-	ldr r0, address_of_message6		@ Set message6 as the first parameter of printf
-	bl printf
-	bl ask
-	
+	bal scorecomp0
 	
 scorecomp0:							@ The following compare numonics are used to compare score and determine winner
 	cmp r7, #21
@@ -362,32 +477,36 @@ scorecomp0:							@ The following compare numonics are used to compare score and
 	bgt youlose
 	
 housescore:
-	cmp r8, #21
+	cmp r9, #21
 	ble scorecomp
 	bgt youwin
 	
 scorecomp:
-	cmp r7, r8
+	cmp r7, r9
 	bgt youwin
 	blt youlose
 	
 youwin:	
-	ldr r0, address_of_win
+	ldr r0, address_of_message14
 	bl printf
-	bl exit
+	bal exit
 
 youlose:
-	ldr r0, address_of_lose
+	ldr r0, address_of_message15
 	bl printf
-	bl exit
+	bal exit
+	
+	@add r4,#1
+	@cmp r4,#1						@ How many hands do you want the dealer to deal?
+	@blt face1
 
 exit:	
 	pop {lr} 						@ Pop the top of the stack and put it in lr
 	bx lr 							@ Leave main
-	
-	
-	
  
+ 
+ 
+ address_of_message0: .word message0
  address_of_message1: .word message1
  address_of_message2: .word message2
  address_of_message3: .word message3
@@ -396,26 +515,26 @@ exit:
  address_of_message6: .word message6
  address_of_message7: .word message7
  address_of_message8: .word message8
-
- address_of_face: .word face
- address_of_suit: .word suit
+ address_of_message9: .word message9
+ address_of_message10: .word message10
+ address_of_message11: .word message11
+ address_of_message12: .word message12
+ address_of_message13: .word message13
+ address_of_message14: .word message14
+ address_of_message15: .word message15
+ address_of_message16: .word message16
+ address_of_message17: .word message17
+ address_of_message18: .word message18
+ address_of_message19: .word message19
+ address_of_message20: .word message20
+ address_of_message21: .word message21
+ address_of_message22: .word message22
+ address_of_message23: .word message23
  
- address_of_win: .word win
- address_of_lose: .word lose
- 
- address_of_clubs: .word clubs
- address_of_diamonds: .word diamonds
- address_of_hearts: .word hearts
- address_of_spades: .word spades
- 
- address_of_ace: .word ace
- address_of_jack: .word jack
- address_of_queen: .word queen
- address_of_king: .word king
- 
+ address_of_message50: .word message50
  address_of_format: .word format
  
- 									@ External Functions
+									@ External Functions
  .global printf
  .global time
  .global srand
