@@ -38,7 +38,11 @@
  message22: .asciz "Queen of "
  message23: .asciz "King of "
  
+ message24: .asciz "You have $50, place your bet to start the game: $"
+ message25: .asciz "You placed a bet of %f.\n"
+ 
  format: .asciz "%d"
+ bet_format: .float "%f"
  
  .text
  
@@ -228,6 +232,34 @@ main:
 	bl srand 						@ Call srand
 	
 	mov r4,#0 						@ Setup loop counter
+
+	
+	
+ bet:	
+	sub sp, sp, #16 					
+									
+	
+ 	ldr r0, address_of_message24	@ r0 <- message6
+ 	bl printf					 	@ call to printf
+ 	
+	ldr r0, address_of_bet_format	@ r0 <- scan_pattern
+ 	vldr s14, [r1]
+	vcvt.f64.f32 d0, s14
+	bl scanf				        @ call to scanf	
+	
+	
+									@ Echo Results
+	ldr r0, address_of_message25 	@ Set message25 as the first parameter of printf
+	vstor d0, [sp]
+	bl printf
+	
+	
+	add sp, sp, #16					@ Discard the integer read by scanf
+	bx lr                    
+	
+	
+	
+
 
 	ldr r0, address_of_message0		@ Set message0 as the first parameter of printf
 	bl printf 						@ Call printf	
@@ -535,9 +567,12 @@ exit:
  address_of_message21: .word message21
  address_of_message22: .word message22
  address_of_message23: .word message23
+ address_of_message24: .word message24
+ address_of_message25: .word message25
  
  address_of_message50: .word message50
  address_of_format: .word format
+ address_of_bet_format: .word bet_format
  
 									@ External Functions
  .global printf
