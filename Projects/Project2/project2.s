@@ -236,7 +236,7 @@ main:
 	
 	
  bet:	
-	sub sp, sp, #16 					
+	sub sp, sp, #8					
 									
 	
  	ldr r0, address_of_message24	@ r0 <- message6
@@ -254,7 +254,7 @@ main:
 	bl printf
 	
 	
-	add sp, sp, #16					@ Discard the integer read by scanf
+	add sp, sp, #8					@ Discard the integer read by scanf
 	bx lr                    
 	
 	
