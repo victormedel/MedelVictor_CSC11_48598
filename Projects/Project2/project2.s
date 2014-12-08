@@ -42,7 +42,6 @@
  message25: .asciz "You placed a bet of %f.\n"
  
  format: .asciz "%d"
- bet_format: .asciz "%f"
  
  .text
  
@@ -243,7 +242,7 @@ main:
  	ldr r0, address_of_message24	@ r0 <- message6
  	bl printf					 	@ call to printf
  	
-	ldr r0, address_of_bet_format	@ r0 <- scan_pattern
+	ldr r0, address_of_format		@ r0 <- scan_pattern
  	vldr s14, [r1]
 	vcvt.f64.f32 d5, s14
 	bl scanf				        @ call to scanf	
@@ -573,7 +572,6 @@ exit:
  
  address_of_message50: .word message50
  address_of_format: .word format
- address_of_bet_format: .word bet_format
  
 									@ External Functions
  .global printf

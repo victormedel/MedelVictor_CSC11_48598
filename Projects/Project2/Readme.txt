@@ -1,4 +1,4 @@
 Compile Instructions
 
-as -o project1.o project1.s
-gcc -o project1 project1.o
+as -o project2.o project2.s
+gcc -o project2 project2.o
