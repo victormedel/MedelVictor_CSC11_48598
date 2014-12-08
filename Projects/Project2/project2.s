@@ -42,7 +42,7 @@
  message25: .asciz "You placed a bet of %f.\n"
  
  format: .asciz "%d"
- bet_format: .float "%f"
+ bet_format: .asciz "%f"
  
  .text
  
@@ -245,13 +245,13 @@ main:
  	
 	ldr r0, address_of_bet_format	@ r0 <- scan_pattern
  	vldr s14, [r1]
-	vcvt.f64.f32 d0, s14
+	vcvt.f64.f32 d5, s14
 	bl scanf				        @ call to scanf	
 	
 	
 									@ Echo Results
 	ldr r0, address_of_message25 	@ Set message25 as the first parameter of printf
-	vstor d0, [sp]
+	vmov r2, r3, d5
 	bl printf
 	
 	
