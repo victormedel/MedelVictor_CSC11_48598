@@ -225,6 +225,7 @@ regular:
 				
  
 	.global main
+	.func main
 main:
 	push {lr}	 					@ Push lr onto the top of the stack	
 	mov r0,#0 						@ Set time(0)
