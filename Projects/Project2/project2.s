@@ -235,27 +235,26 @@ main:
 
 	
 	
- bet:	
-	sub sp, sp, #8					
+ @bet:	
+	@sub sp, sp, #8					
 									
 	
- 	ldr r0, address_of_message24	@ r0 <- message6
- 	bl printf					 	@ call to printf
+ 	@ldr r0, address_of_message24	@ r0 <- message6
+ 	@bl printf					 	@ call to printf
  	
-	ldr r0, address_of_format		@ r0 <- scan_pattern
- 	vldr s14, [r1]
-	vcvt.f64.f32 d5, s14
-	bl scanf				        @ call to scanf	
-	
+	@ldr r0, address_of_format		@ r0 <- scan_pattern
+ 	@vldr s14, [r1]
+	@vcvt.f32.s32 s15, s14
+	@vcvt.f64.f32 d0, s15
+	@bl scanf				        @ call to scanf	
 	
 									@ Echo Results
-	ldr r0, address_of_message25 	@ Set message25 as the first parameter of printf
-	vmov r2, r3, d5
-	bl printf
+	@ldr r0, address_of_message25 	@ Set message25 as the first parameter of printf
+	@vmov r2, r3, d5
+	@bl printf
 	
-	
-	add sp, sp, #8					@ Discard the integer read by scanf
-	bx lr                    
+	@add sp, sp, #8					@ Discard the integer read by scanf
+	@bx lr                    
 	
 	
 	
